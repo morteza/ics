@@ -1,0 +1,113 @@
+#{extends 'main.html' /}
+#{set title:'Dashboard' /}
+
+<section class="ui stackable padded basic segment">
+  <div class="ui four doubling dashboard stackable three columns js-masonry cards">
+    #{security.check models.AccountRole.DESIGNER}
+    <div class="ui purple inverted segment card">
+      <div class="content">
+        Design a new experiment. Test your intuition, hone your prediction, improve your erudition.
+      </div>
+      <a class="ui bottom attached labeled purple button" id="newExperimentBtn">
+        <i class="big add icon"></i>
+      </a>
+    </div>
+    #{/security.check}
+  	#{list experiments}
+    <div class="ui #{if _.isDeleted}red#{/if} card">
+      <div class="content">
+        #{ifnot _.isDeleted}
+        #{security.check models.AccountRole.DESIGNER}
+        <a href="@{Designer.general(_.code)}" class="right floated" title="&{'cut.Settings'}">
+          <i class="large options link icon"></i>
+        </a>
+        <a href="@{Designer.fork(_.code)}" class="right floated" title="&{'cut.Fork'}">
+          <i class="large fork link icon"></i>
+        </a>
+        #{/security.check}
+        <a href="@{FlowController.next(_.code)}" class="right floated">
+          <i class="large green play link icon" title="Participate in this experiment"></i>
+        </a>
+        #{/ifnot}
+        #{else}
+        <div class="ui horizontal right floated red label">REMOVED</div>
+        #{/else}
+
+        <div class="header">${_.title}</div>
+        <div class="meta">${_.createdAt?.since() }</div>
+        <div class="description">${_.description.replace("\n","<br />").raw()}</div>
+      </div>
+  </div>
+  	#{/list}
+  	#{else}
+  	<!-- <div class="col-md-8 text-center">No experiment!</div> -->
+  	#{/else}
+  </div>
+</section>
+
+
+<!-- New Experiment Modal -->
+<section class="ui small modal" role="dialog" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="header">&{'cut.NewExperiment'}</div>
+  <div class="content">
+    <form class="ui form" id="newExperimentForm" action="@{Experiments.create}" method="POST">
+      <input type="hidden" name="experiment.type" value="UG2" /> <!-- TODO: Remove this mandatory field -->
+      <div class="required field">
+        <label>Title</label>
+        <input type="text" name="experiment.title" />
+      </div>
+      <div class="required field">
+        <label>Description</label>
+        <textarea rows="3" name="experiment.description" max="500"></textarea>
+        <small>Both title and description can be changed later.</small>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button type="submit" id="submitNewExperiment" class="ui purple right labeled icon submit button" form="newExperimentForm">
+      <i class="right arrow icon"></i>
+      &{'Continue'}
+    </button>
+  </div>
+</section>
+
+#{set 'moreScripts'}
+<script src="@{'/public/js/masonry.pkgd.min.js'}"></script>
+
+#{security.check models.AccountRole.DESIGNER}
+<script>
+  $('.modal').modal({
+    selector    : {
+      close: '.close'
+    }
+  }).modal('attach events', '#newExperimentBtn', 'show');
+  $('#newExperimentForm').form({
+    title: {
+      identifier: 'experiment.title',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Please enter a title.'
+        }
+      ]
+    },
+    description: {
+      identifier: 'experiment.description',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'Please provide description.'
+        }
+      ]
+    }
+  },
+  {
+    inline: true
+  });
+  $('#submitNewExperiment').click(function(){
+    $('#newExperimentForm').submit();
+  });
+</script>
+#{/security.check}
+#{/set}

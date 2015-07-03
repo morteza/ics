@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html> <!-- <html lang="en"> -->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>&{'app.name'} - #{get 'title' /}</title>
+
+    <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
+
+    <link rel="stylesheet" href="@{'/public/css/jquery.growl.css'}">
+    <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+    <link rel="stylesheet" href="@{'/public/css/main.css'}">
+    <!--[if !IE 7]>
+      <style type="text/css">
+        #wrap {display:table;height:100%}
+      </style>
+    <![endif]-->
+    #{get 'moreStyles' /}
+
+    <script src="@{'/public/js/jquery.min.js'}"></script>
+    <script src="@{'/public/js/jquery.growl.js'}"></script>
+    <script src="@{'/public/js/semantic.min.js'}"></script>
+  </head>
+  <body>
+    <div id="wrap">
+      #{ifnot hideHeader=='true'}
+        #{header /}
+      #{/ifnot}
+      #{flashMessage /}
+      <div id="main">
+        #{doLayout /}
+      </div>
+    </div>
+    #{ifnot hideFooter=='true'}
+      #{footer /}
+    #{/ifnot}
+    #{get 'moreScripts' /}
+  </body>
+</html>

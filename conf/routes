@@ -1,0 +1,30 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# General application pages
+GET     /                                       Application.index
+GET     /dashboard                              Application.dashboard
+GET     /status                                 Application.status
+GET     /captcha                                Application.captcha
+
+# Account and security routes
+*       /login                                  Security.login
+*       /amazon_login                           Security.amazon_login
+*       /logout                                 Security.logout
+*       /register                               Accounts.signUp
+*       /profile/{id}                           Accounts.profile
+*       /profile/{id}/edit                      Accounts.edit
+*       /account/reset                          Accounts.resetPasswordForm
+
+# Feedback form
+*       /feedback                               Experiments.saveFeedback
+
+# Ignore favicon requests
+GET     /favicon.ico                            404
+
+# Map static resources from the /app/public folder to the /public path
+GET     /public/                                staticDir:public
+
+# Catch all
+*       /{controller}/{action}                  {controller}.{action}

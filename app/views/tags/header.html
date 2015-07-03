@@ -1,0 +1,58 @@
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-53774411-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+#{security.check models.AccountRole.DESIGNER}
+<header class="ui fixed large tiered main menu">
+  <a class="item" href="@{Application.index}"><strong>&{'app.name'}</strong></a>
+  <a  class="#{if request.action=='Application.dashboard'}active#{/if} purple item" href="@{Application.dashboard()}" title="&{'cut.Dashboard'}"><i class="dashboard icon"></i></a>
+  <div class="right menu">
+    #{if controllers.Security.isConnected()}
+    <a class="#{if request.controller=='Accounts'}active#{/if} purple item" href="@{Accounts.profile(controllers.Security.connected().id)}" class="Your Profile">
+      <i class="user icon"></i>
+    </a>
+    <a class="item" href="@{Security.logout()}" title="Sign out">
+      <i class="log out icon"></i>
+    </a></li>
+    #{/if}
+	  #{else}
+      <a href="@{Security.login()}" class="item" title="Log in">
+        <i class="log in icon"></i>
+      </a>
+    #{/else}
+	</div>
+
+  #{if experimentCode}
+    <a class="active purple item"><i class="options icon"></i></a>
+    <!-- Designer menu -->
+    <section class="sub menu">
+      <a class="#{if request.action=='Designer.general'}active#{/if} item" href="@{Designer.general(experimentCode)}">
+        <i class="settings icon"></i> General
+      </a>
+      <a class="#{if request.action=='Designer.mturk'}active#{/if} item" href="@{Designer.mturk(experimentCode)}">
+        <i class="users icon"></i> MTurk
+      </a>
+      <a class="#{if request.action=='Designer.flow'}active#{/if} item" href="@{Designer.flow(experimentCode)}">
+        <i class="sort alphabet ascending icon"></i> Flow
+      </a>
+      <a class="#{if request.action=='Designer.opponents'}active#{/if} item" href="@{Designer.opponents(experimentCode)}">
+        <i class="meh icon"></i> Opponents
+      </a>
+      <a class="#{if request.action=='Designer.publish'}active#{/if} item" href="@{Designer.publish(experimentCode)}">
+        <i class="play icon"></i> Publish
+      </a>
+    </section>
+  #{/if}
+</header>
+#{if experimentCode}
+<div class="menu spacer"></div>
+#{/if}
+<div class="menu spacer"></div>
+#{/security.check}

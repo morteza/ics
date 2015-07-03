@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>&{'app.name'} - &{'cg125.SignUp'}</title>
+
+  <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
+  
+  <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  <link rel="stylesheet" href="@{'/public/css/secure.css'}">
+</head>
+<body>
+  <div class="ui padded page centered grid">
+    #{if flash.error}
+    <br /><div class="ui eight wide column red message">&{flash.error}</div>
+    #{/if} #{if flash.success}
+    <br /><div class="ui eight wide column green message">&{flash.success}</div>
+    #{/if}
+  </div>
+      
+  <section class="ui stackable page grid">
+    <div class="ui eight wide centered column">
+      <div class="ui segment">
+        <h2 class="ui dividing header">
+          &{'cg125.SignUp'}
+        </h2>
+        <form class="ui fluid form" action="@{Accounts.create()}" method="POST" id="signupForm">
+          <div class="field">
+            <label>&{'cg125.FullName'}</label>
+            <input type="text" name="account.fullName" required autofocus value="${account?.fullName}">
+          </div>
+          <div class="field">
+            <label>&{'cg125.Email'}</label>
+            <input type="email" name="account.email" required value="${account?.email}">
+          </div>
+          <div class="two fields">
+	          <div class="field">
+	            <label>&{'cg125.Password'}</label>
+	            <input type="password" name="account.passwordHash" required>
+	          </div>
+	          <div class="field">
+              <label>&{'cg125.RetypePassword'}</label>
+              <input type="password" name="passwordHash2" required>
+            </div>              
+          </div>
+          <div class="two fields">
+            <div class="field">
+            <label>Please enter the code below:</label>
+            <img src="@{Application.captcha(randomUUID)}" class="image" />
+            <input type="text" name="human" size="18" value="" />
+            <input type="hidden" name="randomUUID" value="${randomUUID}" />
+            </div>
+            <div class="field"></div>
+            <div class="field"></div>
+          </div>
+          <div class="field">
+				    <div class="ui checkbox">
+				      <input type="checkbox" name="agreed">
+				      <label>I agree to the <a href="@{cms.CMS.show("terms")}">Terms of Service</a>.</label>
+				    </div>
+				  </div>
+          
+          <div class="field">
+            <button type="submit" class="fluid ui left labeled primary icon button">
+              <i class="add user icon"></i>
+              &{'cg125.SignUp'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="ui center aligned basic segment">
+    <span>Already have an account? <a href="@{Security.login()}">&{'cg125.SignIn'}</a></span>
+  </section>
+
+  <section class="ui centered center aligned basic segment">
+    <a class="ui compact icon button" href="@{Application.index()}"><i class="large home icon"></i></a>
+  </section>
+  
+  <script src="@{'/public/js/jquery.min.js'}"></script>
+  <script src="@{'/public/js/semantic.min.js'}"></script>
+  <script>
+    $('.ui.checkbox').checkbox();
+    $('select.dropdown').dropdown();
+    $('#signupForm').form({
+      fullName: {
+        identifier : 'account.fullName',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter your full name'
+          }
+        ]
+      },
+      email: {
+        identifier: 'account.email',
+        rules: [
+          {
+            type: 'email',
+            prompt: 'Please enter a valid email'
+          }
+        ]
+      },
+      password: {
+        identifier : 'account.passwordHash',
+        rules: [
+          {
+            type   : 'empty',
+            prompt : 'Please enter a password'
+          },
+          {
+            type   : 'length[7]',
+            prompt : 'Your password must be at least 7 characters'
+          }
+        ]
+      },
+      passwordMatch: {
+        identifier : 'passwordHash2',
+        rules: [
+          {
+            type   : 'match[account.passwordHash]',
+            prompt : 'Passwords do not match'
+          }
+        ]
+      },
+      terms: {
+        identifier : 'agreed',
+        rules: [
+          {
+            type   : 'checked',
+            prompt : 'You must agree to the terms and conditions'
+          }
+        ]
+      }
+    },
+    {
+      inline: true
+    });
+    </script>
+
+</body>
+</html>

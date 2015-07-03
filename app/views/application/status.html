@@ -1,0 +1,24 @@
+#{extends 'main.html' /}
+#{set title:'Status' /}
+
+#{set 'moreScripts'}
+<script type="text/javascript" src="@{'/public/js/status.js'}" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    var listAction = #{jsAction @Application.statusJson() /}
+    $.getJSON(listAction(), function(data) {
+    $('#status').status2html(data);
+  });
+});
+</script>
+#{/set}
+
+#{set 'moreStyles'}
+#{/set}
+
+<div class="ui padded page stackable grid">
+  <div class="ui sixteen centered column">
+    <div class="ui segment" id="status"></div>
+  </div>
+</div>

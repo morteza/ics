@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Not found</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>    
+    <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  </head>
+  <body>
+    <section class="ui padded page grid">
+      <div class="ten wide centered column">
+        <div class="ui basic segment">
+	        #{if play.mode.name() == 'DEV'}
+	            #{404 result /}
+	        #{/if}
+	        #{else}
+            <h1 class="ui center aligned header">Not found</h1>
+	            <p>
+	                ${result.message}
+	            </p>
+	        #{/else}
+
+        </div>
+      </div>
+    </section>
+
+    <section class="ui centered center aligned basic segment">
+      <a class="ui compact icon button" href="@{Application.index()}"><i class="large home icon"></i></a>
+    </section>
+  
+  </body>
+  
+</html>

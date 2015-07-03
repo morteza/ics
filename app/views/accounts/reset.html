@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>&{'app.name'} - &{'cg125.ResetPassword'}</title>
+
+  <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
+
+  <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  <link rel="stylesheet" href="@{'/public/css/secure.css'}">
+</head>
+<body>
+  <div class="ui padded page centered grid">
+    #{if flash.error}
+    <br /><div class="ui eight wide column red message">&{flash.error}</div>
+    #{/if} #{if flash.success}
+    <br /><div class="ui eight wide column green message">&{flash.success}</div>
+    #{/if}
+  </div>
+
+  <section class="ui stackable page grid">
+    <div class="ui eight wide centered column">
+      <div class="ui segment">
+        <div class="ui header">
+          <div class="content">
+            &{'cut.ResetPassword'}
+            <div class="sub header">
+              &{'cut.ResetPasswordMessage'}
+            </div>
+          </div>
+        </div>
+        <form class="ui fluid form" action="@{Accounts.sendResetPasswordEmail}" method="POST">
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" required autofocus value="${flash.email}" />
+          </div>
+
+          <div class="field">
+            <a href="@{Security.login()}" class="ui left floated left labeled icon button">
+              <i class="left arrow icon"></i>
+              &{'cg125.SignIn'}
+            </a>
+            <button type="submit" class="ui right floated primary button" type="submit">
+              &{'cut.SendResetPasswordEmail'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <section class="ui centered center aligned basic segment">
+    <a class="ui compact icon button" href="@{Application.index()}"><i class="large home icon"></i></a>
+  </section>
+
+</body>
+</html>

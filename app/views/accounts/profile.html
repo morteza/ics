@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set 'title'} &{'cut.ProfilePageTitle'} #{/set}
+
+<div class="ui padded stackable grid">
+  <div class="ui ten wide centered column">
+    <div class="ui segment">
+      <h2 class="ui header">
+      <a href="@{Accounts.edit(account.id)}" class="ui primary right floated compact button">Edit</a>
+        <img class="image" src="#{gravatar.url account.email /}" />
+        <div class="content">
+          ${account.fullName}
+          <div class="sub header">&{"cg125.roles." + account.role}</div>
+        </div>
+      </h2>
+      <div class="ui list">
+	      <!-- <div class="item">
+	        <i class="large user icon"></i>
+	        <div class="content">
+            <strong>ID:</strong> <code>${account.id}</code>
+	        </div>
+	      </div>
+	      -->
+	      <div class="item">
+	        <i class="large envelope icon"></i>
+	        <div class="content">
+            <strong>Email:</strong> <code>${account.email}</code>
+	        </div>
+	      </div>
+	      <div class="item">
+	        <i class="large clock icon"></i>
+	        <div class="content">
+          <strong>Joined on </strong> <span>${account.createdAt.format("MMMM dd, yyyy")}</span> <span>(${account.createdAt.since()})</span>
+	        </div>
+	      </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- /.row -->
+
+#{set 'moreStyles'}
+#{/set}
+
+#{set 'moreScripts'}
+#{/set}

@@ -1,0 +1,80 @@
+#{extends 'main.html' /}
+#{set 'title'} &{'cut.EditAccountPageTitle'} #{/set}
+
+#{set 'moreStyles'}
+#{/set}
+
+<div class="ui stackable padded grid">
+  <div class="ten wide centered column">
+  <div class="ui segment">
+    <h2 class="ui header">Edit Account</h2>
+              <div>
+            <div class="col-md-6">
+              <span class="text-right"><strong>Email: </strong><code>${account?.email}</code></span>
+            </div>
+              #{if account.isConfirmed()}
+              <p>Account is confirmed.</p>
+              #{/if}
+              #{else}
+              <div class="ui warning message">Account is not confirmed yet!</div>
+              #{/else}
+          </div>
+          <div class="ui divider"></div>
+          
+    <form class="ui form" method="POST" action="@{Accounts.update(account.id)}" id="new-card-form">
+
+
+          <!-- Full Name -->
+          <div class="two fields">
+            <div class="field">
+              <label>Full Name</label>
+              <input id="fullname" name="account.fullName" type="text" class="form-control" placeholder="Full Name" value="${account?.fullName}" />
+            </div>
+	          <div class="field">
+	            <label>Email</label>
+	            <input id="fullname" name="account.email" type="text" class="form-control" placeholder="Email" value="${account?.email}" />
+	          </div>
+
+          </div>
+          <div class="two fields">
+	          <div class="field">
+	            <label>New Password</label>
+	            <input id="password" name="password" type="password" class="form-control" placeholder="New Password" value=""/>
+	          </div>
+            <div class="field">
+              #{security.check models.AccountRole.ADMINISTRATOR}
+              <label>Role</label>
+              <select name="account.role" class="form-control" >
+                %{ models.AccountRole.values().each(){ }%
+                <option title="${it.name()}" value="${it.name()}" ${it.equals(account.role) ? 'selected' : ''}>&{"cg125.roles."+it.toString()}</option>
+                %{ } }%
+              </select>
+              #{/security.check}
+            </div>          
+          </div>
+
+          <!-- Activate/Deactivate -->
+          <div class="row" style="padding-bottom:5px;">
+            <div class="col-md-12">
+              <button type="submit" class="ui primary button" id="submit-btn">Save</button>
+              <a href="@{Accounts.profile(account.id)}" class="ui button">Cancel</a>
+              #{security.check models.AccountRole.ADMINISTRATOR}
+                #{if account.role.ordinal() < models.AccountRole.ADMINISTRATOR.ordinal()}
+                  #{if account.confirmed}
+                  <a href="@{Accounts.deactivate(account.id)}" class="ui button">Deactivate Account</a>
+                  #{/if}
+                  #{else}
+                  <a href="@{Accounts.activate(account.id)}" class="ui button">Activate Account</a>
+                  #{/else}
+                #{/if}
+              #{/security.check}
+            </div>
+          </div>
+        </form>
+      </div> <!-- /.panel-body -->
+    </div> <!-- /.panel -->
+</div> <!-- /.grid -->
+
+
+#{set 'moreScripts'}
+#{/set}

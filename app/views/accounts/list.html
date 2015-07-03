@@ -1,0 +1,131 @@
+#{extends 'main.html' /}
+#{set 'title'} &{'cg125.AccountsPageTitle'} #{/set}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui page centered padded stackable grid">
+  <div class="ui twelve wide column">
+    <div class="ui segment">
+    <h2 class="ui dividing header">
+	    <div class="ui right floated compact buttons">
+		    #{if request.action=="Accounts.list"}
+		    <a class="ui compact button" href="@{Accounts.listAll()}" title="Show all cccounts">&{'cut.AllAccounts'}</a>
+		    #{/if}
+		    #{else}
+		    <a class="ui compact button" href="@{Accounts.list()}" title="Show all cccounts">&{'cut.OnlyAdminsAndDesignerAccounts'}</a>
+		    #{/else}
+		    <a class="ui primary right floated compact button" href="#" title="Create new account" id="newAccountBtn">&{'cut.NewAccount'}</a>
+	    </div>
+      <i class="users icon"></i>
+      <div class="content">
+          &{'cg125.AccountsTitle'}
+      <div class="sub header">List of all user accounts.</div>
+      </div>
+    </h2>
+        
+        <table class="ui table">
+          <thead>
+            <tr>
+              <th>&{'cut.Id'}</th>
+	            <th>&{'cut.FullName'}</th>
+	            <th>&{'cut.Email'}</th>
+	            <th>&{'cut.Role'}</th>
+	            <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            #{list accounts}
+            <tr>
+              <td>${_?.id}</td>
+              <td>${_?.fullName}</td>
+              <td>${_?.email}</td>
+              <!-- <td>
+                <code>${_?.id}</code>
+              </td> -->
+              <td>&{"cg125.roles."+_.role}</td>
+              <td>
+                <div class="ui right floated compact tiny buttons">
+                #{ifnot _.confirmed}
+                  <a href="@{Accounts.confirm(_.id)}" class="ui icon button" title="Confirm">Confirm</a>
+                #{/ifnot}
+                <a href="@{Accounts.edit(_.id)}" class="ui icon button"><i class="pencil icon"></i></a>
+                #{security.check models.AccountRole.ADMINISTRATOR}
+                <a href="@{Accounts.delete(_.id)}" class="ui icon red button"><i class="remove icon"></i></a>
+                #{/security.check}
+                </div>
+              </td>
+            </tr>
+            #{/list}
+          </tbody>
+        </table>
+    </div> <!-- /.segment -->
+  </div> <!-- /.column -->
+</section> <!-- /.grid -->
+
+<div class="ui small modal" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="header">&{'cut.NewAccount'}</div>
+  <div class="content">
+		<form class="ui form" method="POST" action="@{Accounts.create}" id="newAccountForm">
+
+        <div class="field">
+          <label>&{'cut.FullName'}</label>
+          <input id="fullname" name="account.fullName" type="text"/>
+        </div>
+
+        <div class="field">
+          <label>&{'cut.Email'}</label>
+          <input id="email" name="account.email" type="email"/>
+        </div>
+
+        <div class="field">
+          <label>&{'cut.Password'}</label>
+          <input id="password" name="account.passwordHash" type="password"/>
+        </div>
+    
+		</form>  
+  </div>
+  <div class="actions">
+    <button type="submit" class="ui primary button" id="submitNewAccount">&{'cut.Create'}</button>
+  </div>
+
+
+</div><!-- /.modal -->
+
+#{set 'moreScripts'}
+<script>
+$('.modal').modal({
+  selector    : {
+    close: '.close'
+  }
+}).modal('attach events', '#newAccountBtn', 'show');
+$('#newExperimentForm').form({
+  title: {
+    identifier: 'experiment.title',
+    rules: [
+      {
+        type: 'empty',
+        prompt: 'Please enter a title.'
+      }
+    ]
+  },
+  description: {
+    identifier: 'experiment.description',
+    rules: [
+      {
+        type: 'empty',
+        prompt: 'Please provide description.'
+      }
+    ]
+  }
+},
+{
+  inline: true
+});
+$('#submitNewAccount').click(function(){
+  $('#newAccountForm').submit();
+});
+
+</script>
+#{/set}

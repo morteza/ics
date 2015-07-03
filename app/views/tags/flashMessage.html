@@ -1,0 +1,31 @@
+  #{if errors}
+  <div class="ui padded centered grid">
+    <div class="ten wide column">
+      <div class="ui negative message">
+        #{errors}
+        <li>${error}</li>
+        #{/errors}
+      </div>
+    </div>
+  </div>
+  #{/if}
+
+  #{if flash.error}
+  <script>
+  $.growl.error({
+    title:'Error',
+    message:'&{flash.error}',
+    location:'br'
+  });
+  </script>
+  #{/if}
+
+  #{if flash.success}
+  <script>
+  $.growl.notice({
+    title:'',
+    message:'&{flash.success}',
+    location:'br'
+  });
+  </script>
+  #{/if}
