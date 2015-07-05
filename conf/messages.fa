@@ -17,3 +17,6 @@ password=کلمه‌ی عبور
 
 security.forgetPassword=فراموش کردید؟
 security.dontHaveAnAccount=حساب کابری ندارید؟
+security.sendResetPasswordEmail=ارسال کلمه‌ی عبور
+security.resetPassword=بازیابی کلمه‌ی عبور
+security.resetPasswordMessage=لطفا پست‌الکترونیکی خود را که با آن ثبت‌نام کرده بودید را وارد نمایید. یک پست‌الکترونیکی شامل لینکی برای بازیابی کلمه‌ی عبور برای شما ارسال می‌شود.

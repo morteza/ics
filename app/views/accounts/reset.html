@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>&{'app.name'} - &{'cg125.ResetPassword'}</title>
+  <title>&{'app.name'} - &{'security.resetPassword'}</title>
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
@@ -31,28 +31,28 @@
 
   <section class="ui stackable page grid">
     <div class="ui eight wide centered column">
-      <div class="ui segment">
+      <div class="ui clearing segment">
         <div class="ui header">
           <div class="content">
-            &{'cut.ResetPassword'}
+            &{'security.resetPassword'}
             <div class="sub header">
-              &{'cut.ResetPasswordMessage'}
+              &{'security.resetPasswordMessage'}
             </div>
           </div>
         </div>
         <form class="ui fluid form" action="@{Accounts.sendResetPasswordEmail}" method="POST">
           <div class="field">
-            <label>Email</label>
+            <label>&{'email'}</label>
             <input type="email" name="email" required autofocus value="${flash.email}" />
           </div>
 
           <div class="field">
             <a href="@{Security.login()}" class="ui left floated left labeled icon button">
               <i class="left arrow icon"></i>
-              &{'cg125.SignIn'}
+              &{'login'}
             </a>
             <button type="submit" class="ui right floated primary button" type="submit">
-              &{'cut.SendResetPasswordEmail'}
+              &{'security.sendResetPasswordEmail'}
             </button>
           </div>
         </form>

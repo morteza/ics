@@ -12,6 +12,7 @@ The following items are change logs divided by dates. In addition to this list, 
 - Update login page i18n messages.
 - Add switch language item to the top menu.
 - Farsi fonts for several UI components (It's Iranian Serif open source font).
+- Improve reset password page, and change its segment to 'clearing segment'.
 
 ## July 3, 2015
 
