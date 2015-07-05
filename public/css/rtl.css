@@ -14,9 +14,22 @@ h1,h2,h3,h4,h5,h6,
 .ui.steps,
 .ui.input,
 .ui.form,
+.ui.button,
 .ui.message .header,
 .ui.cards, .ui.card,
 .ui {
   font-family: 'FarsiFont';
   direction: rtl;
+}
+
+.push.right {
+  float: right;
+  margin-right: 0em;
+  margin-left: 0.25em;  
+}
+
+.rtl.push.right {
+  float: left;
+  margin-left: 0em;
+  margin-right: 0.25em;  
 }

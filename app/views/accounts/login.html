@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>&{'app.name'} - &{'cg125.SignIn'}</title>
+  <title>&{'app.name'} - &{'login'}</title>
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
@@ -20,23 +20,7 @@
 
   <link rel="stylesheet" href="@{'/public/css/secure.css'}">
 </head>
-<body>
-  *{
-	<div id="amazon-root"></div>
-	<script type="text/javascript">
-	
-	  window.onAmazonLoginReady = function() {
-	    amazon.Login.setClientId('amzn1.application-oa2-client.644454a7822348f8a0a0c488e75d95b3');
-	  };
-	  (function(d) {
-	    var a = d.createElement('script'); a.type = 'text/javascript';
-	    a.async = true; a.id = 'amazon-login-sdk';
-	    a.src = 'https://api-cdn.amazon.com/sdk/login1.js';
-	    d.getElementById('amazon-root').appendChild(a);
-	  })(document);
-	</script>
-  }*
-  
+<body>  
   <div class="ui padded page centered grid">
     #{if flash.error}
     <br /><div class="ui six wide column red message">&{flash.error}</div>
@@ -50,12 +34,12 @@
       <div class="ui segment">
         <form class="ui fluid form" action="@{Security.authenticate()}" method="POST">
           <div class="field">
-            <label>Email</label>
+            <label>&{'email'}</label>
             <input type="email" name="username" required autofocus value="${flash.email}" />
           </div>
           <div class="field">
-            <label>Password
-              <a href="@{Accounts.resetPassword()}" class="push right">Forgot Password?</a>
+            <label>&{'password'}
+              <a href="@{Accounts.resetPassword()}" class="#{if play.i18n.Lang.get()=='fa'}rtl#{/if} push right">&{'security.forgetPassword'}</a>
             </label>
             <input type="password" name="password" required value="${flash.email}" />
           </div>
@@ -64,37 +48,19 @@
             <input type="hidden" name="remember" value="true">
             <button type="submit" class="ui left labeled primary icon button" type="submit">
               <i class="unlock icon"></i>
-            &{'cg125.SignIn'}</button>
+            &{'login'}</button>
           </div>
         </form>
       </div>
 	  </div>
 	</section>
 	<section class="ui stackable centered center aligned basic segment" id="login">
-    <div>Don't have an account? <a href="@{Accounts.signup()}">&{'cut.SignUp'}</a></div>
+    <div>&{'security.dontHaveAnAccount'} <a href="@{Accounts.signup()}">&{'signup'}</a></div>
 	</section>
 
   <section class="ui centered center aligned basic segment">
-    <a class="ui compact icon button" href="@{Application.index()}"><i class="large home icon"></i></a>
+    <a class="ui compact icon button" href="@{Application.index()}" title="&{'home'}"><i class="large home icon"></i></a>
   </section>
-	
-  *{
-        <section class="ui centered center aligned basic segment">
-          <a href="#" id="LoginWithAmazon" class="btn-block btn-link btn btn-xs" title="Login with Amazon">
-          <img border="0" alt="Login with Amazon"
-            src="https://images-na.ssl-images-amazon.com/images/G/01/lwa/btnLWA_gold_156x32.png"
-            width="156" height="32" />
-          </a>
-          <script type="text/javascript">
-            // Login codes via amazon
-            document.getElementById('LoginWithAmazon').onclick = function() {
-              options = { scope : 'profile' };
-              amazon.Login.authorize(options, 'https://cut.onto.ir/amazon_login');
-              return false;
-            };
-          </script>
-        </section>     
-	}*
 	
 </body>
 </html>

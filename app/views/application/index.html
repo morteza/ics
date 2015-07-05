@@ -30,6 +30,12 @@
         <div class="ui inverted menu">
           <div class="header item">&{'app.name'}</div>
           <div class="right menu">
+			      #{if play.i18n.Lang.get()=='fa'}
+			      <a class="item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag"></i></a>
+			      #{/if}
+			      #{else}
+			      <a class="item" href="@{API.changeUserLanguage("fa")}"><i class="ui ir flag"></i></a>
+			      #{/else}
 	          #{ifnot controllers.Security.check(models.AccountRole.REGISTERED)}
 	          <a class="item" href="@{Security.login()}" class="btn">&{'login'}</a>
             <a class="item" href="@{Accounts.signUp()}" class="btn">&{'signup'}</a>

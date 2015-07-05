@@ -14,8 +14,14 @@
   <a class="item" href="@{Application.index}"><strong>&{'app.name'}</strong></a>
   <a  class="#{if request.action=='Application.dashboard'}active#{/if} item" href="@{Application.dashboard()}" title="&{'cut.Dashboard'}"><i class="dashboard icon"></i></a>
   <div class="right menu">
+    #{if play.i18n.Lang.get()=='fa'}
+      <a class="item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag"></i></a>
+    #{/if}
+    #{else}
+      <a class="item" href="@{API.changeUserLanguage("fa")}"><i class="ui ir flag"></i></a>
+    #{/else}
     #{if controllers.Security.isConnected()}
-    <a class="#{if request.controller=='Accounts'}active#{/if} item" href="@{Accounts.profile(controllers.Security.connected().id)}" class="Your Profile">
+    <a class="#{if request.controller=='Accounts'}active#{/if} item" href="@{Accounts.profile(controllers.Security.connected().id)}" title="Your Profile">
       <i class="user icon"></i>
     </a>
     <a class="item" href="@{Security.logout()}" title="&{'logout'}">

@@ -1,12 +1,19 @@
 # Farsi i18n messages.
 #
 
-app.name=سی‌سِت
+app.name=ارزیابی امنیت سایبری
 
-homepage.masthead.title=ابزار بررسی امنیت سایبری
+home=خانه
+
+homepage.masthead.title=آزمایشگاه سیستم‌های صنعتی
 homepage.masthead.description=مرکز تحقیقات مخابرات ایران
 
 copyright.notice=&copy; ۱۳۹۴ &{app.name}. تمامی حقوق قانونی محفوظ است.
 
 login=ورود
 signup=ثبت‌نام
+email=پست الکترونیکی
+password=کلمه‌ی عبور
+
+security.forgetPassword=فراموش کردید؟
+security.dontHaveAnAccount=حساب کابری ندارید؟

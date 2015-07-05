@@ -9,6 +9,9 @@ The following items are change logs divided by dates. In addition to this list, 
 - New RTL theme, enabled automatically by local user language.
 - Enhanced i18n, and respective API to change local user language.
 - i18n for Farsi, and English.
+- Update login page i18n messages.
+- Add switch language item to the top menu.
+- Farsi fonts for several UI components (It's Iranian Serif open source font).
 
 ## July 3, 2015
 
