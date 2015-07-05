@@ -1,3 +1,12 @@
-# You can specialize this file for each language.
-# For example, for French create a messages.fr file
+# Farsi i18n messages.
 #
+
+app.name=سی‌سِت
+
+homepage.masthead.title=ابزار بررسی امنیت سایبری
+homepage.masthead.description=مرکز تحقیقات مخابرات ایران
+
+copyright.notice=&copy; ۱۳۹۴ &{app.name}. تمامی حقوق قانونی محفوظ است.
+
+login=ورود
+signup=ثبت‌نام

@@ -9,7 +9,15 @@
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
+
+  #{if play.i18n.Lang.get()=='fa'}
+  <link rel="stylesheet" href="@{'/public/css/semantic.rtl.css'}">
+  <link rel="stylesheet" href="@{'/public/css/rtl.css'}">
+  #{/if}
+  #{else}
   <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  #{/else}
+  
   <link rel="stylesheet" href="@{'/public/css/secure.css'}">
 </head>
 <body>

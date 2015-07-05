@@ -8,8 +8,15 @@
   <title>&{'app.name'} - &{'cg125.SignUp'}</title>
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
-  
+
+  #{if play.i18n.Lang.get()=='fa'}
+  <link rel="stylesheet" href="@{'/public/css/semantic.rtl.css'}">
+  <link rel="stylesheet" href="@{'/public/css/rtl.css'}">
+  #{/if}
+  #{else}
   <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  #{/else}  
+
   <link rel="stylesheet" href="@{'/public/css/secure.css'}">
 </head>
 <body>
@@ -59,14 +66,14 @@
           <div class="field">
 				    <div class="ui checkbox">
 				      <input type="checkbox" name="agreed">
-				      <label>I agree to the <a href="@{cms.CMS.show("terms")}">Terms of Service</a>.</label>
+				      <label>I agree to the <a href="#">Terms of Service</a>.</label>
 				    </div>
 				  </div>
           
           <div class="field">
-            <button type="submit" class="fluid ui left labeled primary icon button">
+            <button type="submit" class="ui left labeled primary icon button">
               <i class="add user icon"></i>
-              &{'cg125.SignUp'}
+              &{'signup'}
             </button>
           </div>
         </form>
@@ -74,7 +81,7 @@
     </div>
   </section>
   <section class="ui center aligned basic segment">
-    <span>Already have an account? <a href="@{Security.login()}">&{'cg125.SignIn'}</a></span>
+    <span>Already have an account? <a href="@{Security.login()}">&{'login'}</a></span>
   </section>
 
   <section class="ui centered center aligned basic segment">

@@ -1,7 +1,8 @@
 /*******************************************************************************
  *        File: API.java
  *    Revision: 2
- * Description: Several API calls to access core functionality.
+ * Description: Several API calls to access core functionality. This controller
+ *              might expose some internal functionalities of other controllers.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: August 5, 2014
  *     Project: itrc.cset
@@ -21,9 +22,11 @@ import com.google.gson.JsonParser;
 import models.AccountRole;
 import models.cms.Attachment;
 import play.Play;
+import play.i18n.Lang;
 import play.libs.WS;
 import play.mvc.Controller;
 import play.mvc.With;
+import utils.NoSecurityCheck;
 import utils.SecurityCheck;
 
 /**
@@ -68,4 +71,14 @@ public class API extends Controller {
     response.setContentTypeIfNotSet(attachment.data.type());
     renderBinary(attachment.data.get());
   }
+  
+  @NoSecurityCheck
+  public static void changeUserLanguage(String lang) {
+    if ("en".equalsIgnoreCase(lang) || "fa".equalsIgnoreCase(lang)) {
+      Lang.change(lang);
+    }
+    //TODO REMOVE this rediect
+    Application.index();
+  }
+
 }

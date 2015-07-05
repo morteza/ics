@@ -9,7 +9,15 @@
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
+
+  #{if play.i18n.Lang.get()=='fa'}
+  <link rel="stylesheet" href="@{'/public/css/semantic.rtl.css'}">
+  <link rel="stylesheet" href="@{'/public/css/rtl.css'}">
+  #{/if}
+  #{else}
   <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+  #{/else}  
+
   <link rel="stylesheet" href="@{'/public/css/secure.css'}">
 </head>
 <body>
@@ -54,7 +62,7 @@
           
           <div class="field">
             <input type="hidden" name="remember" value="true">
-            <button type="submit" class="fluid ui left labeled primary icon button" type="submit">
+            <button type="submit" class="ui left labeled primary icon button" type="submit">
               <i class="unlock icon"></i>
             &{'cg125.SignIn'}</button>
           </div>

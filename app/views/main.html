@@ -11,7 +11,15 @@
     <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
     <link rel="stylesheet" href="@{'/public/css/jquery.growl.css'}">
-    <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+
+	  #{if play.i18n.Lang.get()=='fa'}
+	  <link rel="stylesheet" href="@{'/public/css/semantic.rtl.css'}">
+	  <link rel="stylesheet" href="@{'/public/css/rtl.css'}">
+	  #{/if}
+	  #{else}
+	  <link rel="stylesheet" href="@{'/public/css/semantic.css'}">
+	  #{/else}
+  
     <link rel="stylesheet" href="@{'/public/css/main.css'}">
     <!--[if !IE 7]>
       <style type="text/css">

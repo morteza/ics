@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'FarsiFont';
+  src: url("../fonts/irseri.ttf") format('truetype');
+  font-style: normal;
+  font-weight: normal;
+}
+
+body,
+p,
+.ui.header,
+.ui.menu,
+h1,h2,h3,h4,h5,h6,
+.ui.list,
+.ui.steps,
+.ui.input,
+.ui.form,
+.ui.message .header,
+.ui.cards, .ui.card,
+.ui {
+  font-family: 'FarsiFont';
+  direction: rtl;
+}

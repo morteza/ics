@@ -1,0 +1,114 @@
+html {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  /*background-image: url('/public/img/bg.jpg');
+  background-repeat: repeat-xy;*/
+  height: 100%;
+}
+
+.ui.side-help,
+.ui.side-help .item .header,
+.ui.side-help .item .description {
+  color: gray;
+}
+
+.menu.spacer {
+  min-height: 2.5em;
+}
+
+/* ====================== */
+/* Sticky Footer          */
+/* ====================== */
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom: 5em;
+}
+
+#footer {
+  position: relative;
+  margin-top: -3em; /* negative value of footer height */
+  min-height: 3em;
+  clear:both;
+  padding-top: 1em;
+}
+
+/*Opera Fix*/
+body:before {
+  content:"";
+  height:100%;
+  float:left;
+  width:0;
+  margin-top:-32767px;
+}
+
+.ui.dashboard.stackable.cards .card:first-child {
+margin-top: 1em !important;  
+}
+
+/* ====================== */
+/* File Upload Button     */
+/* ====================== */
+
+/*
+.file.button {
+  position: relative;
+  overflow: hidden;
+  margin: 14px;
+  vertical-align: top;
+}
+
+.file.button input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.file.button img {
+  max-width: 48px;
+  height: auto;
+}
+*/
+
+/* =========================== */
+/* Typography */
+/* =========================== */
+
+.ui.article.segment {
+  border: none;
+  box-shadow: none;
+  background: white;
+  padding-bottom: 3.5em;
+}
+
+.article .ui.header,
+.article h2,
+.article .ui.header .content
+{
+  font-size: 28px;
+  line-height: 1.2em;
+  font-weight: normal;
+}
+
+.article blockquote {
+  padding-left:10px;
+  border-left:4px solid rgb(235, 235, 235);
+}
+
+.article,
+.article .content p {
+  font-size: 16px;
+  line-height: 1.75em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

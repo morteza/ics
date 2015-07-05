@@ -3,7 +3,7 @@
 
 <section class="ui stackable padded basic segment">
   <div class="ui four doubling dashboard stackable three columns js-masonry cards">
-    #{security.check models.AccountRole.DESIGNER}
+    #{security.check models.AccountRole.REGISTERED}
     <div class="ui purple inverted segment card">
       <div class="content">
         Design a new experiment. Test your intuition, hone your prediction, improve your erudition.
@@ -17,7 +17,7 @@
     <div class="ui #{if _.isDeleted}red#{/if} card">
       <div class="content">
         #{ifnot _.isDeleted}
-        #{security.check models.AccountRole.DESIGNER}
+        #{security.check models.AccountRole.REGISTERED}
         <a href="@{Designer.general(_.code)}" class="right floated" title="&{'cut.Settings'}">
           <i class="large options link icon"></i>
         </a>
@@ -51,7 +51,7 @@
   <i class="close icon"></i>
   <div class="header">&{'cut.NewExperiment'}</div>
   <div class="content">
-    <form class="ui form" id="newExperimentForm" action="@{Experiments.create}" method="POST">
+    <form class="ui form" id="newExperimentForm" action="" method="POST">
       <input type="hidden" name="experiment.type" value="UG2" /> <!-- TODO: Remove this mandatory field -->
       <div class="required field">
         <label>Title</label>
@@ -75,7 +75,7 @@
 #{set 'moreScripts'}
 <script src="@{'/public/js/masonry.pkgd.min.js'}"></script>
 
-#{security.check models.AccountRole.DESIGNER}
+#{security.check models.AccountRole.REGISTERED}
 <script>
   $('.modal').modal({
     selector    : {

@@ -67,7 +67,7 @@ public class Application extends Controller {
   @NoSecurityCheck
   public static void captcha(String id) {
     Images.Captcha captcha = Images.captcha();
-    String code = captcha.getText("#66023c");
+    String code = captcha.getText("#2185d0");
     Cache.set(id, code, "5mn");
     renderBinary(captcha);
   }
