@@ -9,6 +9,6 @@
  *******************************************************************************/
 package models.survey;
 
-public class QuestionResult {
+public class Answer {
 
 }

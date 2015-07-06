@@ -4,11 +4,18 @@
 app.name=ارزیابی امنیت سایبری
 
 home=خانه
+dashboard=داشبورد
+about=درباره
+contact=تماس
+accounts=کاربران
+privacy=حقوق شخصی
+support=پشتیبانی
+status=وضعیت
 
 homepage.masthead.title=آزمایشگاه سیستم‌های صنعتی
 homepage.masthead.description=مرکز تحقیقات مخابرات ایران
 
-copyright.notice=&copy; ۱۳۹۴ &{app.name}. تمامی حقوق قانونی محفوظ است.
+copyright.notice=&copy; ۱۳۹۴ مرکز تحقیقات مخابرات ایران. تمامی حقوق قانونی محفوظ است.
 
 login=ورود
 signup=ثبت‌نام
@@ -20,3 +27,7 @@ security.dontHaveAnAccount=حساب کابری ندارید؟
 security.sendResetPasswordEmail=ارسال کلمه‌ی عبور
 security.resetPassword=بازیابی کلمه‌ی عبور
 security.resetPasswordMessage=لطفا پست‌الکترونیکی خود را که با آن ثبت‌نام کرده بودید را وارد نمایید. یک پست‌الکترونیکی شامل لینکی برای بازیابی کلمه‌ی عبور برای شما ارسال می‌شود.
+
+unknown=نامشخص
+continue=ادامه
+newSurvey=پرسش‌نامه‌ی جدید

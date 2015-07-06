@@ -1,14 +1,14 @@
 <footer class="ui tertiary center aligned vertical segment" id="footer">
   <p class="small text-muted">
-    <a href="@{Application.index()}">Home</a>&nbsp;&middot;
-    <a href="#">About</a>&nbsp;&middot;
-    <a href="#">Privacy</a>&nbsp;&middot;
-    <a href="#">&{'cms.Support'}</a>&nbsp;&middot;
-    <a href="#">Contact</a>
+    <a href="@{Application.index()}">&{'home'}</a>&nbsp;&middot;
+    <a href="#">&{'about'}</a>&nbsp;&middot;
+    <a href="#">&{'privacy'}</a>&nbsp;&middot;
+    <a href="#">&{'support'}</a>&nbsp;&middot;
+    <a href="#">&{'contact'}</a>
     #{security.check models.AccountRole.ADMINISTRATOR}
     &nbsp;&middot;
-    <a href="@{Application.status()}">&{'cut.Status'}</a>&nbsp;&middot;
-    <a href="@{Accounts.list()}">&{'cut.Accounts'}</a>
+    <a href="@{Application.status()}">&{'status'}</a>&nbsp;&middot;
+    <a href="@{Accounts.list()}">&{'accounts'}</a>
 		#{/security.check}
   </p>
 </footer>

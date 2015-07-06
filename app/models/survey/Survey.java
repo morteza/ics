@@ -1,6 +1,6 @@
 /*******************************************************************************
  *        File: Survey.java
- *    Revision: 1
+ *    Revision: 2
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: July 3, 2015
@@ -9,6 +9,16 @@
  *******************************************************************************/
 package models.survey;
 
-public class Survey {
+import java.util.ArrayList;
+import java.util.List;
 
+public class Survey {
+  
+  public String title;
+  
+  public List<Question> questions;
+  
+  public Survey() {
+    questions = new ArrayList<Question>();
+  }
 }
