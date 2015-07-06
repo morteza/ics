@@ -8,6 +8,9 @@ GET     /dashboard                              Application.dashboard
 GET     /status                                 Application.status
 GET     /captcha                                Application.captcha
 
+# Security calculator pages
+GET     /calculator                             SecurityCalculator.index
+
 # Account and security routes
 *       /login                                  Security.login
 *       /amazon_login                           Security.amazon_login

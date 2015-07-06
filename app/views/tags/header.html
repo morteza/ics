@@ -12,7 +12,9 @@
 #{security.check models.AccountRole.REGISTERED}
 <header class="ui tiered icon fixed menu">
   <a class="item" href="@{Application.index}"><strong>&{'app.name'}</strong></a>
-  <a  class="#{if request.action=='Application.dashboard'}active#{/if} item" href="@{Application.dashboard()}" title="&{'cut.Dashboard'}"><i class="dashboard icon"></i></a>
+  <a  class="#{if request.action=='Application.dashboard'}active#{/if} item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
+  <a  class="#{if request.action=='SecurityCalculator.index'}active#{/if} item" href="@{SecurityCalculator.index()}" title="&{'calculator'}"><i class="calculator icon"></i></a>
+
   #{if surveyCode}
     <!-- Survey Designer menu -->
     <section class="secondary menu">

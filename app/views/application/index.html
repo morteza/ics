@@ -41,8 +41,9 @@
             <a class="item" href="@{Accounts.signUp()}" class="btn">&{'signup'}</a>
 	          #{/ifnot}
 	          #{else}
-	          <a class="item" href="@{Application.dashboard()}" title="&{'cut.Dashboard'}"><i class="dashboard icon"></i></a>
-            <a class="item" href="@{Security.logout()}" title="&{'cg125.SignOut'}"><i class="log out icon"></i></a>
+            <a class="item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
+            <a class="item" href="@{SecurityCalculator.index()}" title="&{'calculator'}"><i class="calculator icon"></i></a>
+            <a class="item" href="@{Security.logout()}" title="&{'signout'}"><i class="log out icon"></i></a>
 	          #{/else}
           </div>
         </div>

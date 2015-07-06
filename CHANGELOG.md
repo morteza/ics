@@ -25,6 +25,7 @@ The following items are change logs divided by dates. In addition to this list, 
 - Javascript Masonry library (v3) to sort out survey cards on dashboard.
 - Initial survey designer to demo.
 - Charts in the survey designer results page.
+- Simple Security Calculator, and its view, to be implemented using AngularJs.
 
 ## July 3, 2015
 

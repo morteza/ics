@@ -1,0 +1,162 @@
+#{extends 'main.html' /}
+#{set 'title'}&{'SecurityCalculator'}#{/set}
+
+#{set 'moreScripts'}
+<script type="text/javascript" src="@{'/public/js/angular.min.js'}" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+
+</script>
+
+<script src="@{'public/js/chart.js'}"></script>
+
+<script>
+$('.ui.dropdown').dropdown();
+$('.ui.checkbox').checkbox();
+var radarConfig = {
+    type: 'radar',
+    data: {
+        labels: ["منابع انسانی", "سخت‌افزار", "نرم‌افزار", "شبکه", "یک‌پارچگی"],
+        datasets: [{
+            label: "Dataset #1",
+            backgroundColor: "rgba(220,220,220,0.2)",
+            pointBackgroundColor: "rgba(220,220,220,1)",
+            data: [10, 9.8, 4.2, 5.3, 8.2]
+        }, {
+            label: "Dataset #2",
+            backgroundColor: "rgba(251,80,50,0.5)",
+            pointBackgroundColor: "rgba(251,80,50,1)",
+            hoverPointBackgroundColor: "#fff",
+            pointHighlightStroke: "rgba(251,80,50,1)",
+            data: [9, 8.1, 4.1, 7.2, 9]
+        }]
+    }
+};
+var radarChart = new Chart($("#radarChart").get(0).getContext("2d"), radarConfig);
+</script>
+
+<script>
+var app = angular.module('CalculatorApp', []);
+app.controller('CalculatorController', function($scope) {
+    $scope.firstName = "John";
+    $scope.lastName = "Doe";
+});
+</script>
+
+#{/set}
+
+#{set 'moreStyles'}
+#{/set}
+
+<div class="menu spacer"></div>
+
+<div class="ui padded page stackable grid" ng-app="CalculatorApp" ng-controller="CalculatorController">
+  <div class="twelve wide centered column">
+    <h2 class="ui header">
+      <i class="calculator icon"></i>
+      <div class="content">
+        &{'SecurityCalculator'}
+        <div class="sub header">در این بخش می‌توانید با وارد نمودن پارامترهای سیستم‌های صنعتی خود، امتیاز امنیتیِ خود را محاسبه نمایید.</div>
+      </div>
+      </h2>
+    <div class="ui form segment">
+      <h2 class="ui dividing header">منابع انسانی</h2>
+      <div class="ui field">
+        <label>چند نفر در سازمان شما مشغول به کار هستند؟</label>
+        <select class="ui simple dropdown">
+				  <option value=""></option>
+				  <option value="1">۱ تا ۱۰ نفر</option>
+				  <option value="0">۱۱ تا ۱۰۰ نفر</option>
+          <option value="0">۱۰۱ تا ۱۰۰۰ نفر</option>
+				</select>
+      </div>
+      <div class="ui field">
+        <label>نوع سازمان شما چیست؟</label>
+        <select class="ui dropdown">
+          <option value=""></option>
+          <option value="1">دولتی</option>
+          <option value="0">خصوصی</option>
+          <option value="0">نیمه‌دولتی</option>
+          <option value="0">مردم‌نهاد</option>
+        </select>
+      </div>
+		  <div class="inline fields">
+		    <label>آموزش کارکنان در چه بازه‌های زمانی صورت می‌گیرد؟</label>
+		    <div class="field">
+		      <div class="ui radio checkbox">
+		        <input type="radio" name="frequency" checked="checked">
+		        <label>روزانه</label>
+		      </div>
+		    </div>
+		    <div class="field">
+		      <div class="ui radio checkbox">
+		        <input type="radio" name="frequency">
+		        <label>هفتگی</label>
+		      </div>
+		    </div>
+		    <div class="field">
+		      <div class="ui radio checkbox">
+		        <input type="radio" name="frequency">
+		        <label>ماهانه</label>
+		      </div>
+		    </div>
+		    <div class="field">
+		      <div class="ui radio checkbox">
+		        <input type="radio" name="frequency">
+		        <label>سالیانه</label>
+		      </div>
+		    </div>
+		  </div>
+
+      <div class="ui field">
+      </div>
+    </div>
+    <div class="ui form segment">
+      <h2 class="ui dividing header">سخت‌افزار</h2>
+      <div class="field">
+		    <div class="ui checkbox">
+		      <input type="checkbox" tabindex="0" class="hidden">
+		      <label>از فایروال سخت‌افزاری استفاده می‌کنیم.</label>
+		    </div>
+      </div>
+    </div>
+    
+    <div class="ui form segment">
+      <h2 class="ui dividing header">نرم‌افزار</h2>
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" tabindex="0" class="hidden">
+          <label>از فایروال نرم‌افزاری استفاده می‌کنیم.</label>
+        </div>
+      </div>
+    </div>
+    <div class="ui inverted segment">
+      <h2 class="ui dividing centered header">امتیازات</h2>
+      <div class="ui five statistics">
+        <div class="ui inverted statistic">
+          <div class="value">۸.۲</div>
+          <div class="label">منابع انسانی</div>
+        </div>
+	      <div class="ui blue inverted statistic">
+	        <div class="value">۵.۳</div>
+	        <div class="label">شبکه</div>
+	      </div>
+	      <div class="ui olive inverted statistic">
+	        <div class="value">۴.۲</div>
+	        <div class="label">سخت‌افزار</div>
+	      </div>
+	      <div class="ui red inverted statistic">
+	        <div class="value">۹.۸</div>
+	        <div class="label">نرم‌افزار</div>
+	      </div>      
+        <div class="ui violet inverted statistic">
+          <div class="value">۱۰</div>
+          <div class="label">یک‌پارچگی</div>
+        </div>      
+      </div>
+      <div class="ui divider"></div>
+      <canvas id="radarChart"></canvas>
+    </div>
+  </div>
+
+</div>
