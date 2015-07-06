@@ -7,19 +7,7 @@
 
 body,
 p,
-.ui.header,
-.ui.menu,
-h1,h2,h3,h4,h5,h6,
-.ui.list,
-.ui.steps,
-.ui.input,
-.ui.form,
-.ui.button,
-.ui.message .header,
-.ui.cards, .ui.card,
-.ui.modal > .header,
 .ui {
-  font-family: 'FarsiFont';
   direction: rtl;
 }
 

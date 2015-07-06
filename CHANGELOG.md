@@ -13,6 +13,16 @@ The following items are change logs divided by dates. In addition to this list, 
 - Add switch language item to the top menu.
 - Farsi fonts for several UI components (It's Iranian Serif open source font).
 - Improve reset password page, and change its segment to 'clearing segment'.
+- Footer i18n messages.
+- Add status page javascript.
+- Improve dashboard for surveys.
+- Modal to create a new survey from dashboard.
+- List published surveys on dashboard.
+- Add isDeleted and deletedAt fields to the general data model.
+- Survey data model.
+- i18n for since() extension.
+- Improve Semantic-UI RTL font.
+- Javascript Masonry library (v3) to sort out survey cards on dashboard.
 
 ## July 3, 2015
 

@@ -25,10 +25,14 @@ public class ModelWithTimestamp extends Model {
 
   @Required
   public Date modifiedAt = new Date(createdAt.getTime());
+  
+  public Boolean isDeleted;
+  public Date deletedAt;
 
   public ModelWithTimestamp() {
     this.createdAt = new Date();
     this.modifiedAt= new Date();
+    this.isDeleted = false;
   }
   
   @PreUpdate

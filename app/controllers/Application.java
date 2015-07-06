@@ -9,8 +9,11 @@
  *******************************************************************************/
 package controllers;
 
+import java.util.List;
+
 import models.Account;
 import models.AccountRole;
+import models.survey.Survey;
 import play.CorePlugin;
 import play.cache.Cache;
 import play.libs.Images;
@@ -42,8 +45,10 @@ public class Application extends Controller {
   public static void dashboard() {    
     Account me = Security.connected();
     notFoundIfNull(me);
+    
+    List<Survey> surveys = Survey.find("isDeleted=false and isPublished=true").fetch();
 
-    render("application/dashboard.html");
+    render("application/dashboard.html", surveys);
   }
 
   /**

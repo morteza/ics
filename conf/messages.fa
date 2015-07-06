@@ -3,6 +3,15 @@
 
 app.name=ارزیابی امنیت سایبری
 
+# For use in JavaExtensions.since tag
+since.seconds = %s ثانیه پیش
+since.minutes = %s دقیقه پیش
+since.hours   = %s ساعت پیش
+since.days    = %s روز پیش
+since.months  = %s ماه پیش
+since.years   = %s سال پیش
+since.format  = yyyy/MMMM/d
+
 home=خانه
 dashboard=داشبورد
 about=درباره

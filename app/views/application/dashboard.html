@@ -2,9 +2,9 @@
 #{set title}&{'dashboard'}#{/set}
 
 <section class="ui stackable padded basic segment">
-  <div class="ui four doubling dashboard stackable three columns js-masonryx cards">
+  <div class="ui dashboard masonry cards">
     #{security.check models.AccountRole.REGISTERED}
-    <div class="ui inverted card">
+    <div class="ui card">
       <div class="content">
         شما می‌توانید پرسش‌نامه‌ای جدید بسازید. از دکمه‌ی زیر برای شروع ساخت یک پرسش‌نامه‌ی جدید استفاده نمایید.
       </div>
@@ -14,15 +14,15 @@
     </div>
     #{/security.check}
   	#{list surveys}
-    <div class="ui #{if _.isRemoved}red#{/if} card">
+    <div class="ui #{if _.isDeleted}red#{/if} card">
       <div class="content">
-        #{ifnot _.isRemoved}
+        #{ifnot _.isDeleted}
         #{security.check models.AccountRole.REGISTERED}
         <a href="@{SurveyDesigner.general(_.code)}" class="right floated" title="&{'settings'}">
           <i class="large options link icon"></i>
         </a>
         #{/security.check}
-        <a href="@{FlowController.next(_.code)}" class="right floated">
+        <a href="{FlowController.next(_.code)}" class="right floated">
           <i class="large green play link icon" title="Participate in this survey"></i>
         </a>
         #{/ifnot}
@@ -48,7 +48,7 @@
   <i class="close icon"></i>
   <div class="header">&{'newSurvey'}</div>
   <div class="content">
-    <form class="ui form" id="newSurveyForm" action="" method="POST">
+    <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.create()}" method="POST">
       <div class="required field">
         <label>نام</label>
         <input type="text" name="survey.title" />
@@ -69,10 +69,17 @@
 </section>
 
 #{set 'moreScripts'}
-<script src="@{'/public/js/masonry.pkgd.min.js'}"></script>
+<script src="@{'/public/js/jquery.masonry.min.js'}"></script>
 
 #{security.check models.AccountRole.REGISTERED}
 <script>
+	$('.masonry').masonry({
+	  itemSelector: '.card',
+	  isRTL: true,
+	  isAnimated: true,
+	  isFitWidth: true
+	});
+
   $('.modal').modal({
     selector    : {
       close: '.close'
