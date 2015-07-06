@@ -11,6 +11,7 @@
  *******************************************************************************/
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import models.Account;
@@ -47,7 +48,7 @@ public class Accounts extends Controller {
    */
   @SecurityCheck(AccountRole.ADMINISTRATOR)
   public static void list() {
-    List<Account> accounts = Account.find("(deleted=false or deleted=null) and (role!=models.AccountRole.PLAYER)").fetch();
+    List<Account> accounts = Account.find("isDeleted=false and (role!=models.AccountRole.GUEST)").fetch();
     render("accounts/list.html", accounts);    
   }
 
@@ -57,7 +58,7 @@ public class Accounts extends Controller {
    */
   @SecurityCheck(AccountRole.ADMINISTRATOR)
   public static void listAll() {
-    List<Account> accounts = Account.find("(deleted=false or deleted=null)").fetch();
+    List<Account> accounts = Account.find("isDeleted=false").fetch();
     render("accounts/list.html", accounts);    
   }
   
@@ -71,7 +72,7 @@ public class Accounts extends Controller {
     boolean isAlreadyRegistered = Security.check(AccountRole.REGISTERED);
     
     if (isAlreadyRegistered) {
-      flash.error(Messages.get("cut.YouAreAlreadyRegistered"));
+      flash.error(Messages.get("security.YouAreAlreadyRegistered"));
       Application.dashboard();
     }
     
@@ -186,7 +187,7 @@ public class Accounts extends Controller {
 
     account.save();
 
-    flash.success(Messages.get("cg125.AccountUpdated"));
+    flash.success(Messages.get("security.AccountUpdated"));
     
     // Redirect profile edits to their own page
     if (Security.connected().id == id)
@@ -205,15 +206,16 @@ public class Accounts extends Controller {
   public static void delete(Long id) {
     Account account = Account.findById(id);
     if (account.role.ordinal() >= AccountRole.ADMINISTRATOR.ordinal()) {
-      flash.error(Messages.get("cg125.AccountCannotBeDeleted"));
+      flash.error(Messages.get("security.AccountCannotBeDeleted"));
       flash.keep();
       list();
     }
 
-    account.deleted = true;
+    account.isDeleted = true;
+    account.deletedAt = new Date();
     account.save();
 
-    flash.success(Messages.get("cg125.AccountDeleted"));
+    flash.success(Messages.get("security.AccountDeleted"));
     flash.keep();
     list();
   }
@@ -228,13 +230,13 @@ public class Accounts extends Controller {
     Account account = Account.find("byConfirmationToken", confirmationToken).first();
     
     if (account==null) {
-      error(Messages.get("cg125.ConfirmationError"));
+      error(Messages.get("security.ConfirmationError"));
     }
     
     account.confirmationToken = "";
     account.save();
 
-    flash.success(Messages.get("cg125.AccountConfirmed"));
+    flash.success(Messages.get("security.AccountConfirmed"));
     flash.keep();
     Security.login();
   }
@@ -257,14 +259,14 @@ public class Accounts extends Controller {
   public static void sendResetPasswordEmail(String email) {
     Account account = Account.findByEmail(email);
     if (account==null) {
-      flash.error(Messages.get("cut.InvalidResetEmail"));
+      flash.error(Messages.get("security.InvalidResetEmail"));
       flash.put("email", email);
       flash.keep();
       resetPassword();
     }
     try {
       //TODO send reset password email
-      flash.success(Messages.get("cut.ResetPasswordEmailSent"));
+      flash.success(Messages.get("security.ResetPasswordEmailSent"));
       flash.keep();
       Security.login();
     } catch (Throwable e) {

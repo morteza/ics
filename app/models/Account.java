@@ -31,8 +31,6 @@ public class Account extends ModelWithTimestamp {
   @Password
   public String passwordHash;
 
-  public Boolean deleted;
-
   public String confirmationToken;
   public String resetPasswordToken;
 
@@ -40,11 +38,9 @@ public class Account extends ModelWithTimestamp {
   
   public String remoteAddress;
   
-  public String mTurkId;
-
   public Account() {
     this.role = AccountRole.GUEST;
-    this.deleted = false;
+    this.isDeleted = false;
     this.remoteAddress = "";
   }
 
@@ -52,7 +48,7 @@ public class Account extends ModelWithTimestamp {
     this.fullName = fullName;
     this.email = email;
     this.passwordHash = play.libs.Crypto.passwordHash(password);
-    this.deleted = false;
+    this.isDeleted = false;
     this.remoteAddress = "";
     this.role = AccountRole.REGISTERED;
     //TODO generate confirmation token
