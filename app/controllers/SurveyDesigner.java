@@ -32,29 +32,41 @@ public class SurveyDesigner extends Controller {
   }
   
   public static void general(String code) {
-    todo();
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+
+    render("designer/general.html", survey);
   }
   
   public static void results(String code) {
-    todo();
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+
+    render("designer/results.html", survey);
   }
   
   public static void flow(String code) {
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+
+    render("designer/flow.html", survey);  }
+
+  public static void publish(String code) {
     todo();
   }
-
+  
   /**
    * Delete a survey by setting its isDeleted flag.
    * @param code
    */
   @SecurityCheck(AccountRole.MAINTAINER)
   public static void remove(String code) {
-    Survey s = Survey.findByCode(code);
-    notFoundIfNull(s);
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
     
-    s.isDeleted = true;
-    s.deletedAt = new Date();
-    s.save();
+    survey.isDeleted = true;
+    survey.deletedAt = new Date();
+    survey.save();
     
     Application.dashboard();
   }

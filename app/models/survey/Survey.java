@@ -53,6 +53,8 @@ public class Survey extends ModelWithTimestamp {
   
   public Boolean isPublished;
   
+  public Boolean isPublic;
+  
   //TODO public List<Question> questions;
   
   public Survey() {
@@ -61,6 +63,7 @@ public class Survey extends ModelWithTimestamp {
     //TODO set isPublished to false, and add an action to publish it manually.
     isPublished = true;
     isDeleted = false;
+    isPublic = true;
   }
 
   

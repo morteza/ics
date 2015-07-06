@@ -10,9 +10,26 @@
 </script>
 
 #{security.check models.AccountRole.REGISTERED}
-<header class="ui fixed large tiered main menu">
+<header class="ui tiered icon fixed menu">
   <a class="item" href="@{Application.index}"><strong>&{'app.name'}</strong></a>
   <a  class="#{if request.action=='Application.dashboard'}active#{/if} item" href="@{Application.dashboard()}" title="&{'cut.Dashboard'}"><i class="dashboard icon"></i></a>
+  #{if surveyCode}
+    <!-- Survey Designer menu -->
+    <section class="secondary menu">
+      <a class="#{if request.action=='SurveyDesigner.general'}active#{/if} blue item" href="@{SurveyDesigner.general(surveyCode)}">
+        <i class="settings blue icon"></i>
+      </a>
+      <a class="#{if request.action=='SurveyDesigner.flow'}active#{/if} red item" href="@{SurveyDesigner.flow(surveyCode)}">
+        <i class="sort numeric ascending blue icon"></i>
+      </a>
+      <a class="#{if request.action=='SurveyDesigner.publish'}active#{/if} olive item" href="@{SurveyDesigner.publish(surveyCode)}">
+        <i class="play blue icon"></i>
+      </a>
+      <a class="#{if request.action=='SurveyDesigner.results'}active#{/if} green item" href="@{SurveyDesigner.results(surveyCode)}">
+        <i class="area chart blue icon"></i>
+      </a>
+    </section>
+  #{/if}
   <div class="right menu">
     #{if play.i18n.Lang.get()=='fa'}
       <a class="item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag"></i></a>
@@ -26,7 +43,7 @@
     </a>
     <a class="item" href="@{Security.logout()}" title="&{'logout'}">
       <i class="log out icon"></i>
-    </a></li>
+    </a>
     #{/if}
 	  #{else}
       <a href="@{Security.login()}" class="item" title="&{'login'}">
@@ -34,30 +51,8 @@
       </a>
     #{/else}
 	</div>
-
-  #{if experimentCode}
-    <a class="active item"><i class="options icon"></i></a>
-    <!-- Designer menu -->
-    <section class="sub menu">
-      <a class="#{if request.action=='Designer.general'}active#{/if} item" href="@{Designer.general(experimentCode)}">
-        <i class="settings icon"></i> General
-      </a>
-      <a class="#{if request.action=='Designer.mturk'}active#{/if} item" href="@{Designer.mturk(experimentCode)}">
-        <i class="users icon"></i> MTurk
-      </a>
-      <a class="#{if request.action=='Designer.flow'}active#{/if} item" href="@{Designer.flow(experimentCode)}">
-        <i class="sort alphabet ascending icon"></i> Flow
-      </a>
-      <a class="#{if request.action=='Designer.opponents'}active#{/if} item" href="@{Designer.opponents(experimentCode)}">
-        <i class="meh icon"></i> Opponents
-      </a>
-      <a class="#{if request.action=='Designer.publish'}active#{/if} item" href="@{Designer.publish(experimentCode)}">
-        <i class="play icon"></i> Publish
-      </a>
-    </section>
-  #{/if}
 </header>
-#{if experimentCode}
+#{if surveyCode}
 <div class="menu spacer"></div>
 #{/if}
 <div class="menu spacer"></div>

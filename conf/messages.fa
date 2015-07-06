@@ -1,7 +1,7 @@
 # Farsi i18n messages.
 #
 
-app.name=ارزیابی امنیت سایبری
+app.name=آزمایشگاه امنیت صنعتی
 
 # For use in JavaExtensions.since tag
 since.seconds = %s ثانیه پیش
@@ -21,7 +21,7 @@ privacy=حقوق شخصی
 support=پشتیبانی
 status=وضعیت
 
-homepage.masthead.title=آزمایشگاه سیستم‌های صنعتی
+homepage.masthead.title=آزمایشگاه امنیت سیستم‌های صنعتی
 homepage.masthead.description=مرکز تحقیقات مخابرات ایران
 
 copyright.notice=&copy; ۱۳۹۴ مرکز تحقیقات مخابرات ایران. تمامی حقوق قانونی محفوظ است.
@@ -39,4 +39,15 @@ security.resetPasswordMessage=لطفا پست‌الکترونیکی خود را
 
 unknown=نامشخص
 continue=ادامه
+save=ذخیره شود
 newSurvey=پرسش‌نامه‌ی جدید
+
+title=نام
+description=توضیحات
+
+survey.designer.GeneralSettings=تنظیمات عمومی
+survey.designer.RemoveThisSurvey=حذف این پرسش‌نامه
+survey.designer.RemoveSurvey=حذف پرسش‌نامه و اطلاعات مرتبط
+survey.designer.Results=نتایج
+
+

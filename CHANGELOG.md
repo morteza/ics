@@ -23,6 +23,8 @@ The following items are change logs divided by dates. In addition to this list, 
 - i18n for since() extension.
 - Improve Semantic-UI RTL font.
 - Javascript Masonry library (v3) to sort out survey cards on dashboard.
+- Initial survey designer to demo.
+- Charts in the survey designer results page.
 
 ## July 3, 2015
 

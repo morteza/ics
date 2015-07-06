@@ -1,0 +1,137 @@
+#{extends 'main.html' /}
+#{set 'title'}&{'flow'}#{/set}
+#{set surveyCode:survey.code /}
+
+#{set 'moreStyles'}
+  <link rel="stylesheet" href="@{'/public/css/sir-trevor.css'}">
+#{/set}
+
+<section class="ui page centered padded stackable grid">
+  <div class="twelve wide column" id="sticker">
+  <h2 class="ui header">
+    <i class="sort alphabet ascending icon"></i>
+    <div class="content">
+      طراحی پرسش‌نامه
+      <div class="sub header">در این صفحه می‌توانید سوالات پرسش‌نامه را طراحی نموده و توالی آن‌ها را مشخص سازید.</div>
+    </div>
+  </h2>
+
+  <div class="ui segment">
+
+    <form class="ui fluid form" role="form">
+      <input type="hidden" name="survey.id" value="${survey.id}" />
+  
+      <div class="field">
+        <textarea class="ui message wysiwyg" name="survey-flow"></textarea>
+      </div>
+       
+      #{ifnot preventSavingFlow}
+      <div class="field">
+        <button type="submit" class="ui primary button">&{'save'}</button>
+      </div>
+      #{/ifnot}
+  
+    </form>
+    
+    #{if preventSavingFlow}
+      <div class="field">
+        <div class="ui error message">
+          There are some results associated with this experiment, so you cannot change the flow.<br />
+          If you want to modify the flow, <a href="@{Designer.fork(experiment.code)}">duplicate</a> this experiment, and edit the new one.
+        </div>
+      </div>
+    #{/if}
+  </div>
+  </div> <!-- /.segment -->
+
+
+  <div class="four wide column">
+  <div class="ui sticky">
+    <div class="ui small side-help list">
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">متن</div>
+          <div class="description">Use this block to present information to the user.</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">سوال متنی</div>
+          <div class="description">You can ask for long or short text answers to be typed in.</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">سوال چندگزینه‌ای</div>
+          <div class="description">Add as many choices as you want. You can also allow selection of multiple choices.</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">سوال مقیاسی</div>
+          <div class="description">Similar to likert scales, you can define both ends, midpoint and vary the range.</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle warning icon"></i>
+        <div class="content">
+          <div class="header"></div>
+          <div class="description">هر تغییری در ساختار سوالات می‌تواند منجر به از بین رفتن اطلاعات ذخیره‌شده‌ی قبلی، مرتبط با این پرسش‌نامه شود.</div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /.ui.sticky -->
+  </div>
+</section>
+
+#{set 'moreScripts'}
+  <script src="@{'/public/js/sir-trevor.min.js'}"></script>
+  <script src="@{'/public/js/blocks/statement.js'}"></script>
+  <script src="@{'/public/js/blocks/text_question.js'}"></script>
+  <script src="@{'/public/js/blocks/multiple_choice_question.js'}"></script>
+  <script src="@{'/public/js/blocks/scale_question.js'}"></script>
+  <script>
+    new SirTrevor.Editor({
+      el: $('.wysiwyg'),
+      blockTypes: [
+        "Statement",
+        "TextQuestion",
+        "MultipleChoiceQuestion",
+        "ScaleQuestion"]
+    });
+
+/*
+    $('.form').on("keyup", function(event) {
+      if ($(":focus").hasClass('st-text-block')) {
+        return;        
+      }
+      return event.keyCode != 13;
+    });
+*/
+#{ifnot preventSavingFlow}
+    $('.form').submit(function(e) {
+      e.preventDefault();
+      var posting = $.post('@{SurveyDesigner.update()}', {code:'${survey.code}', json:SirTrevor.getInstance(0).store.toString()});
+      posting.done(function(data) {
+        $.growl.notice({
+          title:'',
+          message:data,
+          location:'br'
+        });
+      });
+      return false;
+    });
+    $(document).ready(function(){
+      $('.ui.sticky').sticky({
+        context: '#sticker',
+        offset: 90
+      });
+      //$('.ui.sticky').sticky('refresh');
+    });
+#{/ifnot}
+  </script>
+#{/set}

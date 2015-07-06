@@ -1,0 +1,136 @@
+#{extends 'main.html' /}
+#{set title:'Edit Experiment' /}
+#{set surveyCode:survey.code /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui page centered padded stackable grid">
+  <div class="twelve wide column">
+      <h2 class="ui header">
+        <i class="settings icon"></i>
+        <div class="content">
+          &{'survey.designer.GeneralSettings'}
+        </div>
+      </h2>
+
+	  <div class="ui segment">	
+		  <form class="ui fluid form" id="updateSurveyForm" role="form" method="POST" action="@{SurveyDesigner.update}" enctype="multipart/form-data">
+		    <input type="hidden" name="survey.id" value="${survey.id}" />
+		    <input type="hidden" name="survey.code" value="${survey.code}" />
+		    <div class="field">
+		      <label>&{'title'}</label>
+		      <input type="text" name="survey.title" value="${survey.title}" min="1" />
+		    </div>
+		    <div class="field">
+		      <label>&{'description'}</label>
+		      <textarea name="survey.description" rows="10" max="1000">${survey.description}</textarea>
+		    </div>
+	      <div class="field">
+	        <div class="ui checkbox">
+	          <input type="checkbox" id="publicSurvey" name="survey.isPublic" value="true" #{if survey.isPublic==true}checked#{/if}>
+	          <input type="hidden" name="experiment.isPublic" value="false" />
+	          <label for="publicSurvey">پرسش‌نامه‌ی عمومی</label>
+	        </div>
+	      </div>
+	
+	      <div class="ui divider"></div>
+
+		    <div class="field">
+		      <button class="ui primary button" type="submit">&{'save'}</button>
+		    </div>
+	
+		  </form>
+		</div> <!-- /.segment -->
+    <div class="ui secondary red clearing segment">
+       <div class="ui red header">&{'survey.designer.RemoveThisSurvey'}</div>
+       مراقب باشید! وقتی این پرسش‌نامه حذف شود، هیچ راهی برای بازیابی آن و هر نوع داده‌ی مرتبط با آن وجود ندارد.
+       همه‌ی اطلاعات از جمله سوالات پرسش‌نامه، نتایج موجود و پاسخ‌های داده‌شده حذف خواهد شد. 
+       <br />
+       <a href="#" class="ui right floated basic red left labeled icon button" id="removeSurveyBtn">
+         <i class="warning sign icon"></i>
+         &{'survey.designer.RemoveSurvey'}
+       </a>
+    </div>
+  </div> <!-- /.column -->
+
+	<div class="four wide column">
+	  <div class="ui small side-help list">
+	    <div class="item">
+	      <i class="top aligned right circle help icon"></i>
+	      <div class="content">
+	        <div class="header">نام</div>
+	        <div class="description">یک نام، ترجیا یکتا برای شناسایی این پرسش‌نامه انتخاب نمایید. این نام می‌تواند نام استاندارد یا ویژگی‌هایی باشد که در این پرسش‌نامه مورد آزمون قرار می‌گیرد.</div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="top aligned right circle help icon"></i>
+	      <div class="content">
+	        <div class="header">توضیحات</div>
+	        <div class="description">متنی کوتاه که به توصیف اهداف، نتایج و استانداردهای مورد توجه در این پرسش‌نامه می‌پردازد. </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</section>
+
+<!-- Delete Experiment Modal -->
+<section class="ui small modal" role="dialog" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="content">
+    <form class="ui form" id="removeSurveyForm" action="@{SurveyDesigner.remove}" method="POST">
+      <div class="field">
+        <p>برای حذف این پرسش‌نامه و تمامی داده‌های مرتبت با آن کّد زیر را وارد نمایید: <pre>${survey.code}</pre></p>
+        <input type="text" name="code" data-survey="${survey.code}" id="toBeRemovedCode"/>
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button type="submit" id="submitRemoveSurvey" class="ui disabled red left labeled icon button">
+      <i class="warning sign icon"></i>
+      &{'survey.designer.RemoveSurvey'}
+    </button>
+  </div>
+</section>
+
+<br />
+#{set 'moreScripts'}
+<script>
+
+$('#updateSurveyForm').form({
+  title: {
+    identifier: 'survey.title',
+    rules: [
+      {
+        type: 'empty',
+        prompt: 'Please enter a title.'
+      }
+    ]
+  },
+  description: {
+    identifier: 'survey.description',
+    rules: [
+      {
+        type: 'empty',
+        prompt: 'Please enter a description for this experiment.'
+      }
+    ]
+  }
+},
+{
+  inline: true
+});
+
+$('.modal').modal('attach events', '#removeSurveyBtn', 'show');
+$('#submitRemoveSurvey').click(function(){
+  $('#removeSurveyForm').submit();
+});
+$("#toBeRemovedCode").keyup(function() {
+  if ($(this).data('survey')==$(this).val()) {
+    $('#submitRemoveSurvey').removeClass('disabled');
+  } else {
+    $('#submitRemoveSurvey').addClass('disabled');
+  }
+});
+</script>
+#{/set}
