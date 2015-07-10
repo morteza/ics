@@ -45,7 +45,7 @@
 		<div class="ui container">
       
       <div class="ui huge fixed pointing menu">
-        <a class="active item" style="padding:4px;"><img class="ui brand image" src="@{'/public/img/itrc_logo_small.png'}" /></a>
+        <a class="active item" href="@{Application.index()}" style="padding:4px;"><img class="ui brand image" src="@{'/public/img/itrc_logo_small.png'}" /></a>
         
         #{if controllers.Security.check(models.AccountRole.REGISTERED)}
         <a class="icon item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
@@ -80,7 +80,13 @@
       </h2>
       <div class="ui hidden divider"></div>
       <p>&{'homepage.masthead.description'}</p>
-      <a class="ui basic huge black compact button" href="@{Application.dashboard()}">&{'homepage.GetStarted'} <i class="right arrow icon"></i></a>
+
+      #{if controllers.Security.check(models.AccountRole.REGISTERED)}
+      <a class="ui basic huge blue compact button" href="@{Application.dashboard()}">&{'homepage.GetStarted'} <i class="right arrow icon"></i></a>
+      #{/if}
+      #{else}
+      <a class="ui basic huge blue compact button" href="@{Security.login()}">&{'login'}</a>
+      #{/else}
     </div>
 	
   </div>

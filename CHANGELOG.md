@@ -5,6 +5,7 @@ The following items are change logs divided by dates. In addition to this list, 
 ## July 10, 2015
 
 - Rewrite homepage, and improve top menu.
+- New page break block in survey flow.
  
 
 ## July 5, 2015
