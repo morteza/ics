@@ -2,6 +2,11 @@
 
 The following items are change logs divided by dates. In addition to this list, please review git commits for more items and detailed descriptions.
 
+## July 10, 2015
+
+- Rewrite homepage, and improve top menu.
+ 
+
 ## July 5, 2015
 
 - New UI based on Semantic-UI v2.

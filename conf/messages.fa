@@ -3,6 +3,8 @@
 
 app.name=آزمایشگاه امنیت صنعتی
 
+homepage.GetStarted=داشبورد
+
 # For use in JavaExtensions.since tag
 since.seconds = %s ثانیه پیش
 since.minutes = %s دقیقه پیش
@@ -21,8 +23,8 @@ privacy=حقوق شخصی
 support=پشتیبانی
 status=وضعیت
 
-homepage.masthead.title=آزمایشگاه امنیت سیستم‌های صنعتی
-homepage.masthead.description=مرکز تحقیقات مخابرات ایران
+homepage.masthead.title=آزمایشگاه امنیت سامانه‌های صنعتی
+homepage.masthead.description=
 
 copyright.notice=&copy; ۱۳۹۴ مرکز تحقیقات مخابرات ایران. تمامی حقوق قانونی محفوظ است.
 
