@@ -2,6 +2,10 @@
 
 The following items are change logs divided by dates. In addition to this list, please review git commits for more items and detailed descriptions.
 
+## July 15, 2015
+
+- RedHat OpenShift deployment.
+
 ## July 10, 2015
 
 - Rewrite homepage, and improve top menu.
