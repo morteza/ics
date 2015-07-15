@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import models.Account;
 import models.AccountRole;
+import play.i18n.Lang;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.libs.WS;
@@ -25,6 +26,10 @@ import play.libs.WS.FileParam;
 public class Bootstrap extends Job {
 
   public void doJob() throws Exception {
+    
+    // Set default language to Farsi (fa-IR).
+    Lang.set("fa");
+    
     //TODO Query accounts for administrators, and create if it's no administrator
     if (Account.count() == 0) {
       // Create default administrator account.
