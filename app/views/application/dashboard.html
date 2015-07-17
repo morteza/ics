@@ -2,44 +2,63 @@
 #{set 'title'}&{'dashboard'}#{/set}
 
 <section class="ui stackable padded basic segment">
-  <div class="ui dashboard masonry cards">
-    #{security.check models.AccountRole.REGISTERED}
-    <div class="ui card">
-      <div class="content">
-        شما می‌توانید پرسش‌نامه‌ای جدید بسازید. از دکمه‌ی زیر برای شروع ساخت یک پرسش‌نامه‌ی جدید استفاده نمایید.
-      </div>
-      <a class="ui bottom attached labeled blue button" id="newSurveyBtn">
-        <i class="big add icon"></i>
-      </a>
-    </div>
-    #{/security.check}
-  	#{list surveys}
-    <div class="ui #{if _.isDeleted}red#{/if} card">
-      <div class="content">
-        #{ifnot _.isDeleted}
-        #{security.check models.AccountRole.REGISTERED}
-        <a href="@{SurveyDesigner.general(_.code)}" class="right floated" title="&{'settings'}">
-          <i class="large options link icon"></i>
-        </a>
-        #{/security.check}
-        <a href="{FlowController.next(_.code)}" class="right floated">
-          <i class="large green play link icon" title="Participate in this survey"></i>
-        </a>
-        #{/ifnot}
-        #{else}
-        <div class="ui horizontal right floated red label">REMOVED</div>
-        #{/else}
+  <div class="ui two columns stackable grid">
+	  <div class="ui column">
+	    <div class="ui centered header">
+        <i class="checkmark box icon"></i>
+	      پرسش‌نامه‌ها 
+	    </div>
+		  <div class="ui two cards js-masonry" data-masonry-options='{ "itemSelector": ".card", "isOriginLeft": false }'>
+		    #{security.check models.AccountRole.REGISTERED}
+		    <div class="ui card">
+		      <div class="content">
+		        شما می‌توانید پرسش‌نامه‌ای جدید بسازید. از دکمه‌ی زیر برای شروع ساخت یک پرسش‌نامه‌ی جدید استفاده نمایید.
+		      </div>
+		      <a class="ui bottom attached labeled blue button" id="newSurveyBtn">
+		        <i class="big add icon"></i>
+		      </a>
+		    </div>
+		    #{/security.check}
+		    #{list surveys}
+		    <div class="ui #{if _.isDeleted}red#{/if} card">
+		      <div class="content">
+		        #{ifnot _.isDeleted}
+		        #{security.check models.AccountRole.REGISTERED}
+		        <a href="@{SurveyDesigner.general(_.code)}" class="right floated" title="&{'settings'}">
+		          <i class="large options link icon"></i>
+		        </a>
+		        #{/security.check}
+		        <a href="{FlowController.next(_.code)}" class="right floated">
+		          <i class="large green play link icon" title="Participate in this survey"></i>
+		        </a>
+		        #{/ifnot}
+		        #{else}
+		        <div class="ui horizontal right floated red label">REMOVED</div>
+		        #{/else}
+		
+		        <div class="header">${_.title}</div>
+		        <div class="meta">${_.createdAt?.since() }</div>
+		        <div class="description">${_.description.replace("\n","<br />").raw()}</div>
+		      </div>
+		  </div>
+		    #{/list}
+		    #{else}
+		    <!-- <div class="col-md-8 text-center">No experiment!</div> -->
+		    #{/else}
+		  </div>
+	  </div>
+	  <div class="ui vertical fitted divider"></div>
+	  <div class="ui column">
+	    <div class="ui centered header">
+	      <i class="certificate icon"></i>
+	      استانداردها
+	    </div>
+	  </div>
 
-        <div class="header">${_.title}</div>
-        <div class="meta">${_.createdAt?.since() }</div>
-        <div class="description">${_.description.replace("\n","<br />").raw()}</div>
-      </div>
   </div>
-  	#{/list}
-  	#{else}
-  	<!-- <div class="col-md-8 text-center">No experiment!</div> -->
-  	#{/else}
-  </div>
+  
+  
+
 </section>
 
 
@@ -69,16 +88,10 @@
 </section>
 
 #{set 'moreScripts'}
-<script src="@{'/public/js/jquery.masonry.min.js'}"></script>
+<script src="@{'/public/js/masonry.pkgd.min.js'}"></script>
 
 #{security.check models.AccountRole.REGISTERED}
 <script>
-	$('.masonry').masonry({
-	  itemSelector: '.card',
-	  isRTL: true,
-	  isAnimated: true,
-	  isFitWidth: true
-	});
 
   $('.modal').modal({
     selector    : {
