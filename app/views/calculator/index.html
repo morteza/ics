@@ -13,14 +13,6 @@
 <script>
 $('.ui.dropdown').dropdown();
 
-$('.ui.buttons .button').click(function() {
-  $(this)
-    .addClass('active')
-    .siblings()
-    .removeClass('active')
-  ;
-});
-
 $('.ui.checkbox').checkbox();
 var radarConfig = {
     type: 'radar',
@@ -50,6 +42,16 @@ app.controller('CalculatorController', function($scope) {
     $scope.firstName = "John";
     $scope.lastName = "Doe";
 });
+
+$('.ui.buttons .button').click(function() {
+  $(this)
+    .addClass('active')
+    .siblings().removeClass('active');
+  var metric = $(this).parent().data('metric');
+  var value = $(this).data('value');
+  $('#vectorString').html("<strong>بردار = </strong>{" + metric + ":" + value + "}");
+});
+
 </script>
 
 #{/set}
@@ -103,9 +105,9 @@ app.controller('CalculatorController', function($scope) {
 
       <div class="ui field">
         <label>رفتار انسانی</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">نیاز ندارد</a>
-          <a class="ui button">دارد</a>
+        <div class="ui basic blue buttons" data-metric="UI">
+          <a class="ui button" data-value="X">نیاز ندارد</a>
+          <a class="ui button" data-value="Y">دارد</a>
         </div>
       </div>
 
@@ -155,6 +157,7 @@ app.controller('CalculatorController', function($scope) {
       <div class="ui info message">در حال پیاده‌سازی...</div>
     </div>
 
+    <div class="ui green message" id="vectorString" style="direction:ltr"></div>
 
     <div class="ui inverted segment">
       <h2 class="ui dividing centered header">امتیازات</h2>
