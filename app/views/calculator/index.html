@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set 'title'}&{'SecurityCalculator'}#{/set}
+#{set 'title'}&{'CVSSCalculator'}#{/set}
 
 #{set 'moreScripts'}
 <script type="text/javascript" src="@{'/public/js/angular.min.js'}" type="text/javascript" charset="utf-8"></script>
@@ -12,6 +12,15 @@
 
 <script>
 $('.ui.dropdown').dropdown();
+
+$('.ui.buttons .button').click(function() {
+  $(this)
+    .addClass('active')
+    .siblings()
+    .removeClass('active')
+  ;
+});
+
 $('.ui.checkbox').checkbox();
 var radarConfig = {
     type: 'radar',
@@ -55,81 +64,98 @@ app.controller('CalculatorController', function($scope) {
     <h2 class="ui header">
       <i class="calculator icon"></i>
       <div class="content">
-        &{'SecurityCalculator'}
-        <div class="sub header">در این بخش می‌توانید با وارد نمودن پارامترهای سیستم‌های صنعتی خود، امتیاز امنیتیِ خود را محاسبه نمایید.</div>
+        &{'CVSSCalculator'}
       </div>
-      </h2>
+    </h2>
+    <div class="ui basic message">
+      در این بخش می‌توانید با وارد نمودن پارامترهای سیستم‌های صنعتی خود، درجه‌ی آسیب‌پذیری خود را محاسبه نمایید.
+      <br />
+      برای اطلاعات بیشتر در مورد هر متریک یا گزینه، ماوس خود را بر روی نام آن یا گزینه‌ی موردنظر چند لحظه نگه دارید.
+    </div> 
     <div class="ui form segment">
-      <h2 class="ui dividing header">منابع انسانی</h2>
+      <h2 class="ui dividing header">امتیاز پایه</h2>
       <div class="ui field">
-        <label>چند نفر در سازمان شما مشغول به کار هستند؟</label>
-        <select class="ui simple dropdown">
-				  <option value=""></option>
-				  <option value="1">۱ تا ۱۰ نفر</option>
-				  <option value="0">۱۱ تا ۱۰۰ نفر</option>
-          <option value="0">۱۰۱ تا ۱۰۰۰ نفر</option>
-				</select>
+        <label>مسیر حمله؟</label>
+        <div class="ui basic blue buttons">
+				  <a class="ui button">شبکه</a>
+				  <a class="ui button">فرعی</a>
+				  <a class="ui button">محلی</a>
+          <a class="ui button">فیزیکی</a>
+				</div>
       </div>
-      <div class="ui field">
-        <label>نوع سازمان شما چیست؟</label>
-        <select class="ui dropdown">
-          <option value=""></option>
-          <option value="1">دولتی</option>
-          <option value="0">خصوصی</option>
-          <option value="0">نیمه‌دولتی</option>
-          <option value="0">مردم‌نهاد</option>
-        </select>
-      </div>
-		  <div class="inline fields">
-		    <label>آموزش کارکنان در چه بازه‌های زمانی صورت می‌گیرد؟</label>
-		    <div class="field">
-		      <div class="ui radio checkbox">
-		        <input type="radio" name="frequency" checked="checked">
-		        <label>روزانه</label>
-		      </div>
-		    </div>
-		    <div class="field">
-		      <div class="ui radio checkbox">
-		        <input type="radio" name="frequency">
-		        <label>هفتگی</label>
-		      </div>
-		    </div>
-		    <div class="field">
-		      <div class="ui radio checkbox">
-		        <input type="radio" name="frequency">
-		        <label>ماهانه</label>
-		      </div>
-		    </div>
-		    <div class="field">
-		      <div class="ui radio checkbox">
-		        <input type="radio" name="frequency">
-		        <label>سالیانه</label>
-		      </div>
-		    </div>
-		  </div>
 
       <div class="ui field">
+        <label>پیچیدگی حمله</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">کم</a>
+          <a class="ui button">زیاد</a>
+        </div>
       </div>
-    </div>
-    <div class="ui form segment">
-      <h2 class="ui dividing header">سخت‌افزار</h2>
-      <div class="field">
-		    <div class="ui checkbox">
-		      <input type="checkbox" tabindex="0" class="hidden">
-		      <label>از فایروال سخت‌افزاری استفاده می‌کنیم.</label>
-		    </div>
+      
+      <div class="ui field">
+        <label>دسترسی مورد نیاز</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">بی‌نیاز</a>
+          <a class="ui button">کم</a>
+          <a class="ui button">زیاد</a>
+        </div>
       </div>
+
+      <div class="ui field">
+        <label>رفتار انسانی</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">نیاز ندارد</a>
+          <a class="ui button">دارد</a>
+        </div>
+      </div>
+
+      <div class="ui field">
+        <label>محدوده</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">تغییر کرده</a>
+          <a class="ui button">بدون تغییر</a>
+        </div>
+      </div>
+
+      <div class="ui field">
+        <label>رازداری</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">ندارد</a>
+          <a class="ui button">کم</a>
+          <a class="ui button">زیاد</a>
+        </div>
+      </div>      
+
+      <div class="ui field">
+        <label>درستی</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">ندارد</a>
+          <a class="ui button">کم</a>
+          <a class="ui button">زیاد</a>
+        </div>
+      </div>
+      
+      <div class="ui field">
+        <label>دسترسی</label>
+        <div class="ui basic blue buttons">
+          <a class="ui button">ندارد</a>
+          <a class="ui button">کم</a>
+          <a class="ui button">زیاد</a>
+        </div>
+      </div>   
     </div>
     
     <div class="ui form segment">
-      <h2 class="ui dividing header">نرم‌افزار</h2>
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" tabindex="0" class="hidden">
-          <label>از فایروال نرم‌افزاری استفاده می‌کنیم.</label>
-        </div>
-      </div>
+      <h2 class="ui dividing header">امتیاز موقت</h2>
+      <div class="ui info message">در حال پیاده‌سازی...</div>
     </div>
+    
+    <div class="ui form segment">
+      <h2 class="ui dividing header">امتیاز محیطی</h2>
+      <div class="ui info message">در حال پیاده‌سازی...</div>
+    </div>
+
+
     <div class="ui inverted segment">
       <h2 class="ui dividing centered header">امتیازات</h2>
       <div class="ui five statistics">
@@ -160,3 +186,5 @@ app.controller('CalculatorController', function($scope) {
   </div>
 
 </div>
+
+
