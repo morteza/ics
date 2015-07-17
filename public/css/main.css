@@ -19,6 +19,10 @@ body {
   min-height: 2.5em;
 }
 
+.menu .item .brand.image {
+  height: 48px;
+}
+    
 /* ====================== */
 /* Sticky Footer          */
 /* ====================== */
@@ -30,6 +34,7 @@ body {
 #main {
   overflow:auto;
   padding-bottom: 5em;
+  padding-top: 2em;
 }
 
 #footer {

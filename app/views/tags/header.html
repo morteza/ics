@@ -10,50 +10,52 @@
 </script>
 
 #{security.check models.AccountRole.REGISTERED}
-<header class="ui tiered icon fixed menu">
-  <a class="item" href="@{Application.index}"><strong>&{'app.name'}</strong></a>
-  <a  class="#{if request.action=='Application.dashboard'}active#{/if} item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
-  <a  class="#{if request.action=='SecurityCalculator.index'}active#{/if} item" href="@{SecurityCalculator.index()}" title="&{'calculator'}"><i class="calculator icon"></i></a>
+<div class="ui container">
+<header class="ui huge fixed pointing menu">
+  <a class="icon item" href="@{Application.index()}" style="padding:4px;"><img class="ui brand image" src="@{'/public/img/itrc_logo_small.png'}" /></a>
+  <a  class="#{if request.action=='Application.dashboard'}active#{/if} icon item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
+  <a  class="#{if request.action=='SecurityCalculator.index'}active#{/if} icon item" href="@{SecurityCalculator.index()}" title="&{'calculator'}"><i class="calculator icon"></i></a>
 
   #{if surveyCode}
     <!-- Survey Designer menu -->
     <section class="secondary menu">
-      <a class="#{if request.action=='SurveyDesigner.general'}active#{/if} blue item" href="@{SurveyDesigner.general(surveyCode)}">
+      <a class="#{if request.action=='SurveyDesigner.general'}active#{/if} icon item" href="@{SurveyDesigner.general(surveyCode)}">
         <i class="settings blue icon"></i>
       </a>
-      <a class="#{if request.action=='SurveyDesigner.flow'}active#{/if} red item" href="@{SurveyDesigner.flow(surveyCode)}">
+      <a class="#{if request.action=='SurveyDesigner.flow'}active#{/if} icon item" href="@{SurveyDesigner.flow(surveyCode)}">
         <i class="sort numeric ascending blue icon"></i>
       </a>
-      <a class="#{if request.action=='SurveyDesigner.publish'}active#{/if} olive item" href="@{SurveyDesigner.publish(surveyCode)}">
+      <a class="#{if request.action=='SurveyDesigner.publish'}active#{/if} icon item" href="@{SurveyDesigner.publish(surveyCode)}">
         <i class="play blue icon"></i>
       </a>
-      <a class="#{if request.action=='SurveyDesigner.results'}active#{/if} green item" href="@{SurveyDesigner.results(surveyCode)}">
+      <a class="#{if request.action=='SurveyDesigner.results'}active#{/if} icon item" href="@{SurveyDesigner.results(surveyCode)}">
         <i class="area chart blue icon"></i>
       </a>
     </section>
   #{/if}
   <div class="right menu">
     #{if play.i18n.Lang.get()=='fa'}
-      <a class="item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag"></i></a>
+      <a class="icon item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag" style="margin:0"></i></a>
     #{/if}
     #{else}
-      <a class="item" href="@{API.changeUserLanguage("fa")}"><i class="ui ir flag"></i></a>
+      <a class="icon item" href="@{API.changeUserLanguage("fa")}"><i class="ui ir flag" style="margin:0"></i></a>
     #{/else}
     #{if controllers.Security.isConnected()}
-    <a class="#{if request.controller=='Accounts'}active#{/if} item" href="@{Accounts.profile(controllers.Security.connected().id)}" title="Your Profile">
+    <a class="#{if request.controller=='Accounts'}active#{/if} icon item" href="@{Accounts.profile(controllers.Security.connected().id)}" title="Your Profile">
       <i class="user icon"></i>
     </a>
-    <a class="item" href="@{Security.logout()}" title="&{'logout'}">
+    <a class="icon item" href="@{Security.logout()}" title="&{'logout'}">
       <i class="log out icon"></i>
     </a>
     #{/if}
 	  #{else}
-      <a href="@{Security.login()}" class="item" title="&{'login'}">
+      <a href="@{Security.login()}" class="icon item" title="&{'login'}">
         <i class="log in icon"></i>
       </a>
     #{/else}
 	</div>
 </header>
+</div> <!-- /.ui.container -->
 #{if surveyCode}
 <div class="menu spacer"></div>
 #{/if}
