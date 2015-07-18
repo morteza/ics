@@ -3,7 +3,7 @@
 
 #{set 'moreScripts'}
 <script type="text/javascript" src="@{'/public/js/angular.min.js'}" type="text/javascript" charset="utf-8"></script>
-
+ 
 <script type="text/javascript">
 
 </script>
@@ -43,13 +43,25 @@ app.controller('CalculatorController', function($scope) {
     $scope.lastName = "Doe";
 });
 
+var vector = {};
+
 $('.ui.buttons .button').click(function() {
   $(this)
     .addClass('active')
     .siblings().removeClass('active');
   var metric = $(this).parent().data('metric');
   var value = $(this).data('value');
-  $('#vectorString').html("<strong>بردار = </strong>{" + metric + ":" + value + "}");
+  vector[metric] = value;
+  var result = "";
+  $.each(vector, function(i, v) {
+    result += i + ":" + v + ";";
+  });
+  $.growl.notice({
+    title:'دیباگ (موقتی)',
+    message: "<p style='direction:ltr'>CVSS_VECTOR = " + result + "<span>",
+    location:'br'
+  });
+  $('#vectorString').html("<strong>بردار = </strong>{" + result + "}");
 });
 
 </script>
@@ -78,71 +90,71 @@ $('.ui.buttons .button').click(function() {
       <h2 class="ui dividing header">امتیاز پایه</h2>
       <div class="ui field">
         <label>مسیر حمله؟</label>
-        <div class="ui basic blue buttons">
-				  <a class="ui button">شبکه</a>
-				  <a class="ui button">فرعی</a>
-				  <a class="ui button">محلی</a>
-          <a class="ui button">فیزیکی</a>
+        <div class="ui basic blue buttons" data-metric="AV">
+				  <a class="ui button" data-value="N">شبکه</a>
+				  <a class="ui button" data-value="A">فرعی</a>
+				  <a class="ui button" data-value="L">محلی</a>
+          <a class="ui button" data-value="P">فیزیکی</a>
 				</div>
       </div>
 
       <div class="ui field">
         <label>پیچیدگی حمله</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">کم</a>
-          <a class="ui button">زیاد</a>
+        <div class="ui basic blue buttons" data-metric="AC">
+          <a class="ui button" data-value="L">کم</a>
+          <a class="ui button" data-value="H">زیاد</a>
         </div>
       </div>
       
       <div class="ui field">
         <label>دسترسی مورد نیاز</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">بی‌نیاز</a>
-          <a class="ui button">کم</a>
-          <a class="ui button">زیاد</a>
+        <div class="ui basic blue buttons" data-metric="PR">
+          <a class="ui button" data-value="N">بی‌نیاز</a>
+          <a class="ui button" data-value="L">کم</a>
+          <a class="ui button" data-value="H">زیاد</a>
         </div>
       </div>
 
       <div class="ui field">
         <label>رفتار انسانی</label>
         <div class="ui basic blue buttons" data-metric="UI">
-          <a class="ui button" data-value="X">نیاز ندارد</a>
-          <a class="ui button" data-value="Y">دارد</a>
+          <a class="ui button" data-value="N">نیاز ندارد</a>
+          <a class="ui button" data-value="R">دارد</a>
         </div>
       </div>
 
       <div class="ui field">
         <label>محدوده</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">تغییر کرده</a>
-          <a class="ui button">بدون تغییر</a>
+        <div class="ui basic blue buttons" data-metric="S">
+          <a class="ui button" data-value="U">تغییر کرده</a>
+          <a class="ui button" data-value="C">بدون تغییر</a>
         </div>
       </div>
 
       <div class="ui field">
         <label>رازداری</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">ندارد</a>
-          <a class="ui button">کم</a>
-          <a class="ui button">زیاد</a>
+        <div class="ui basic blue buttons" data-metric="C">
+          <a class="ui button" data-value="N">ندارد</a>
+          <a class="ui button" data-value="L">کم</a>
+          <a class="ui button" data-value="H">زیاد</a>
         </div>
       </div>      
 
       <div class="ui field">
         <label>درستی</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">ندارد</a>
-          <a class="ui button">کم</a>
-          <a class="ui button">زیاد</a>
+        <div class="ui basic blue buttons" data-metric="I">
+          <a class="ui button" data-value="N">ندارد</a>
+          <a class="ui button" data-value="L">کم</a>
+          <a class="ui button" data-value="H">زیاد</a>
         </div>
       </div>
       
       <div class="ui field">
         <label>دسترسی</label>
-        <div class="ui basic blue buttons">
-          <a class="ui button">ندارد</a>
-          <a class="ui button">کم</a>
-          <a class="ui button">زیاد</a>
+        <div class="ui basic blue buttons" data-metric="A">
+          <a class="ui button" data-value="N">ندارد</a>
+          <a class="ui button" data-value="L">کم</a>
+          <a class="ui button" data-value="H">زیاد</a>
         </div>
       </div>   
     </div>
@@ -157,7 +169,7 @@ $('.ui.buttons .button').click(function() {
       <div class="ui info message">در حال پیاده‌سازی...</div>
     </div>
 
-    <div class="ui green message" id="vectorString" style="direction:ltr"></div>
+    <div class="ui olive message" id="vectorString" style="direction:ltr"></div>
 
     <div class="ui inverted segment">
       <h2 class="ui dividing centered header">امتیازات</h2>
