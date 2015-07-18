@@ -39,6 +39,20 @@ security.sendResetPasswordEmail=ارسال کلمه‌ی عبور
 security.resetPassword=بازیابی کلمه‌ی عبور
 security.resetPasswordMessage=لطفا پست‌الکترونیکی خود را که با آن ثبت‌نام کرده بودید را وارد نمایید. یک پست‌الکترونیکی شامل لینکی برای بازیابی کلمه‌ی عبور برای شما ارسال می‌شود.
 
+accounts.roles.ADMINISTRATOR=مدیر
+accounts.roles.REGISTERED=عادی
+accounts.roles.GUEST=مهمان
+accounts.roles.MAINTAINER=اپراتور
+accounts.Accounts=کاربران
+accounts.NewAccount=حساب جدید
+accounts.AllAccounts=همه‌ی حساب‌ها
+accounts.OnlyRegisteredAccounts=کاربران ثبت‌نامی
+accounts.HeaderDescription=لیست حساب‌های کاربران
+
+id=شناسه
+fullName=نام
+role=دسترسی
+
 unknown=نامشخص
 continue=ادامه
 save=ذخیره شود

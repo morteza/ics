@@ -7,30 +7,31 @@
 <section class="ui page centered padded stackable grid">
   <div class="ui twelve wide column">
     <div class="ui segment">
-    <h2 class="ui dividing header">
+    <h2 class="ui header">
 	    <div class="ui right floated compact buttons">
 		    #{if request.action=="Accounts.list"}
-		    <a class="ui compact button" href="@{Accounts.listAll()}" title="Show all cccounts">&{'cut.AllAccounts'}</a>
+		    <a class="ui compact button" href="@{Accounts.listAll()}" title="Show all cccounts">&{'accounts.AllAccounts'}</a>
 		    #{/if}
 		    #{else}
-		    <a class="ui compact button" href="@{Accounts.list()}" title="Show all cccounts">&{'cut.OnlyAdminsAndDesignerAccounts'}</a>
+		    <a class="ui compact button" href="@{Accounts.list()}" title="Show all cccounts">&{'accounts.OnlyRegisteredAccounts'}</a>
 		    #{/else}
-		    <a class="ui primary right floated compact button" href="#" title="Create new account" id="newAccountBtn">&{'cut.NewAccount'}</a>
+		    <a class="ui primary right floated compact button" href="#" title="Create new account" id="newAccountBtn">&{'accounts.NewAccount'}</a>
 	    </div>
       <i class="users icon"></i>
       <div class="content">
-          &{'cg125.AccountsTitle'}
-      <div class="sub header">List of all user accounts.</div>
+          &{'accounts.Accounts'}
       </div>
     </h2>
-        
+    
+    <div class="ui divider"></div>
+    
         <table class="ui table">
           <thead>
             <tr>
-              <th>&{'cut.Id'}</th>
-	            <th>&{'cut.FullName'}</th>
-	            <th>&{'cut.Email'}</th>
-	            <th>&{'cut.Role'}</th>
+              <th>&{'id'}</th>
+	            <th>&{'fullName'}</th>
+	            <th>&{'email'}</th>
+	            <th>&{'role'}</th>
 	            <th></th>
             </tr>
           </thead>
@@ -43,7 +44,7 @@
               <!-- <td>
                 <code>${_?.id}</code>
               </td> -->
-              <td>&{"cg125.roles."+_.role}</td>
+              <td>&{"accounts.roles."+_.role}</td>
               <td>
                 <div class="ui right floated compact tiny buttons">
                 #{ifnot _.confirmed}
