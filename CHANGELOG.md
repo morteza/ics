@@ -5,6 +5,8 @@ The following items are change logs divided by dates. In addition to this list, 
 ## July 18, 2015
 
 - Several UI improvements and bug fixes.
+- Initial  CVSS 3.0 calculator.
+- Calculate CVSS 3.0 base score and show it to the user.
 
 ## July 15, 2015
 

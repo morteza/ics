@@ -43,7 +43,16 @@ app.controller('CalculatorController', function($scope) {
     $scope.lastName = "Doe";
 });
 
-var vector = {};
+var vector = {
+    AV: "X",
+    AC: "X",
+    PR: "X",
+    UI: "X",
+    S: "X",
+    C: "X",
+    I: "X",
+    A: "X"
+};
 
 $('.ui.buttons .button').click(function() {
   $(this)
@@ -56,11 +65,25 @@ $('.ui.buttons .button').click(function() {
   $.each(vector, function(i, v) {
     result += i + ":" + v + ";";
   });
-  $.growl.notice({
-    title:'دیباگ (موقتی)',
-    message: "<p style='direction:ltr'>CVSS_VECTOR = " + result + "<span>",
-    location:'br'
-  });
+  
+  vSize = 0;
+  for (key in vector) {
+    vSize++;
+  }
+  $.post("@{CVSS.calculateCVSSFromMetrics()}",{
+    AV: vector["AV"],
+    AC: vector["AC"],
+    PR: vector["PR"],
+    UI: vector["UI"],
+    S: vector["S"],
+    C: vector["C"],
+    I: vector["I"],
+    A: vector["A"]
+  }).done(function(data) {
+    if (data==Number(data))
+      $(".baseScore").text(data);
+  });    
+
   $('#vectorString').html("<strong>بردار = </strong>{" + result + "}");
 });
 
@@ -84,10 +107,13 @@ $('.ui.buttons .button').click(function() {
     <div class="ui basic message">
       در این بخش می‌توانید با وارد نمودن پارامترهای سیستم‌های صنعتی خود، درجه‌ی آسیب‌پذیری خود را محاسبه نمایید.
       <br />
-      برای اطلاعات بیشتر در مورد هر متریک یا گزینه، ماوس خود را بر روی نام آن یا گزینه‌ی موردنظر چند لحظه نگه دارید.
+      برای محاسبه‌ی امتیاز باید به تمام سوالات بخش پایه پاسخ داد. سوالات مربوط به امتیاز موفت و محیطی اختیاری هستند.
     </div> 
-    <div class="ui form segment">
-      <h2 class="ui dividing header">امتیاز پایه</h2>
+    <div class="ui form segment" id="baseSegment">
+      <h2 class="ui dividing header">امتیاز پایه
+      <a class="ui green horizontal label baseScore">نامشخص</a>      
+      </h2>
+
       <div class="ui field">
         <label>مسیر حمله</label>
         <label>
@@ -177,29 +203,21 @@ $('.ui.buttons .button').click(function() {
 
     <div class="ui olive message" id="vectorString" style="direction:ltr"></div>
 
-    <div class="ui inverted segment">
+    <div class="ui centered inverted segment">
       <h2 class="ui dividing centered header">امتیازات</h2>
-      <div class="ui five statistics">
+      <div class="ui three statistics">
         <div class="ui inverted statistic">
-          <div class="value">۸.۲</div>
-          <div class="label">منابع انسانی</div>
+          <div class="baseScore value">-</div>
+          <div class="label">پایه</div>
         </div>
 	      <div class="ui blue inverted statistic">
-	        <div class="value">۵.۳</div>
-	        <div class="label">شبکه</div>
+	        <div class="value">-</div>
+	        <div class="label">موقتی</div>
 	      </div>
 	      <div class="ui olive inverted statistic">
-	        <div class="value">۴.۲</div>
-	        <div class="label">سخت‌افزار</div>
-	      </div>
-	      <div class="ui red inverted statistic">
-	        <div class="value">۹.۸</div>
-	        <div class="label">نرم‌افزار</div>
-	      </div>      
-        <div class="ui violet inverted statistic">
-          <div class="value">۱۰</div>
-          <div class="label">یک‌پارچگی</div>
-        </div>      
+	        <div class="value">-</div>
+	        <div class="label">محیطی</div>
+	      </div>     
       </div>
       <div class="ui divider"></div>
       <canvas id="radarChart"></canvas>

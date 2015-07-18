@@ -9,7 +9,7 @@ GET     /status                                 Application.status
 GET     /captcha                                Application.captcha
 
 # Security calculator pages
-GET     /calculator                             SecurityCalculator.index
+GET     /cvss                                   CVSS.calculator
 
 # Account and security routes
 *       /login                                  Security.login
