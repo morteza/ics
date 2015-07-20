@@ -14,7 +14,7 @@ since.months  = %s ماه پیش
 since.years   = %s سال پیش
 since.format  = yyyy/MMMM/d
 
-NA=نامشخص
+None=نامشخص
 
 home=خانه
 dashboard=داشبورد

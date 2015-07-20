@@ -44,7 +44,7 @@ public class CVSS extends Controller {
       wI = weights.get("CIA_"+I);
       wA = weights.get("CIA_"+A);      
     } catch(Exception e) {
-      renderText(Messages.get("NA"));
+      renderText(Messages.get("None"));
     }
 
     
@@ -74,6 +74,25 @@ public class CVSS extends Controller {
     }
 
     renderText(baseScore + "");
+  }
+
+  /** Severity rating bands, as defined in the CVSS v3.0 specification.
+   * 
+   * @param score
+   */
+  public static void severityRating(double score) {
+    if (score==0.0) {
+      renderText(Messages.get("None"));
+    } else if (score>0.0 && score<4.0) {
+      renderText(Messages.get("Low"));
+    } else if (score>=4.0 && score<7.0) {
+      renderText(Messages.get("Medium"));
+    } else if (score>=7.0 && score<9) {
+      renderText(Messages.get("High"));
+    } else if (score>=9.0 && score <=10.0) {
+      renderText(Messages.get("Critical"));
+    }
+    renderText(Messages.get("None"));
   }
   
   public static Map<String, Double> getWeights(String S) {

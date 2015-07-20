@@ -2,6 +2,11 @@
 
 The following items are change logs divided by dates. In addition to this list, please review git commits for more items and detailed descriptions.
 
+# July 20, 2015
+
+- CVSS 3.0 temporal questions, and respective UI.
+- Action to calculate CVSS severity based on the score.
+
 ## July 18, 2015
 
 - Several UI improvements and bug fixes.
