@@ -6,8 +6,11 @@ import models.AccountRole;
 import models.survey.Survey;
 import play.i18n.Messages;
 import play.mvc.Controller;
+import play.mvc.With;
 import utils.SecurityCheck;
 
+@With(Security.class)
+@SecurityCheck(AccountRole.REGISTERED)
 public class SurveyDesigner extends Controller {
   
   public static void create(Survey survey) {

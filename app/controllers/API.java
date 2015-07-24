@@ -77,7 +77,6 @@ public class API extends Controller {
     if ("en".equalsIgnoreCase(lang) || "fa".equalsIgnoreCase(lang)) {
       Lang.change(lang);
     }
-    //TODO REMOVE this rediect
     Application.index();
   }
 

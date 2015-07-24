@@ -16,7 +16,9 @@ import models.AccountRole;
 import models.survey.Survey;
 import play.CorePlugin;
 import play.cache.Cache;
+import play.i18n.Lang;
 import play.libs.Images;
+import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.With;
 import utils.NoSecurityCheck;
@@ -28,7 +30,7 @@ import utils.SecurityCheck;
  */
 @With(Security.class)
 public class Application extends Controller {
-
+  
   /**
    * Shows the main page.
    */
