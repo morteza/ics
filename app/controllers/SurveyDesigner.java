@@ -30,8 +30,13 @@ public class SurveyDesigner extends Controller {
     flow(survey.code);
   }
   
-  public static void update() {
-    todo();
+  public static void update(Survey survey) {
+    notFoundIfNull(survey);
+    notFoundIfNull(survey.code);
+    survey.save();
+    flash.success("Survey has been updated!");
+    flash.keep();
+    general(survey.code);
   }
   
   public static void general(String code) {
@@ -52,7 +57,18 @@ public class SurveyDesigner extends Controller {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
 
-    render("designer/flow.html", survey);  }
+    render("designer/flow.html", survey);
+  }
+  
+  /**
+   * Shows import flow page.
+   */
+  public static void importFlow(String code) {
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+
+    render("designer/import_flow.html", survey);    
+  }
 
   public static void publish(String code) {
     todo();

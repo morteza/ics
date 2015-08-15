@@ -74,6 +74,6 @@ survey.designer.GeneralSettings=تنظیمات عمومی
 survey.designer.RemoveThisSurvey=حذف این پرسش‌نامه
 survey.designer.RemoveSurvey=حذف پرسش‌نامه و اطلاعات مرتبط
 survey.designer.Results=نتایج
-
+survey.designer.ImportFlow=افزودن پرسش‌نامه به صورت فایل
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 

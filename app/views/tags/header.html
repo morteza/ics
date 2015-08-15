@@ -22,7 +22,7 @@
       <a class="#{if request.action=='SurveyDesigner.general'}active#{/if} icon item" href="@{SurveyDesigner.general(surveyCode)}">
         <i class="settings blue icon"></i>
       </a>
-      <a class="#{if request.action=='SurveyDesigner.flow'}active#{/if} icon item" href="@{SurveyDesigner.flow(surveyCode)}">
+      <a class="#{if request.action=='SurveyDesigner.flow' || request.action=='SurveyDesigner.importFlow'}active#{/if} icon item" href="@{SurveyDesigner.flow(surveyCode)}">
         <i class="sort numeric ascending blue icon"></i>
       </a>
       <a class="#{if request.action=='SurveyDesigner.publish'}active#{/if} icon item" href="@{SurveyDesigner.publish(surveyCode)}">
