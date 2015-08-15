@@ -43,12 +43,14 @@
         #{/if}
         
 		    <div class="right menu">
+		      <!--
 		      #{if play.i18n.Lang.get()=='fa'}
 		      <a class="icon item" href="@{API.changeUserLanguage("en")}"><i class="us flag" style="margin:0"></i></a>
 		      #{/if}
 		      #{else}
 		      <a class="icon item" href="@{API.changeUserLanguage("fa")}"><i class="ir flag" style="margin:0"></i></a>
 		      #{/else}
+		      -->
 		      #{ifnot controllers.Security.check(models.AccountRole.REGISTERED)}
 		      <a class="icon item" href="@{Security.login()}" class="btn">&{'login'}</a>
 		      <a class="icon item" href="@{Accounts.signUp()}" class="btn">&{'signup'}</a>

@@ -34,12 +34,14 @@
     </section>
   #{/if}
   <div class="right menu">
+  <!-- 
     #{if play.i18n.Lang.get()=='fa'}
       <a class="icon item" href="@{API.changeUserLanguage("en")}"><i class="ui us flag" style="margin:0"></i></a>
     #{/if}
     #{else}
       <a class="icon item" href="@{API.changeUserLanguage("fa")}"><i class="ui ir flag" style="margin:0"></i></a>
     #{/else}
+  -->
     #{if controllers.Security.isConnected()}
     <a class="#{if request.controller=='Accounts'}active#{/if} icon item" href="@{Accounts.profile(controllers.Security.connected().id)}" title="Your Profile">
       <i class="user icon"></i>
