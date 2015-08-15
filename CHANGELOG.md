@@ -2,6 +2,10 @@
 
 The following items are change logs divided by dates. In addition to this list, please review git commits for more items and detailed descriptions.
 
+# August 15, 2015
+
+- Push footer to the bottom of the view.
+
 # July 20, 2015
 
 - CVSS 3.0 temporal questions, and respective UI.
