@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.util.Date;
 
 import models.AccountRole;
@@ -10,7 +11,7 @@ import play.mvc.With;
 import utils.SecurityCheck;
 
 @With(Security.class)
-@SecurityCheck(AccountRole.REGISTERED)
+@SecurityCheck(AccountRole.ADMINISTRATOR)
 public class SurveyDesigner extends Controller {
   
   public static void create(Survey survey) {
@@ -63,11 +64,13 @@ public class SurveyDesigner extends Controller {
   /**
    * Shows import flow page.
    */
-  public static void importFlow(String code) {
+  public static void importFlow(String code, File flowFile) {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
 
-    render("designer/import_flow.html", survey);    
+    //TODO parse CSV and add questions.
+    
+    render("designer/flow.html", survey);    
   }
 
   public static void publish(String code) {

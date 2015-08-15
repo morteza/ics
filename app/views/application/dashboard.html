@@ -23,7 +23,7 @@
 		    <div class="ui #{if _.isDeleted}red#{/if} card">
 		      <div class="content">
 		        #{ifnot _.isDeleted}
-		        #{security.check models.AccountRole.REGISTERED}
+		        #{security.check models.AccountRole.MAINTAINER}
 		        <a href="@{SurveyDesigner.general(_.code)}" class="right floated" title="&{'settings'}">
 		          <i class="large options link icon"></i>
 		        </a>

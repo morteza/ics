@@ -16,7 +16,7 @@
     </div>
   </h2>
 
-  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="@{SurveyDesigner.importFlow(surveyCode)}">افزودن پرسش‌نامه به صورت فایل</a></div>
+  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="#" id="importFlowFileBtn">افزودن پرسش‌نامه به صورت فایل</a></div>
 
   <div class="ui segment">
 
@@ -89,7 +89,34 @@
   </div>
 </section>
 
+<!-- Import CSV file modal -->
+<section class="ui small modal" role="dialog" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="header">&{'survey.designer.ImportFlow'}</div>
+  <div class="content">
+    <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.create()}" method="POST">
+      <div class="required field">
+        <label>فایل سوالات</label>
+        <input type="file" name="survey.title" />
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button type="submit" id="submitNewSurvey" class="ui right labeled icon primary disabled submit button" form="newSurveyForm">
+      <i class="right arrow icon"></i>
+      &{'continue'}
+    </button>
+  </div>
+</section>
+
 #{set 'moreScripts'}
+  <script>
+	  $('.modal').modal({
+	    selector    : {
+	      close: '.close'
+	    }
+	  }).modal('attach events', '#importFlowFileBtn', 'show');
+  </script>
   <script src="@{'/public/js/sir-trevor.min.js'}"></script>
   <script src="@{'/public/js/blocks/statement.js'}"></script>
   <script src="@{'/public/js/blocks/text_question.js'}"></script>
@@ -97,6 +124,7 @@
   <script src="@{'/public/js/blocks/scale_question.js'}"></script>
   <script src="@{'/public/js/blocks/page_break.js'}"></script>
   <script>
+
     new SirTrevor.Editor({
       el: $('.wysiwyg'),
       blockTypes: [

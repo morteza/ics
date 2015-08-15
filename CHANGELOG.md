@@ -5,6 +5,8 @@ The following items are change logs divided by dates. In addition to this list, 
 # August 15, 2015
 
 - Push footer to the bottom of the view.
+- Initial support to import survey flow CSV file.
+- Update surveys on save.
 
 # July 20, 2015
 
