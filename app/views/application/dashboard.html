@@ -9,7 +9,7 @@
 	      پرسش‌نامه‌ها 
 	    </div>
 		  <div class="ui two cards js-masonry" data-masonry-options='{ "itemSelector": ".card", "isOriginLeft": false }'>
-		    #{security.check models.AccountRole.REGISTERED}
+		    #{security.check models.AccountRole.MAINTAINER}
 		    <div class="ui card">
 		      <div class="content">
 		        شما می‌توانید پرسش‌نامه‌ای جدید بسازید. از دکمه‌ی زیر برای شروع ساخت یک پرسش‌نامه‌ی جدید استفاده نمایید.
@@ -52,6 +52,19 @@
 	    <div class="ui centered header">
 	      <i class="certificate icon"></i>
 	      استانداردها
+	    </div>
+	    <div class="ui two cards js-masonry" data-masonry-options='{ "itemSelector": ".card", "isOriginLeft": false }'>
+	      #{security.check models.AccountRole.MAINTAINER}
+        <div class="ui card">
+          <div class="content">
+            شما می‌توانید پرسش‌نامه‌ای مطابق با استانداردی خاص بسازید. از دکمه‌ی زیر برای تعریف یک استاندارد و بررسی مطابقت با آن استفاده نمایید.
+          </div>
+          <a class="ui bottom attached labeled blue compact button" id="newSurveyBtn">
+            استاندارد جدید
+          </a>
+        </div>
+        #{/security.check}
+	    
 	    </div>
 	  </div>
 
