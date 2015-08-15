@@ -38,7 +38,7 @@
 		
 		        <div class="header">${_.title}</div>
 		        <div class="meta">${_.createdAt?.since() }</div>
-		        <div class="description">${_.description.replace("\n","<br />").raw()}</div>
+		        <div class="description">${_.description?.replace("\n","<br />").raw()}</div>
 		      </div>
 		  </div>
 		    #{/list}

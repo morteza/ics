@@ -15,12 +15,37 @@
       <input type="hidden" name="code" value="${survey.code}" />
       <input type="hidden" name="block.code" value="{block.code}" />
       
-      #{list question}
-      <div class="field">
-        <p>${_}</p>  
+      #{list questions}
+      <p>${_.raw()}</p>
+      <div class="inline fields">
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="answer_${_index}" value="yes" />
+            <label>بلی</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="answer_${_index}" value="no" />
+            <label>خیر</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="answer_${_index}" value="none" />
+            <label>موارد دیگر</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="answer_${_index}" value="alt" />
+            <label>شامل نمی‌شود</label>
+          </div>
+        </div>
       </div>
+      <div class="ui divider"></div>
       #{/list}
-      
+            
       <div class="ui hidden divider"></div>
       
       <div class="field">

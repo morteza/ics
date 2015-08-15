@@ -15,6 +15,7 @@ import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -56,9 +57,12 @@ public class Survey extends ModelWithTimestamp {
   public Boolean isPublic;
   
   //TODO public List<Question> questions;
+  @ElementCollection
+  public List<String> questions;
   
   public Survey() {
     //TODO questions = new ArrayList<Question>();
+    questions = new ArrayList<String>();
     code = generateCode(10);
     //TODO set isPublished to false, and add an action to publish it manually.
     isPublished = true;

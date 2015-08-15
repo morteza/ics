@@ -75,7 +75,7 @@ public class Surveys extends Controller {
     
     
     //TODO find questions belong to the current page.
-    List<String> questions = new ArrayList<String>();
+    List<String> questions = survey.questions;
         
     render("surveys/page.html", survey, page, pages, questions);
 
