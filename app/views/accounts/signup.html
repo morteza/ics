@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>&{'app.name'} - &{'cg125.SignUp'}</title>
+  <title>&{'app.name'} - &{'accounts.SignUp'}</title>
 
   <link rel="shortcut icon" type="image/png" href="@{'/public/img/favicon.png'}">
 
@@ -32,24 +32,24 @@
     <div class="ui eight wide centered column">
       <div class="ui segment">
         <h2 class="ui dividing header">
-          &{'cg125.SignUp'}
+          &{'accounts.SignUp'}
         </h2>
         <form class="ui fluid form" action="@{Accounts.create()}" method="POST" id="signupForm">
           <div class="field">
-            <label>&{'cg125.FullName'}</label>
+            <label>&{'accounts.FullName'}</label>
             <input type="text" name="account.fullName" required autofocus value="${account?.fullName}">
           </div>
           <div class="field">
-            <label>&{'cg125.Email'}</label>
+            <label>&{'accounts.Email'}</label>
             <input type="email" name="account.email" required value="${account?.email}">
           </div>
           <div class="two fields">
 	          <div class="field">
-	            <label>&{'cg125.Password'}</label>
+	            <label>&{'accounts.Password'}</label>
 	            <input type="password" name="account.passwordHash" required>
 	          </div>
 	          <div class="field">
-              <label>&{'cg125.RetypePassword'}</label>
+              <label>&{'accounts.RetypePassword'}</label>
               <input type="password" name="passwordHash2" required>
             </div>              
           </div>

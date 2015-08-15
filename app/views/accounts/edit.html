@@ -46,7 +46,7 @@
               <label>Role</label>
               <select name="account.role" class="form-control" >
                 %{ models.AccountRole.values().each(){ }%
-                <option title="${it.name()}" value="${it.name()}" ${it.equals(account.role) ? 'selected' : ''}>&{"cg125.roles."+it.toString()}</option>
+                <option title="${it.name()}" value="${it.name()}" ${it.equals(account.role) ? 'selected' : ''}>&{"security.roles."+it.toString()}</option>
                 %{ } }%
               </select>
               #{/security.check}

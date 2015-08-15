@@ -16,11 +16,12 @@
     </div>
   </h2>
 
+  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="@{SurveyDesigner.importFlow(surveyCode)}">افزودن پرسش‌نامه به صورت فایل</a></div>
+
   <div class="ui segment">
 
     <form class="ui fluid form" role="form">
       <input type="hidden" name="survey.id" value="${survey.id}" />
-  
       <div class="field">
         <textarea class="ui message wysiwyg" name="survey-flow"></textarea>
       </div>

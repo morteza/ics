@@ -104,7 +104,7 @@ public class Security extends Controller {
     Account account = Account.authenticate(username, password);
     if(validation.hasErrors() || account==null) {
       flash.keep("url");
-      flash.error("cg125.AuthenticationError");
+      flash.error("security.AuthenticationError");
       params.flash();
       login();
     }
@@ -206,7 +206,7 @@ public class Security extends Controller {
   public static void logout() {
     session.clear();
     response.removeCookie("remember");
-    flash.success("cg125.LoggedOutSuccessfully");
+    flash.success("security.LoggedOutSuccessfully");
     login();
   }
   

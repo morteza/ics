@@ -101,14 +101,14 @@ public class Accounts extends Controller {
 
     if (Account.findByEmail(account.email) != null) {
       validation.keep();
-      flash.error(Messages.get("cg125.EmailIsNotAvailable"));
+      flash.error(Messages.get("accounts.EmailIsNotAvailable"));
       randomUUID = Codec.UUID();
       render("accounts/signup.html", account, randomUUID);
     }
 
     if(validation.hasErrors()){
       validation.keep();
-      flash.error(Messages.get("cg125.AccountRegistrationFailed"));
+      flash.error(Messages.get("accounts.AccountRegistrationFailed"));
       if (Security.check(AccountRole.ADMINISTRATOR))
         list();
       randomUUID = Codec.UUID();
@@ -119,7 +119,7 @@ public class Accounts extends Controller {
     account.role = AccountRole.REGISTERED;
     account.save();
     
-    flash.success("cg125.SignedUpSuccessfully");
+    flash.success("accounts.SignedUpSuccessfully");
     flash.keep();
     if (Security.check(AccountRole.ADMINISTRATOR))
       list();
