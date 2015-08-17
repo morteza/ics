@@ -1,0 +1,84 @@
+#{extends 'main.html' /}
+#{set 'title'}&{'questions'}#{/set}
+#{set surveyCode:survey.code /}
+
+#{set 'moreStyles'}
+  <link rel="stylesheet" href="@{'/public/css/sir-trevor.css'}">
+#{/set}
+
+<section class="ui page centered padded stackable grid">
+  <div class="twelve wide column" id="sticker">
+  <h2 class="ui header">
+    <i class="sort alphabet ascending icon"></i>
+    <div class="content">
+      سوالات
+      <div class="sub header">در این صفحه می‌توانید سوالات پرسش‌نامه را وارد نمایید.</div>
+    </div>
+  </h2>
+
+  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="#" id="importFlowFileBtn">افزودن پرسش‌نامه به صورت فایل</a></div>
+
+  #{list survey.questions}
+  <div class="ui segment">
+      <p>${_}</p>
+  </div> <!-- /.segment -->
+  #{/list}
+  
+  </div>
+
+  <div class="four wide column">
+  <div class="ui sticky">
+    <div class="ui small side-help list">
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="description">در این بخش می‌توانید سوالات را به صورت فله‌ای یا تکی وارد نموده، و سوالات موجود را مدیریت نمایید.</div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- /.ui.sticky -->
+  </div>
+</section>
+
+<!-- Import CSV file modal -->
+<section class="ui small modal" role="dialog" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="header">&{'survey.designer.ImportFlow'}</div>
+  <div class="content">
+    <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.importQuestions}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="code" value="${surveyCode}" />
+      <div class="required field">
+        <label>فایل سوالات</label>
+        <input type="file" name="file" />
+      </div>
+    </form>
+  </div>
+  <div class="actions">
+    <button type="submit" id="submitNewSurvey" class="ui right labeled icon primary submit button" form="newSurveyForm">
+      <i class="right arrow icon"></i>
+      &{'continue'}
+    </button>
+  </div>
+</section>
+
+#{set 'moreScripts'}
+  <script>
+	  $('.modal').modal({
+	    selector    : {
+	      close: '.close'
+	    }
+	  }).modal('attach events', '#importFlowFileBtn', 'show');
+  </script>
+  <script>
+
+#{ifnot preventSavingFlow}
+    $(document).ready(function(){
+      $('.ui.sticky').sticky({
+        context: '#sticker',
+        offset: 90
+      });
+      //$('.ui.sticky').sticky('refresh');
+    });
+#{/ifnot}
+  </script>
+#{/set}

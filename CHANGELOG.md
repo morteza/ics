@@ -7,6 +7,10 @@ The following items are change logs divided by dates. In addition to this list, 
 - Push footer to the bottom of the view.
 - Initial support to import survey flow CSV file.
 - Update surveys on save.
+- Separate questions and flow designer.
+- New results view at the end of participating in a survey.
+- Update top menu in the survey designer.
+- Update survey designer and survey executor action names.
 
 # July 20, 2015
 

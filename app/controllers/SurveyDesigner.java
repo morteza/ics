@@ -59,7 +59,7 @@ public class SurveyDesigner extends Controller {
     render("designer/results.html", survey);
   }
   
-  public static void importQuestionsCsv(String code, File file) {
+  public static void importQuestions(String code, File file) {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
 
@@ -82,10 +82,17 @@ public class SurveyDesigner extends Controller {
     
     survey.save();
     
-    flash.success(Messages.get("Questions have been imported successfully!"));
+    flash.success(Messages.get("survey.designer.QuestionFileHasBeenImportedSuccessfully"));
     
-    render("designer/flow.html", survey);
+    questions(code);
 
+  }
+  
+  public static void questions(String code) {
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+
+    render("designer/questions.html", survey);    
   }
   
   public static void flow(String code) {
@@ -95,16 +102,11 @@ public class SurveyDesigner extends Controller {
     render("designer/flow.html", survey);
   }
   
-  /**
-   * Shows import flow page.
-   */
-  public static void importFlow(String code, File flowFile) {
+  public static void updateFlow(String code, String json) {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
-
-    //TODO parse CSV and add questions.
     
-    render("designer/flow.html", survey);    
+    renderText(Messages.get("survey.designer.FlowHasBeenUpdated"));
   }
 
   public static void publish(String code) {

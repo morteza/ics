@@ -1,0 +1,120 @@
+#{extends 'main.html' /}
+#{set title:survey.title /}
+#{set hideHeader:'true' /}
+#{set hideFooter:'true' /}
+
+#{set 'moreStyles'}
+#{get 'moreStyles' /}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="ui twelve wide centered column">
+  <div class="ui clearing segment">
+    <div class="ui ribbon label">&{'survey.results'}</div>
+    <div class="ui default message">
+    نمودارهای زیر نتایج مستخرج از پاسخ‌های شما به پرسش‌نامه را نشان می‌دهد.    
+    </div>
+
+    <div class="ui basic segment"> 
+      <canvas id="radarChart"></canvas>
+    </div> <!-- /.segment -->
+
+    <div class="ui basic segment">  
+      <canvas id="polarAreaChart"></canvas>
+    </div> <!-- /.segment -->
+
+    <div class="ui basic segment">  
+      <canvas id="barChart"></canvas>
+    </div> <!-- /.segment -->
+    
+    <div class="ui divider"></div>
+    <a href="@{Surveys.finish(survey.code)}" class="ui primary right floated button">پایان</a>
+  </div>
+</div>
+</section>
+
+#{set 'moreScripts'}
+<script src="@{'public/js/chart.js'}"></script>
+
+<script>
+var radarConfig = {
+    type: 'radar',
+    data: {
+        labels: ["منابع انسانی", "سخت‌افزار", "نرم‌افزار", "شبکه", "آسیب‌پذیری", "به‌روزرسانی", "یک‌پارچگی"],
+        datasets: [{
+            label: "Dataset #1",
+            backgroundColor: "rgba(220,220,220,0.2)",
+            pointBackgroundColor: "rgba(220,220,220,1)",
+            data: [65, 59, 90, 81, 56, 55, 40]
+        }, {
+            label: "Dataset #2",
+            backgroundColor: "rgba(251,187,205,0.2)",
+            pointBackgroundColor: "rgba(251,187,205,1)",
+            hoverPointBackgroundColor: "#fff",
+            pointHighlightStroke: "rgba(251,187,205,1)",
+            data: [28, 48, 40, 19, 96, 27, 100]
+        }]
+    }
+};
+var radarChart = new Chart($("#radarChart").get(0).getContext("2d"), radarConfig);
+
+var polarAreaConfig = {
+    type: 'polarArea',
+    data: {
+        datasets: [{
+            data: [28, 48, 40, 19, 96],
+            backgroundColor: [
+                "#F7464A",
+                "#46BFBD",
+                "#FDB45C",
+                "#949FB1",
+                "#4D5360",
+            ],
+        }],
+        labels: [
+            "سخت‌افزار",
+            "نرم‌افزار",
+            "نیروی انسانی",
+            "شبکه",
+            "تکنولوژی"
+        ]
+    },
+    options: {
+        responsive: true
+    }
+};
+var polarAreaChart = new Chart($("#polarAreaChart").get(0).getContext("2d"), polarAreaConfig);
+
+var barChartData = {
+    labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر"],
+    datasets: [{
+        label: 'سازمان الف',
+        backgroundColor: "rgba(51,187,205,1)",
+        data: [28, 48, 40, 98, 2, 10, 18],
+        borderColor: 'white',
+        borderWidth: 2
+    }, {
+        label: 'سازمان ب',
+        backgroundColor: "rgba(251,187,205,1)",
+        data: [23, 24, 25, 34, 72, 91, 10], 
+        borderColor: 'white',
+        borderWidth: 2
+    }, {
+        type: 'line',
+        label: 'سازمان ج',
+        backgroundColor: "rgba(220,220,220,0.5)",
+        data: [5, 10, 50, 30, 20, 80, 99],
+    }, ]
+
+};
+
+new Chart($("#barChart").get(0).getContext("2d"), {
+  type: 'bar',
+  data: barChartData,
+  options: {
+      responsive: true
+  }
+});
+
+</script>
+#{/set}

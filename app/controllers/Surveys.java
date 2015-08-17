@@ -70,7 +70,7 @@ public class Surveys extends Controller {
     int pages = 1;
 
     if (page >= pages) {
-      finish(code);
+      results(code);
     }
     
     
@@ -79,6 +79,16 @@ public class Surveys extends Controller {
         
     render("surveys/page.html", survey, page, pages, questions);
 
+  }
+
+  public static void results(String code) {
+    Survey survey = Survey.findByCode(code);
+    notFoundIfNull(survey);
+    
+    session.remove(SURVEY_COOKIE_PREFIX + code);
+    session.remove(PAGE_COOKIE_PREFIX + code);
+
+    render("surveys/results.html", survey);
   }
   
   public static void finish(String code) {

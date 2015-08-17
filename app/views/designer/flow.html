@@ -16,8 +16,6 @@
     </div>
   </h2>
 
-  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="#" id="importFlowFileBtn">افزودن پرسش‌نامه به صورت فایل</a></div>
-
   <div class="ui segment">
 
     <form class="ui fluid flow form" role="form">
@@ -94,7 +92,7 @@
   <i class="close icon"></i>
   <div class="header">&{'survey.designer.ImportFlow'}</div>
   <div class="content">
-    <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.importQuestionsCsv}" method="POST" enctype="multipart/form-data">
+    <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.importQuestions}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${surveyCode}" />
       <div class="required field">
         <label>فایل سوالات</label>
@@ -148,7 +146,7 @@
 #{ifnot preventSavingFlow}
     $('.flow.form').submit(function(e) {
       e.preventDefault();
-      var posting = $.post('@{SurveyDesigner.update()}', {code:'${survey.code}', json:SirTrevor.getInstance(0).store.toString()});
+      var posting = $.post('@{SurveyDesigner.updateFlow()}', {code:'${survey.code}', json:SirTrevor.getInstance(0).store.toString()});
       posting.done(function(data) {
         $.growl.notice({
           title:'',

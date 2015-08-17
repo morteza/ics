@@ -75,5 +75,11 @@ survey.designer.RemoveThisSurvey=حذف این پرسش‌نامه
 survey.designer.RemoveSurvey=حذف پرسش‌نامه و اطلاعات مرتبط
 survey.designer.Results=نتایج
 survey.designer.ImportFlow=افزودن پرسش‌نامه به صورت فایل
+survey.designer.QuestionFileHasBeenImportedSuccessfully=سوالات با موفقیت به پرسش‌نامه افزوده شد.
+
+survey.designer.FlowHasBeenUpdated=ساختار پرسش‌نامه به‌روز گردید.
+
+survey.results=نتایج
+
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
