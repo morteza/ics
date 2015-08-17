@@ -56,6 +56,8 @@ public class Survey extends ModelWithTimestamp {
   
   public Boolean isPublic;
   
+  public SurveyType type;
+  
   //TODO public List<Question> questions;
   @ElementCollection
   public List<String> questions;
@@ -68,6 +70,7 @@ public class Survey extends ModelWithTimestamp {
     isPublished = true;
     isDeleted = false;
     isPublic = true;
+    type= SurveyType.REGULAR;
   }
 
   

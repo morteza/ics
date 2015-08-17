@@ -41,10 +41,10 @@
 		        <div class="description">${_.description?.replace("\n","<br />").raw()}</div>
 		      </div>
 		  </div>
-		    #{/list}
-		    #{else}
+		  #{/list}
+		  #{else}
 		    <!-- <div class="col-md-8 text-center">No experiment!</div> -->
-		    #{/else}
+		  #{/else}
 		  </div>
 	  </div>
 	  <div class="ui vertical fitted divider"><i class="grey selected radio icon"></i></div>
@@ -59,12 +59,34 @@
           <div class="content">
             شما می‌توانید پرسش‌نامه‌ای مطابق با استانداردی خاص بسازید. از دکمه‌ی زیر برای تعریف یک استاندارد و بررسی مطابقت با آن استفاده نمایید.
           </div>
-          <a class="ui bottom attached labeled primary disabled compact button" id="newStandardBtn">
+          <a class="ui bottom attached labeled primary compact button" id="newStandardBtn">
             استاندارد جدید
           </a>
         </div>
         #{/security.check}
-	    
+	      #{list standards}
+        <div class="ui #{if _.isDeleted}red#{/if} card">
+          <div class="content">
+            #{ifnot _.isDeleted}
+            #{security.check models.AccountRole.MAINTAINER}
+            <a href="@{SurveyDesigner.general(_.code)}" class="right floated" title="&{'settings'}">
+              <i class="large options link icon"></i>
+            </a>
+            #{/security.check}
+            <a href="@{Surveys.start(_.code)}" class="right floated">
+              <i class="large green play link icon" title="Participate in this survey"></i>
+            </a>
+            #{/ifnot}
+            #{else}
+            <div class="ui horizontal right floated red label">REMOVED</div>
+            #{/else}
+    
+            <div class="header">${_.title}</div>
+            <div class="meta">${_.createdAt?.since() }</div>
+            <div class="description">${_.description?.replace("\n","<br />").raw()}</div>
+          </div>
+      </div>
+      #{/list}
 	    </div>
 	  </div>
 
@@ -76,11 +98,12 @@
 
 
 <!-- New Survey Modal -->
-<section class="ui small modal" role="dialog" aria-hidden="true">
+<section class="ui small regular survey modal" role="dialog" aria-hidden="true">
   <i class="close icon"></i>
-  <div class="header">&{'newSurvey'}</div>
+  <div class="header">&{'survey.designer.newRegularSurvey'}</div>
   <div class="content">
     <form class="ui form" id="newSurveyForm" action="@{SurveyDesigner.create()}" method="POST">
+      <input type="hidden" name="survey.type" value="REGULAR" />
       <div class="required field">
         <label>نام</label>
         <input type="text" name="survey.title" />
@@ -100,17 +123,74 @@
   </div>
 </section>
 
+<!-- New Survey Modal -->
+<section class="ui small standard survey modal" role="dialog" aria-hidden="true">
+  <i class="close icon"></i>
+  <div class="header">&{'survey.designer.newStandardSurvey'}</div>
+  <div class="content">
+    <form class="ui form" id="newStandardForm" action="@{SurveyDesigner.create()}" method="POST">
+      <input type="hidden" name="survey.type" value="STANDARD" />
+      <div class="required field">
+        <label>نام استاندارد</label>
+        <input type="text" name="survey.title" />
+      </div>
+      <div class="required field">
+        <label>توضیحات</label>
+        <textarea rows="3" name="survey.description" max="500"></textarea>
+      </div>
+      <small>نام و توضیحات اجباری است، اما آن‌ها را می‌توانید بعدن تغییر دهید.</small>
+    </form>
+  </div>
+  <div class="actions">
+    <button type="submit" id="submitNewStandard" class="ui right labeled icon primary submit button" form="newStandardForm">
+      <i class="right arrow icon"></i>
+      &{'continue'}
+    </button>
+  </div>
+</section>
+
 #{set 'moreScripts'}
 <script src="@{'/public/js/masonry.pkgd.min.js'}"></script>
 
 #{security.check models.AccountRole.REGISTERED}
 <script>
 
-  $('.modal').modal({
+	$('.standard.survey.modal').modal({
+	  selector    : {
+	    close: '.close'
+	  }
+	}).modal('attach events', '#newStandardBtn', 'show');
+	
+  $('.regular.survey.modal').modal({
     selector    : {
       close: '.close'
     }
   }).modal('attach events', '#newSurveyBtn', 'show');
+
+  $('#newStandardForm').form({
+    title: {
+      identifier: 'survey.title',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'لطفا یک نام برای پرسش‌نامه وارد نمایید.'
+        }
+      ]
+    },
+    description: {
+      identifier: 'survey.description',
+      rules: [
+        {
+          type: 'empty',
+          prompt: 'لطفا توضیحاتی درباره‌ی این پرسش‌نامه وارد نمایید.'
+        }
+      ]
+    }
+  },
+  {
+    inline: true
+  });
+  
   $('#newSurveyForm').form({
     title: {
       identifier: 'survey.title',
@@ -134,9 +214,7 @@
   {
     inline: true
   });
-  $('#submitNewSurvey').click(function(){
-    $('#newSurveyForm').submit();
-  });
+
 </script>
 #{/security.check}
 #{/set}

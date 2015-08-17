@@ -11,6 +11,7 @@ The following items are change logs divided by dates. In addition to this list, 
 - New results view at the end of participating in a survey.
 - Update top menu in the survey designer.
 - Update survey designer and survey executor action names.
+- Two different survey types: regular, and standard. Both available and listed on dashboard.
 
 # July 20, 2015
 
