@@ -9,6 +9,8 @@ import java.util.Date;
 
 import jobs.ImportQuestionsCsv;
 import models.AccountRole;
+import models.survey.AnswerFormat;
+import models.survey.Question;
 import models.survey.Survey;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -32,7 +34,13 @@ public class SurveyDesigner extends Controller {
       Application.dashboard();
     }
     survey.createdBy = Security.connected();
-    survey.save();
+    Question q = new Question(survey);
+    q.title = "نام و نام‌خانوادگی";
+    q.description = "نام و نام‌خانوادگی خود را، به عنوان شخصی که این پرسش‌نامه را پر می‌کند مشخص سازید.";
+    q.format = AnswerFormat.TEXT;
+    q.save();
+    survey.universalQuestions.add(q);
+    survey._save();
     flow(survey.code);
   }
   
@@ -105,6 +113,8 @@ public class SurveyDesigner extends Controller {
   public static void updateFlow(String code, String json) {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
+    
+    //TODO parse JSON and store it.
     
     renderText(Messages.get("survey.designer.FlowHasBeenUpdated"));
   }

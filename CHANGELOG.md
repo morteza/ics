@@ -12,6 +12,7 @@ The following items are change logs divided by dates. In addition to this list, 
 - Update top menu in the survey designer.
 - Update survey designer and survey executor action names.
 - Two different survey types: regular, and standard. Both available and listed on dashboard.
+- Initial support to show complex universal questions on subjects side.
 
 # July 20, 2015
 

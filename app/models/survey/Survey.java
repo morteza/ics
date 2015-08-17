@@ -1,10 +1,10 @@
 /*******************************************************************************
  *        File: Survey.java
- *    Revision: 2
+ *    Revision: 3
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: July 3, 2015
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package models.survey;
@@ -19,6 +19,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -58,21 +59,22 @@ public class Survey extends ModelWithTimestamp {
   
   public SurveyType type;
   
-  //TODO public List<Question> questions;
+  @OneToMany(mappedBy="survey",cascade=CascadeType.ALL)
+  public List<Question> universalQuestions;
+  
   @ElementCollection
   public List<String> questions;
   
   public Survey() {
-    //TODO questions = new ArrayList<Question>();
+    universalQuestions = new ArrayList<Question>();
     questions = new ArrayList<String>();
-    code = generateCode(10);
+    code = generateCode(5);
     //TODO set isPublished to false, and add an action to publish it manually.
     isPublished = true;
     isDeleted = false;
     isPublic = true;
     type= SurveyType.REGULAR;
-  }
-
+  }  
   
   private String generateCode(int size) {
     String chars = "234567890abcdefghijkmnopqrstuvwxyz";

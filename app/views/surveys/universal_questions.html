@@ -1,0 +1,44 @@
+#{extends 'main.html' /}
+#{set title:survey.title /}
+#{set hideHeader:'true' /}
+#{set hideFooter:'true' /}
+
+#{set 'moreStyles'}
+#{get 'moreStyles' /}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="ui twelve wide centered column">
+  <div class="ui clearing segment">
+    <div class="ui ribbon label">&{'page'} ${page+1} &{'of'} ${pages}</div>
+    <form class="ui form" action="@{Surveys.next}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="code" value="${survey.code}" />
+      <input type="hidden" name="block.code" value="{block.code}" />
+            
+      #{list questions}
+      <div class="field">
+	      <label>${_.title}</label>
+	      #{if _.format == models.survey.AnswerFormat.TEXT}
+	      <input type="text" />
+	      <small>${_.description}</small>
+	      #{/if}      
+      </div>
+	    <div class="ui divider"></div>
+      #{/list}
+
+      <div class="ui hidden divider"></div>
+      
+      <div class="field">
+        <button type="submit" class="ui right floated right labeled icon primary button">
+          <i class="right arrow icon"></i>
+          &{'next'}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+</section>
+
+#{set 'moreScripts'}
+#{get 'moreScripts' /}
+#{/set}

@@ -67,17 +67,23 @@ public class Surveys extends Controller {
     notFoundIfNull(survey);
     
     //TODO find total pages
-    int pages = 1;
+    int pages = 2;
 
     if (page >= pages) {
       results(code);
     }
     
+    if (page==0) {
+      System.out.println("Size: " + survey.universalQuestions.size());
+      //Show universal questions on first page.
+      List<Question> questions = survey.universalQuestions;
+      render("surveys/universal_questions.html", survey, page, pages, questions);
+    }
     
     //TODO find questions belong to the current page.
     List<String> questions = survey.questions;
-        
-    render("surveys/page.html", survey, page, pages, questions);
+            
+    render("surveys/questions.html", survey, page, pages, questions);
 
   }
 
