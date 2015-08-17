@@ -13,6 +13,7 @@ The following items are change logs divided by dates. In addition to this list, 
 - Update survey designer and survey executor action names.
 - Two different survey types: regular, and standard. Both available and listed on dashboard.
 - Initial support to show complex universal questions on subjects side.
+- Three more CVSS 3.0 questions in its environment section.
 
 # July 20, 2015
 
