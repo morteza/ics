@@ -62,21 +62,19 @@ var polarAreaConfig = {
     type: 'polarArea',
     data: {
         datasets: [{
-            data: [28, 48, 40, 19, 96],
+            data: [${yess.size()}, ${nos.size()}, ${nones.size()}, ${alts.size()}],
             backgroundColor: [
                 "#F7464A",
                 "#46BFBD",
                 "#FDB45C",
                 "#949FB1",
-                "#4D5360",
             ],
         }],
         labels: [
-            "سخت‌افزار",
-            "نرم‌افزار",
-            "نیروی انسانی",
-            "شبکه",
-            "تکنولوژی"
+            "بلی",
+            "خیر",
+            "شامل نمی‌شود",
+            "موارد دیگر",
         ]
     },
     options: {

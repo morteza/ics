@@ -14,32 +14,33 @@
     <form class="ui form" action="@{Surveys.next}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${survey.code}" />
       <input type="hidden" name="block.code" value="{block.code}" />
+      <input type="hidden" name="isUniversal" value="false" />
       
       #{list questions}
       <p>${_.raw()}</p>
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answer_${_index}" value="yes" />
+            <input type="radio" name="answers[${_index}]" value="yes" />
             <label>بلی</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answer_${_index}" value="no" />
+            <input type="radio" name="answers[${_index}]" value="no" />
             <label>خیر</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answer_${_index}" value="none" />
-            <label>موارد دیگر</label>
+            <input type="radio" name="answers[${_index}]" value="alt" />
+            <label>شامل نمی‌شود</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answer_${_index}" value="alt" />
-            <label>شامل نمی‌شود</label>
+            <input type="radio" name="answers[${_index}]" value="none" />
+            <label>موارد دیگر</label>
           </div>
         </div>
       </div>

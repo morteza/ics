@@ -6,7 +6,9 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.Account;
 import models.AccountRole;
+import models.survey.Answer;
 import models.survey.Question;
 import models.survey.Survey;
 import play.i18n.Messages;
@@ -42,7 +44,7 @@ public class Surveys extends Controller {
       session.put(PAGE_COOKIE_PREFIX + code, "" + page); // put the current step (first) into a survey
     }
     
-    next(code, null);
+    next(code, null, false);
   }
   
   /**
@@ -50,8 +52,8 @@ public class Surveys extends Controller {
    * @param code survey code
    * @param partialResult
    */
-  public static void next(String code, String partialResult) {
-
+  public static void next(String code, String[] answers, boolean isUniversal) {
+    
     // Check if the survey is already started for current session.
     if (!session.contains(PAGE_COOKIE_PREFIX + code) || !session.contains(SURVEY_COOKIE_PREFIX + code)) {
       start(code);
@@ -66,6 +68,26 @@ public class Surveys extends Controller {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
     
+    Account me = Security.connected();
+
+    // Cleanup past survey results
+    Answer.delete("actor=? AND survey=?", me, survey);
+    
+    // Storing results.
+    if (answers!=null && answers.length>0) {
+      for (int i=0;i<answers.length; i++) {
+        Answer a = null;
+        if (isUniversal) {
+          Question question = survey.universalQuestions.get(i);
+          a = new Answer(me, survey, question, answers[i]);
+        } else {
+          a = new Answer(me, survey, i, answers[i]);        
+        }
+        a.save();
+      }      
+    }
+
+    
     //TODO find total pages
     int pages = 2;
 
@@ -74,8 +96,7 @@ public class Surveys extends Controller {
     }
     
     if (page==0) {
-      System.out.println("Size: " + survey.universalQuestions.size());
-      //Show universal questions on first page.
+      //Show universal questions on the first page.
       List<Question> questions = survey.universalQuestions;
       render("surveys/universal_questions.html", survey, page, pages, questions);
     }
@@ -94,7 +115,32 @@ public class Surveys extends Controller {
     session.remove(SURVEY_COOKIE_PREFIX + code);
     session.remove(PAGE_COOKIE_PREFIX + code);
 
-    render("surveys/results.html", survey);
+    Account me = Security.connected();
+    
+    List<Answer> yess = Answer.find("actor=:me AND survey=:survey AND content='yes'")
+        .setParameter("me", me)
+        .setParameter("survey", survey)
+        .fetch();
+
+    
+    List<Answer> nos = Answer.find("actor=:me AND survey=:survey AND content='no'")
+        .setParameter("me", me)
+        .setParameter("survey", survey)
+        .fetch();
+
+    
+    List<Answer> nones = Answer.find("actor=:me AND survey=:survey AND content='none'")
+        .setParameter("me", me)
+        .setParameter("survey", survey)
+        .fetch();
+
+    
+    List<Answer> alts = Answer.find("actor=:me AND survey=:survey AND content='alt'")
+        .setParameter("me", me)
+        .setParameter("survey", survey)
+        .fetch();
+    
+    render("surveys/results.html", survey, yess, nos, nones, alts);
   }
   
   public static void finish(String code) {

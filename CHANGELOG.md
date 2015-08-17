@@ -14,6 +14,8 @@ The following items are change logs divided by dates. In addition to this list, 
 - Two different survey types: regular, and standard. Both available and listed on dashboard.
 - Initial support to show complex universal questions on subjects side.
 - Three more CVSS 3.0 questions in its environment section.
+- Storing results for both universal and general questions.
+- Show number of 'yes', 'no', 'none', and 'alt' answers in a diagram at the end of a survey.
 
 # July 20, 2015
 

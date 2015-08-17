@@ -14,12 +14,13 @@
     <form class="ui form" action="@{Surveys.next}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${survey.code}" />
       <input type="hidden" name="block.code" value="{block.code}" />
+      <input type="hidden" name="isUniversal" value="true" />
             
       #{list questions}
       <div class="field">
 	      <label>${_.title}</label>
 	      #{if _.format == models.survey.AnswerFormat.TEXT}
-	      <input type="text" />
+	      <input type="text" name="answers[${_.id}]" />
 	      <small>${_.description}</small>
 	      #{/if}      
       </div>
