@@ -41,10 +41,10 @@ security.sendResetPasswordEmail=ارسال کلمه‌ی عبور
 security.resetPassword=بازیابی کلمه‌ی عبور
 security.resetPasswordMessage=لطفا پست‌الکترونیکی خود را که با آن ثبت‌نام کرده بودید را وارد نمایید. یک پست‌الکترونیکی شامل لینکی برای بازیابی کلمه‌ی عبور برای شما ارسال می‌شود.
 
-accounts.roles.ADMINISTRATOR=مدیر
-accounts.roles.REGISTERED=عادی
-accounts.roles.GUEST=مهمان
-accounts.roles.MAINTAINER=اپراتور
+security.roles.ADMINISTRATOR=مدیر
+security.roles.REGISTERED=عادی
+security.roles.GUEST=مهمان
+security.roles.MAINTAINER=اپراتور
 accounts.Accounts=کاربران
 accounts.NewAccount=حساب جدید
 accounts.AllAccounts=همه‌ی حساب‌ها
@@ -69,6 +69,9 @@ ThankYou=با تشکر!
 
 title=نام
 description=توضیحات
+
+survey.designer.newRegularSurvey=پرسش‌نامه‌ی جدید
+survey.designer.newStandardSurvey=استانداردِ جدید
 
 survey.designer.GeneralSettings=تنظیمات عمومی
 survey.designer.RemoveThisSurvey=حذف این پرسش‌نامه
