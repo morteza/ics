@@ -16,7 +16,11 @@
     </div>
   </h2>
 
-  <div class="ui default message">شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل CSV وارد نمایید: <a href="#" id="importFlowFileBtn">افزودن پرسش‌نامه به صورت فایل</a></div>
+  <div class="ui default message">
+    شما هم‌چنین می‌توانید پرسش‌نامه را به صورت فایل متنی وارد نمایید: <a href="#" id="importFlowFileBtn">افزودن پرسش‌نامه به صورت فایل</a>
+    <br />
+    
+    </div>
 
   #{list survey.questions}
   <div class="ui segment">
@@ -50,6 +54,8 @@
       <div class="required field">
         <label>فایل سوالات</label>
         <input type="file" name="file" />
+        <br />
+        <small>فایل مورد نظر یک فایل متنی ساده باید باشد که هر خط آن متن یک سوال است.</small>
       </div>
     </form>
   </div>
