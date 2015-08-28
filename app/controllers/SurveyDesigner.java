@@ -7,6 +7,10 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+
 import jobs.ImportQuestionsCsv;
 import models.AccountRole;
 import models.survey.AnswerFormat;
@@ -34,13 +38,7 @@ public class SurveyDesigner extends Controller {
       Application.dashboard();
     }
     survey.createdBy = Security.connected();
-    Question q = new Question(survey);
-    q.title = "نام و نام‌خانوادگی";
-    q.description = "نام و نام‌خانوادگی خود را، به عنوان شخصی که این پرسش‌نامه را پر می‌کند مشخص سازید.";
-    q.format = AnswerFormat.TEXT;
-    q.save();
-    survey.universalQuestions.add(q);
-    survey._save();
+    survey.save();
     flow(survey.code);
   }
   
@@ -114,7 +112,32 @@ public class SurveyDesigner extends Controller {
     Survey survey = Survey.findByCode(code);
     notFoundIfNull(survey);
     
-    //TODO parse JSON and store it.
+    JsonElement jsonElement = new JsonParser().parse(json==null?"":json);
+
+    if (!jsonElement.isJsonNull()) {
+      JsonArray jsonQuestions = jsonElement.getAsJsonObject().getAsJsonArray("data");
+
+      //TODO remove all current questions.
+      
+      survey.universalQuestions.clear();
+      survey.save();
+      
+      for (JsonElement jsonQuestion: jsonQuestions) {
+        JsonElement qDataObj = jsonQuestion.getAsJsonObject().get("data");
+        String qContent = qDataObj.toString();
+        String qType = jsonQuestion.getAsJsonObject().get("type").getAsString();
+
+        Question q = new Question(survey);
+        q.title = qDataObj.getAsJsonObject().get("text").getAsString();
+        q.description = "";
+        q.format = AnswerFormat.parse(qType.toUpperCase());
+        q.save();
+        survey.universalQuestions.add(q);
+      }      
+    }
+
+    survey.flowJson = json;
+    survey.save();
     
     renderText(Messages.get("survey.designer.FlowHasBeenUpdated"));
   }

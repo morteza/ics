@@ -64,6 +64,11 @@ public class Survey extends ModelWithTimestamp {
   
   @ElementCollection
   public List<String> questions;
+
+  @MaxSize(10000)
+  @Lob
+  @Column(columnDefinition="TEXT")
+  public String flowJson;
   
   public Survey() {
     universalQuestions = new ArrayList<Question>();
@@ -74,6 +79,7 @@ public class Survey extends ModelWithTimestamp {
     isDeleted = false;
     isPublic = true;
     type= SurveyType.REGULAR;
+    flowJson = "";
   }  
   
   private String generateCode(int size) {

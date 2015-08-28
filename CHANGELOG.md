@@ -2,6 +2,11 @@
 
 The following items are change logs divided by dates. In addition to this list, please review git commits for more items and detailed descriptions.
 
+# August 28, 2015
+
+- Store flow of a survey in Json format.
+- Parse universal questions and add respective questions tot he survey.
+
 # August 15, 2015
 
 - Push footer to the bottom of the view.

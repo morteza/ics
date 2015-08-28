@@ -18,13 +18,15 @@
             
       #{list questions}
       <div class="field">
-	      <label>${_.title}</label>
+	      <label>${_.title.raw()}</label>
 	      #{if _.format == models.survey.AnswerFormat.TEXT}
 	      <input type="text" name="answers[${_.id}]" />
 	      <small>${_.description}</small>
-	      #{/if}      
+	      #{/if}
+	      #{elseif _.format == models.survey.AnswerFormat.SCALE}
+	      #{/elseif}
       </div>
-	    <div class="ui divider"></div>
+	    <div class="ui hidden divider divider"></div>
       #{/list}
 
       <div class="ui hidden divider"></div>
