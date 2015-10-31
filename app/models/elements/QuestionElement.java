@@ -1,6 +1,6 @@
 /*******************************************************************************
  *        File: QuestionElement.java
- *    Revision: 1
+ *    Revision: 2
  * Description: An element represents default multiple choice questions.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: Oct 31, 2015
@@ -13,15 +13,20 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import models.ModelWithTimestamp;
+import models.survey.Survey;
 import play.i18n.Messages;
 
 @Entity(name="question_element")
 public class QuestionElement extends ModelWithTimestamp {
   
-  public String description;
+  @ManyToOne
+  public Survey survey;
+  
+  public String content;
   public Integer rank;
     
-  public QuestionElement() {
+  public QuestionElement(Survey survey) {
+    this.survey = survey;
   }
   
 }

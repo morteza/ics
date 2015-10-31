@@ -1,6 +1,6 @@
 /*******************************************************************************
  *        File: Survey.java
- *    Revision: 3
+ *    Revision: 4
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: July 3, 2015
@@ -13,22 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import models.Account;
+import models.ModelWithTimestamp;
+import models.elements.MetricElement;
+import models.elements.QuestionElement;
 import play.data.validation.MaxSize;
 import play.data.validation.MinSize;
 import play.data.validation.Required;
 import play.data.validation.Unique;
-import models.Account;
-import models.ModelWithTimestamp;
 
 @Entity
 @Table(name="survey")
@@ -53,33 +52,30 @@ public class Survey extends ModelWithTimestamp {
   @Unique
   public String code;
   
+  // This is maximum alpha value to be compliance of a security standard;
+  public Double complianceThreshold;
+  
   public Boolean isPublished;
   
   public Boolean isPublic;
   
   public SurveyType type;
-  
-  @OneToMany(mappedBy="survey",cascade=CascadeType.ALL)
-  public List<Question> universalQuestions;
-  
-  @ElementCollection
-  public List<String> questions;
 
-  @MaxSize(10000)
-  @Lob
-  @Column(columnDefinition="TEXT")
-  public String flowJson;
+  @OneToMany
+  public List<MetricElement> metrics;
   
+  @OneToMany
+  public List<QuestionElement> questions;
+
   public Survey() {
-    universalQuestions = new ArrayList<Question>();
-    questions = new ArrayList<String>();
+    metrics = new ArrayList<MetricElement>();
+    questions = new ArrayList<QuestionElement>();
     code = generateCode(5);
     //TODO set isPublished to false, and add an action to publish it manually.
     isPublished = true;
     isDeleted = false;
     isPublic = true;
     type= SurveyType.REGULAR;
-    flowJson = "";
   }  
   
   private String generateCode(int size) {
