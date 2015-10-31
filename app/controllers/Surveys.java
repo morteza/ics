@@ -1,6 +1,12 @@
-/**
- * 
- */
+/*******************************************************************************
+ *        File: Surveys.java
+ *    Revision: 4
+ * Description: Runs a survey for the subject.
+ *      Author: Morteza Ansarinia <ansarinia@me.com>
+ *  Created on: Aug 8, 2014
+ *     Project: itrc.ics
+ *   Copyright: See the file "LICENSE" for the full license governing this code.
+ *******************************************************************************/
 package controllers;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@
  * Description: Data models with createdAt and modifiedAt timestamps.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: April 14, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package models;

@@ -1,3 +1,12 @@
+/*******************************************************************************
+ *        File: SurveyDesigner.java
+ *    Revision: 4
+ * Description: Design an survey.
+ *      Author: Morteza Ansarinia <ansarinia@me.com>
+ *  Created on: Aug 8, 2014
+ *     Project: itrc.ics
+ *   Copyright: See the file "LICENSE" for the full license governing this code.
+ *******************************************************************************/
 package controllers;
 
 import java.io.BufferedReader;
@@ -22,7 +31,7 @@ import play.mvc.With;
 import utils.SecurityCheck;
 
 @With(Security.class)
-@SecurityCheck(AccountRole.ADMINISTRATOR)
+@SecurityCheck(AccountRole.MAINTAINER)
 public class SurveyDesigner extends Controller {
   
   public static void create(Survey survey) {
@@ -160,5 +169,13 @@ public class SurveyDesigner extends Controller {
     survey.save();
     
     Application.dashboard();
+  }
+
+  /**
+   * Show a view to manage survey elements.
+   * @param code survey code
+   */
+  public static void elements(String code) {
+    todo();
   }
 }

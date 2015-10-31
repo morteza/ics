@@ -1,10 +1,10 @@
 /*******************************************************************************
- *        File: CreateDummyData.java
+ *        File: ImportQuestionsCsv.java
  *    Revision: 2
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: August 26, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package jobs;
@@ -34,7 +34,7 @@ public class ImportQuestionsCsv extends Job {
   }
   
   public void doJob() throws Exception {
-    System.out.println("Job is done!");
+    System.out.println("CSV has been imported!");
   }
 
 }

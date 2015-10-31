@@ -4,7 +4,7 @@
  * Description: User feedbacks.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: November 16, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package models.cms;

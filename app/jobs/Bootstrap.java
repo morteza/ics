@@ -1,10 +1,10 @@
 /*******************************************************************************
  *        File: Bootstrap.java
  *    Revision: 3
- * Description: 
+ * Description: Runs initialization and startup tasks on application start.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: August 4, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package jobs;

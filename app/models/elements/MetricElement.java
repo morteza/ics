@@ -1,26 +1,27 @@
 /*******************************************************************************
- *        File: Configuration.java
- *    Revision: 2
+ *        File: MetricElement.java
+ *    Revision: 1
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
- *  Created on: August 4, 2014
+ *  Created on: Oct 31, 2015
  *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
-package models;
+package models.elements;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
-import play.data.validation.Required;
-import play.data.validation.Unique;
+import models.ModelWithTimestamp;
+import play.i18n.Messages;
 
-@Entity
-public class Configuration extends ModelWithTimestamp {
+@Entity(name="metric_element")
+public class MetricElement extends ModelWithTimestamp {
+  
+  public String description;
+  public Integer rank;
     
-    @Unique
-    @Required
-    public String configKey;
-    
-    @Required
-    public String configValue;
+  public MetricElement() {
+  }
+  
 }

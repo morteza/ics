@@ -1,10 +1,10 @@
 /*******************************************************************************
  *        File: Account.java
  *    Revision: 4
- * Description:
+ * Description: Data model for user accounts.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: August 8, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package models;

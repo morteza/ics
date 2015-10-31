@@ -4,7 +4,7 @@
  * Description: Security core module.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: Aug 8, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package controllers;

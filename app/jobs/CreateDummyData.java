@@ -1,10 +1,10 @@
 /*******************************************************************************
  *        File: CreateDummyData.java
  *    Revision: 2
- * Description: 
+ * Description: Create some dummy data if nothing is stored in database.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: August 26, 2014
- *     Project: itrc.cset
+ *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package jobs;
