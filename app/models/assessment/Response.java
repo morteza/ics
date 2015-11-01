@@ -1,47 +1,40 @@
 /*******************************************************************************
- *        File: Answer.java
- *    Revision: 1
+ *        File: Response.java
+ *    Revision: 2
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: July 3, 2015
  *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
-package models.survey;
+package models.assessment;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import models.Account;
 import models.ModelWithTimestamp;
+import models.elements.QuestionElement;
 
-@Entity(name="answer")
-public class Answer extends ModelWithTimestamp {
+@Entity(name="response")
+public class Response extends ModelWithTimestamp {
   
   @ManyToOne
-  Survey survey;
+  Assessment assessment;
   
   @ManyToOne
   Account actor;
-  
-  int questionIndex;
-  
+    
   @ManyToOne
-  Question question;
+  QuestionElement question;
   
   public String content;
   
-  public Answer(Account actor, Survey survey, int question, String content) {
+  public Response(Account actor, Assessment assessment, QuestionElement question, String content) {
     this.actor = actor;
-    this.survey = survey;
-    this.questionIndex = question;
-    this.content = content;
-  }
-  
-  public Answer(Account actor, Survey survey, Question question, String content) {
-    this.actor = actor;
-    this.survey = survey;
+    this.assessment = assessment;
     this.question = question;
     this.content = content;
   }
+
 }

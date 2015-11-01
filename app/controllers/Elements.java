@@ -1,7 +1,7 @@
 /*******************************************************************************
  *        File: Elements.java
  *    Revision: 1
- * Description: Manages building block elements of a survey.
+ * Description: Manages building block elements of an assessment.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: Oct 31, 2015
  *     Project: itrc.ics
@@ -10,10 +10,10 @@
 package controllers;
 
 import models.AccountRole;
+import models.assessment.Assessment;
 import models.elements.MetricElement;
 import models.elements.QuestionElement;
 import models.elements.SubMetricElement;
-import models.survey.Survey;
 import play.mvc.Controller;
 import play.mvc.With;
 import utils.SecurityCheck;
@@ -21,7 +21,7 @@ import utils.SecurityCheck;
 @With(Security.class)
 @SecurityCheck(AccountRole.MAINTAINER)
 public class Elements extends Controller {
-  public static void saveQuestion(Survey survey, QuestionElement element) {
+  public static void saveQuestion(Assessment assessment, QuestionElement element) {
     //TODO: read parent sub metric from params, if available.
     String content = request.params.get("content");
     
@@ -31,15 +31,15 @@ public class Elements extends Controller {
     } else {
       // It is a new element.
     }
-    SurveyDesigner.elements(survey.code);
+    AssessmentDesigner.elements(assessment.code);
   }
   
-  public static void saveMetric(Survey survey, MetricElement element) {
+  public static void saveMetric(Assessment assessment, MetricElement element) {
     String title = request.params.get("title");
     String content = request.params.get("content");
   }
   
-  public static void saveSubMetric(Survey survey, SubMetricElement element) {
+  public static void saveSubMetric(Assessment assessment, SubMetricElement element) {
     //TODO: read parent metric from params, if available.    
     String title = request.params.get("title");
     String content = request.params.get("content");

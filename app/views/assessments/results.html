@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:survey.title /}
+#{set title:assessment.title /}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
 
@@ -10,7 +10,7 @@
 <section class="ui padded page stackable grid">
 <div class="ui twelve wide centered column">
   <div class="ui clearing segment">
-    <div class="ui ribbon label">&{'survey.results'}</div>
+    <div class="ui ribbon label">&{'assessment.results'}</div>
     <div class="ui default message">
     نمودارهای زیر نتایج مستخرج از پاسخ‌های شما به پرسش‌نامه را نشان می‌دهد.    
     </div>
@@ -28,7 +28,7 @@
     </div> <!-- /.segment -->
     
     <div class="ui divider"></div>
-    <a href="@{Surveys.finish(survey.code)}" class="ui primary right floated button">پایان</a>
+    <a href="@{assessments.finish(assessment.code)}" class="ui primary right floated button">پایان</a>
   </div>
 </div>
 </section>

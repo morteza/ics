@@ -13,8 +13,7 @@ import java.util.List;
 
 import models.Account;
 import models.AccountRole;
-import models.survey.Survey;
-import models.survey.SurveyType;
+import models.assessment.Assessment;
 import play.CorePlugin;
 import play.cache.Cache;
 import play.i18n.Lang;
@@ -49,12 +48,12 @@ public class Application extends Controller {
     Account me = Security.connected();
     notFoundIfNull(me);
     
-    List<Survey> surveys = Survey.find("type=:type and isDeleted=false and isPublished=true")
-        .setParameter("type", SurveyType.REGULAR).fetch();
-    List<Survey> standards = Survey.find("type=:type and isDeleted=false and isPublished=true")
-        .setParameter("type", SurveyType.STANDARD).fetch();
+    List<Assessment> assessments = Assessment.find("type=:type and isDeleted=false and isPublished=true")
+        .setParameter("type", Assessment.AssessmentType.REGULAR).fetch();
+    List<Assessment> standards = Assessment.find("type=:type and isDeleted=false and isPublished=true")
+        .setParameter("type", Assessment.AssessmentType.STANDARD).fetch();
 
-    render("application/dashboard.html", surveys, standards);
+    render("application/dashboard.html", assessments, standards);
   }
 
   /**

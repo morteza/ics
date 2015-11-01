@@ -1,6 +1,6 @@
 #{extends 'main.html' /}
 #{set title:'Edit Experiment' /}
-#{set surveyCode:survey.code /}
+#{set assessmentCode:assessment.code /}
 
 #{set 'moreStyles'}
 #{/set}
@@ -10,31 +10,39 @@
       <h2 class="ui header">
         <i class="settings icon"></i>
         <div class="content">
-          &{'survey.designer.GeneralSettings'}
+          &{'assessment.designer.GeneralSettings'}
         </div>
       </h2>
 
 	  <div class="ui segment">	
-		  <form class="ui fluid form" id="updateSurveyForm" role="form" method="POST" action="@{SurveyDesigner.update}" enctype="multipart/form-data">
-		    <input type="hidden" name="survey.id" value="${survey.id}" />
-		    <input type="hidden" name="survey.code" value="${survey.code}" />
+		  <form class="ui fluid form" id="updateAssessmentForm" role="form" method="POST" action="@{AssessmentDesigner.save}" enctype="multipart/form-data">
+		    <input type="hidden" name="assessment.id" value="${assessment.id}" />
+		    <input type="hidden" name="assessment.code" value="${assessment.code}" />
 		    <div class="field">
 		      <label>&{'title'}</label>
-		      <input type="text" name="survey.title" value="${survey.title}" min="1" />
+		      <input type="text" name="assessment.title" value="${assessment.title}" min="1" />
 		    </div>
 		    <div class="field">
 		      <label>&{'description'}</label>
-		      <textarea name="survey.description" rows="10" max="1000">${survey.description}</textarea>
+		      <textarea name="assessment.description" rows="10" max="1000">${assessment.description}</textarea>
 		    </div>
+
+        <div class="three fields">
+          <div class="field">
+	          <label>آستانه‌ی تضمین امنیتی (آلفا)</label>
+	          <input type="number" value="${assessment.complianceThreshold}" name="assessment.complianceThreshold" style="direction:ltr"/>
+          </div>
+        </div>
+
 	      <div class="field">
 	        <div class="ui checkbox">
-	          <input type="checkbox" id="publicSurvey" name="survey.isPublic" value="true" #{if survey.isPublic==true}checked#{/if}>
-	          <input type="hidden" name="experiment.isPublic" value="false" />
-	          <label for="publicSurvey">پرسش‌نامه‌ی عمومی</label>
+	          <input type="checkbox" id="publicAssessment" name="assessment.isPublic" value="true" #{if assessment.isPublic==true}checked#{/if}>
+	          <input type="hidden" name="assessment.isPublic" value="false" />
+	          <label for="publicAssessment">پرسش‌نامه‌ی عمومی</label>
 	        </div>
 	      </div>
 	
-	      <div class="ui divider"></div>
+	      <div class="ui hidden divider"></div>
 
 		    <div class="field">
 		      <button class="ui primary button" type="submit">&{'save'}</button>
@@ -43,13 +51,13 @@
 		  </form>
 		</div> <!-- /.segment -->
     <div class="ui secondary red clearing segment">
-       <div class="ui red header">&{'survey.designer.RemoveThisSurvey'}</div>
-       مراقب باشید! وقتی این پرسش‌نامه حذف شود، هیچ راهی برای بازیابی آن و هر نوع داده‌ی مرتبط با آن وجود ندارد.
+       <div class="ui red header">&{'assessment.designer.RemoveThisAssessment'}</div>
+       مراقب باشید! وقتی این ارزیابی حذف شود، هیچ راهی برای بازیابی آن و هر نوع داده‌ی مرتبط با آن وجود ندارد.
        همه‌ی اطلاعات از جمله سوالات پرسش‌نامه، نتایج موجود و پاسخ‌های داده‌شده حذف خواهد شد. 
-       <br />
-       <a href="#" class="ui right floated basic red left labeled icon button" id="removeSurveyBtn">
+       <div class="ui hidden divider"></div>
+       <a href="#" class="ui right floated basic red left labeled icon button" id="removeAssessmentBtn">
          <i class="warning sign icon"></i>
-         &{'survey.designer.RemoveSurvey'}
+         &{'assessment.designer.RemoveAssessment'}
        </a>
     </div>
   </div> <!-- /.column -->
@@ -78,17 +86,17 @@
 <section class="ui small modal" role="dialog" aria-hidden="true">
   <i class="close icon"></i>
   <div class="content">
-    <form class="ui form" id="removeSurveyForm" action="@{SurveyDesigner.remove}" method="POST">
+    <form class="ui form" id="removeAssessmentForm" action="@{AssessmentDesigner.remove}" method="POST">
       <div class="field">
-        <p>برای حذف این پرسش‌نامه و تمامی داده‌های مرتبت با آن کّد زیر را وارد نمایید: <pre>${survey.code}</pre></p>
-        <input type="text" name="code" data-survey="${survey.code}" id="toBeRemovedCode"/>
+        <p>برای حذف این پرسش‌نامه و تمامی داده‌های مرتبت با آن کّد زیر را وارد نمایید: <pre>${assessment.code}</pre></p>
+        <input type="text" name="code" data-assessment="${assessment.code}" id="toBeRemovedCode"/>
       </div>
     </form>
   </div>
   <div class="actions">
-    <button type="submit" id="submitRemoveSurvey" class="ui disabled red left labeled icon button">
+    <button type="submit" id="submitRemoveAssessment" class="ui disabled red left labeled icon button">
       <i class="warning sign icon"></i>
-      &{'survey.designer.RemoveSurvey'}
+      &{'assessment.designer.RemoveAssessment'}
     </button>
   </div>
 </section>
@@ -97,9 +105,9 @@
 #{set 'moreScripts'}
 <script>
 
-$('#updateSurveyForm').form({
+$('#updateAssessmentForm').form({
   title: {
-    identifier: 'survey.title',
+    identifier: 'assessment.title',
     rules: [
       {
         type: 'empty',
@@ -108,11 +116,11 @@ $('#updateSurveyForm').form({
     ]
   },
   description: {
-    identifier: 'survey.description',
+    identifier: 'assessment.description',
     rules: [
       {
         type: 'empty',
-        prompt: 'Please enter a description for this experiment.'
+        prompt: 'Please enter a description for this assessment.'
       }
     ]
   }
@@ -121,15 +129,15 @@ $('#updateSurveyForm').form({
   inline: true
 });
 
-$('.modal').modal('attach events', '#removeSurveyBtn', 'show');
-$('#submitRemoveSurvey').click(function(){
-  $('#removeSurveyForm').submit();
+$('.modal').modal('attach events', '#removeAssessmentBtn', 'show');
+$('#submitRemoveAssessment').click(function(){
+  $('#removeAssessmentForm').submit();
 });
 $("#toBeRemovedCode").keyup(function() {
-  if ($(this).data('survey')==$(this).val()) {
-    $('#submitRemoveSurvey').removeClass('disabled');
+  if ($(this).data('assessment')==$(this).val()) {
+    $('#submitRemoveAssessment').removeClass('disabled');
   } else {
-    $('#submitRemoveSurvey').addClass('disabled');
+    $('#submitRemoveAssessment').addClass('disabled');
   }
 });
 </script>

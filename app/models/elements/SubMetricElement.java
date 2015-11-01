@@ -17,14 +17,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import models.ModelWithTimestamp;
-import models.survey.Survey;
+import models.assessment.Assessment;
 import play.i18n.Messages;
 
 @Entity(name="sub_metric_element")
 public class SubMetricElement extends ModelWithTimestamp {
   
   @ManyToOne
-  public Survey survey;
+  public Assessment assessment;
   
   public String title;
   public String content;
@@ -35,8 +35,8 @@ public class SubMetricElement extends ModelWithTimestamp {
   @OneToMany
   public List<QuestionElement> questions;
   
-  public SubMetricElement(Survey survey) {
-    this.survey = survey;
+  public SubMetricElement(Assessment assessment) {
+    this.assessment = assessment;
     this.questions = new ArrayList<QuestionElement>();
   }
   

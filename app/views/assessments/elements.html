@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:survey.title /}
+#{set title:assessment.title /}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
 
@@ -11,8 +11,8 @@
 <div class="ui twelve wide centered column">
   <div class="ui clearing segment">
     <div class="ui ribbon label">&{'page'} ${page+1} &{'of'} ${pages}</div>
-    <form class="ui form" action="@{Surveys.next}" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="code" value="${survey.code}" />
+    <form class="ui form" action="@{Assessments.next}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="code" value="${assessment.code}" />
       <input type="hidden" name="block.code" value="{block.code}" />
       <input type="hidden" name="isUniversal" value="false" />
       

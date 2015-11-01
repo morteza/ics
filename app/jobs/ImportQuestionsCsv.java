@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import models.Account;
 import models.AccountRole;
-import models.survey.Survey;
+import models.assessment.Assessment;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.libs.WS;
@@ -26,11 +26,11 @@ import play.libs.WS.FileParam;
 
 public class ImportQuestionsCsv extends Job {
   
-  Survey survey;
+  Assessment assessment;
   File csvFile;
   
-  public ImportQuestionsCsv(Survey survey, File csvFile) {
-    this.survey = survey;
+  public ImportQuestionsCsv(Assessment assessment, File csvFile) {
+    this.assessment = assessment;
   }
   
   public void doJob() throws Exception {

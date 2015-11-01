@@ -13,20 +13,20 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
 import models.ModelWithTimestamp;
-import models.survey.Survey;
+import models.assessment.Assessment;
 import play.i18n.Messages;
 
 @Entity(name="question_element")
 public class QuestionElement extends ModelWithTimestamp {
   
   @ManyToOne
-  public Survey survey;
+  public Assessment assessment;
   
   public String content;
   public Integer rank;
     
-  public QuestionElement(Survey survey) {
-    this.survey = survey;
+  public QuestionElement(Assessment assessment) {
+    this.assessment = assessment;
   }
   
 }

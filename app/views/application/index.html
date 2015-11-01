@@ -73,12 +73,7 @@
       <div class="ui hidden divider"></div>
       <p>&{'homepage.masthead.description'}</p>
 
-      #{if controllers.Security.check(models.AccountRole.REGISTERED)}
-      <a class="ui basic huge blue compact button" href="@{Application.dashboard()}">&{'homepage.GetStarted'} <i class="right arrow icon"></i></a>
-      #{/if}
-      #{else}
-      <a class="ui basic huge blue compact button" href="@{Security.login()}">&{'login'}</a>
-      #{/else}
+      <a class="ui basic huge blue compact button" href="@{Assessments.assessorInformation()}">شروع ارزیابی</a>
     </div>
 	
   </div>

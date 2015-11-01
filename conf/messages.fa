@@ -1,7 +1,7 @@
 # Farsi i18n messages.
 #
 
-app.name=آزمایشگاه امنیت صنعتی
+app.name=ارزیابی سامانه‌های کنترل صنعتی
 
 homepage.GetStarted=داشبورد
 
@@ -58,7 +58,7 @@ role=دسترسی
 unknown=نامشخص
 continue=ادامه
 save=ذخیره شود
-newSurvey=پرسش‌نامه‌ی جدید
+newAssessment=پرسش‌نامه‌ی جدید
 
 of=از
 page=صفحه
@@ -70,19 +70,23 @@ ThankYou=با تشکر!
 title=نام
 description=توضیحات
 
-survey.designer.newRegularSurvey=پرسش‌نامه‌ی جدید
-survey.designer.newStandardSurvey=استانداردِ جدید
+assessment.designer.newRegularAssessment=پرسش‌نامه‌ی جدید
+assessment.designer.newStandardAssessment=استانداردِ جدید
 
-survey.designer.GeneralSettings=تنظیمات عمومی
-survey.designer.RemoveThisSurvey=حذف این پرسش‌نامه
-survey.designer.RemoveSurvey=حذف پرسش‌نامه و اطلاعات مرتبط
-survey.designer.Results=نتایج
-survey.designer.ImportFlow=افزودن پرسش‌نامه به صورت فایل
-survey.designer.QuestionFileHasBeenImportedSuccessfully=سوالات با موفقیت به پرسش‌نامه افزوده شد.
+assessment.designer.GeneralSettings=تنظیمات عمومی
+assessment.designer.RemoveThisAssessment=حذف این پرسش‌نامه
+assessment.designer.RemoveAssessment=حذف پرسش‌نامه و اطلاعات مرتبط
+assessment.designer.Results=نتایج
+assessment.designer.ImportFlow=افزودن پرسش‌نامه به صورت فایل
+assessment.designer.QuestionFileHasBeenImportedSuccessfully=سوالات با موفقیت به پرسش‌نامه افزوده شد.
+assessment.UpdatedSuccessfully=ارزیابی به روز گردید.
 
-survey.designer.FlowHasBeenUpdated=ساختار پرسش‌نامه به‌روز گردید.
+assessment.designer.FlowHasBeenUpdated=ساختار پرسش‌نامه به‌روز گردید.
 
-survey.results=نتایج
+assessment.results=نتایج
+
+assessor=ارزیاب
+assessor.Information=اطلاعات ارزیاب
 
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 

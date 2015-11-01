@@ -11,6 +11,9 @@ GET     /captcha                                Application.captcha
 # Security calculator pages
 GET     /cvss                                   CVSS.calculator
 
+# Assessor frontend routes
+GET     /assessor                               Assessments.assessorInformation
+
 # Account and security routes
 *       /login                                  Security.login
 *       /amazon_login                           Security.amazon_login

@@ -1,5 +1,5 @@
 /*******************************************************************************
- *        File: Survey.java
+ *        File: Assessment.java
  *    Revision: 4
  * Description: 
  *      Author: Morteza Ansarinia <ansarinia@me.com>
@@ -7,7 +7,7 @@
  *     Project: itrc.ics
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
-package models.survey;
+package models.assessment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +30,8 @@ import play.data.validation.Required;
 import play.data.validation.Unique;
 
 @Entity
-@Table(name="survey")
-public class Survey extends ModelWithTimestamp {
+@Table(name="assessment")
+public class Assessment extends ModelWithTimestamp {
   
   @Required
   @MinSize(1)
@@ -59,7 +59,12 @@ public class Survey extends ModelWithTimestamp {
   
   public Boolean isPublic;
   
-  public SurveyType type;
+  public enum AssessmentType {
+    REGULAR,
+    STANDARD
+  }
+  
+  public AssessmentType type;
 
   @OneToMany
   public List<MetricElement> metrics;
@@ -67,7 +72,7 @@ public class Survey extends ModelWithTimestamp {
   @OneToMany
   public List<QuestionElement> questions;
 
-  public Survey() {
+  public Assessment() {
     metrics = new ArrayList<MetricElement>();
     questions = new ArrayList<QuestionElement>();
     code = generateCode(5);
@@ -75,7 +80,7 @@ public class Survey extends ModelWithTimestamp {
     isPublished = true;
     isDeleted = false;
     isPublic = true;
-    type= SurveyType.REGULAR;
+    type= AssessmentType.REGULAR;
   }  
   
   private String generateCode(int size) {
@@ -88,7 +93,7 @@ public class Survey extends ModelWithTimestamp {
     return result;
   }
   
-  public static Survey findByCode(String code) {
-    return Survey.find("byCode", code).first();
+  public static Assessment findByCode(String code) {
+    return Assessment.find("byCode", code).first();
   }
 }

@@ -16,22 +16,19 @@
   <a  class="#{if request.action=='Application.dashboard'}active#{/if} icon item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
   <a  class="#{if request.action=='CVSS.calculator'}active#{/if} icon item" href="@{CVSS.calculator()}" title="&{'calculator'}"><i class="calculator icon"></i></a>
 
-  #{if surveyCode}
-    <!-- Survey Designer menu -->
+  #{if assessmentCode}
+    <!-- Assessment Designer menu -->
     <section class="secondary menu">
-      <a class="#{if request.action=='SurveyDesigner.general'}active#{/if} icon item" href="@{SurveyDesigner.general(surveyCode)}">
+      <a class="#{if request.action=='AssessmentDesigner.general'}active#{/if} icon item" href="@{AssessmentDesigner.general(assessmentCode)}">
         <i class="settings blue icon"></i>
       </a>
-      <a class="#{if request.action=='SurveyDesigner.questions'}active#{/if} icon item" href="@{SurveyDesigner.questions(surveyCode)}">
+      <a class="#{if request.action=='AssessmentDesigner.elements'}active#{/if} icon item" href="@{AssessmentDesigner.elements(assessmentCode)}">
         <i class="blue help icon"></i> 
       </a>
-      <a class="#{if request.action=='SurveyDesigner.flow' || request.action=='SurveyDesigner.importFlow'}active#{/if} icon item" href="@{SurveyDesigner.flow(surveyCode)}">
-        <i class="sort numeric ascending blue icon"></i>
-      </a>
-      <a class="#{if request.action=='SurveyDesigner.results'}active#{/if} icon item" href="@{SurveyDesigner.results(surveyCode)}">
+      <a class="#{if request.action=='AssessmentDesigner.results'}active#{/if} icon item" href="@{AssessmentDesigner.results(assessmentCode)}">
         <i class="area chart blue icon"></i>
       </a>
-      <a class="icon item" href="@{Surveys.start(surveyCode)}">
+      <a class="icon item" href="@{Assessments.start(AssessmentCode)}">
         <i class="green play icon"></i>
       </a>
     </section>
