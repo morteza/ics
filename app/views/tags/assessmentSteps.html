@@ -1,0 +1,26 @@
+<div class="ui four top attached steps">
+  <div class="#{if request.action=='Assessments.assessorInformation'}active#{/if} step">
+    <i class="circle info icon"></i>
+    <div class="content">
+      <div class="title">مشخصات</div>
+    </div>
+  </div>
+  <div class="#{if request.action=='Assessments.standards'}active#{/if} disabled step">
+    <i class="legal icon"></i>
+    <div class="content">
+      <div class="title">استانداردها</div>
+    </div>
+  </div>
+  <div class="#{if request.action=='Assessments.next'}active#{/if} step">
+    <i class="circle help icon"></i>
+    <div class="content">
+      <div class="title">پرسش‌نامه</div>
+    </div>
+  </div>
+  <div class="#{if request.action=='Assessments.results'}active#{/if} step">
+    <i class="pie chart icon"></i>
+    <div class="content">
+      <div class="title">نتایج</div>
+    </div>
+  </div>
+</div>

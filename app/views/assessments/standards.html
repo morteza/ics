@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set 'title'} &{'assessor.Information'} #{/set}
+#{set 'title'} &{'assessments.Standards'} #{/set}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
 
@@ -8,32 +8,7 @@
 
 <section class="ui padded page stackable grid">
 <div class="ui fourteen wide centered column">
-<div class="ui four top attached steps">
-  <div class="active step">
-    <i class="circle info icon"></i>
-    <div class="content">
-      <div class="title">مشخصات</div>
-    </div>
-  </div>
-  <div class="disabled step">
-    <i class="legal icon"></i>
-    <div class="content">
-      <div class="title">استانداردها</div>
-    </div>
-  </div>
-  <div class="disabled step">
-    <i class="circle help icon"></i>
-    <div class="content">
-      <div class="title">پرسش‌نامه</div>
-    </div>
-  </div>
-  <div class="disabled step">
-    <i class="pie chart icon"></i>
-    <div class="content">
-      <div class="title">نتایج</div>
-    </div>
-  </div>
-</div>
+  #{assessmentSteps /}
   <div class="ui clearing bottom attached segment" style="border-top: 1px solid #d4d4d5;">
     <div class="ui hidden divider"></div>         
 
