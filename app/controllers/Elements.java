@@ -44,7 +44,7 @@ public class Elements extends Controller {
     } else {
       QuestionElement elem = new QuestionElement(parent);
       elem.title = title;
-      element.description = description;
+      elem.description = description;
       elem.save();
       elem.code = "question." + elem.id;
       elem.save();
