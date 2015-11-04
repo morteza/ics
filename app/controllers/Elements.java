@@ -30,16 +30,28 @@ import utils.SecurityCheck;
 @SecurityCheck(AccountRole.MAINTAINER)
 public class Elements extends Controller {
   public static void saveQuestion(SubMetricElement parent, QuestionElement element) {
-    //TODO: read parent sub metric from params, if available.
-    String content = request.params.get("content");
-    
+    //TODO: read parent metric from params, if available.    
+    String title = request.params.get("title");
+    String description = request.params.get("description");
+
     // Check if elements is new, or we are updating one.
     if (element!=null && element.id!=null) {
-      // Updating an element.
+      element.title = title;
+      element.description = description;
+      element.setParent(parent);
+      element.save();
+      flash.success(Messages.get("assessments.elements.QuestionUpdated"));
     } else {
-      // It is a new element.
+      QuestionElement elem = new QuestionElement(parent);
+      elem.title = title;
+      elem.save();
+      elem.code = "question." + elem.id;
+      elem.save();
+      elem.assessment.elements.add(elem.code);
+      elem.assessment.save();
+      flash.success(Messages.get("assessments.elements.QuestionCreated"));
     }
-    AssessmentDesigner.elements(element.assessment.code);
+    AssessmentDesigner.elements(parent.assessment.code);
   }
   
   public static void saveMetric(Assessment assessment, MetricElement element) {
@@ -73,6 +85,7 @@ public class Elements extends Controller {
     if (element!=null && element.id!=null) {
       element.title = title;
       element.description = description;
+      element.setParent(parent);
       element.save();
       flash.success(Messages.get("assessments.elements.SubMetricUpdated"));
     } else {
@@ -92,8 +105,8 @@ public class Elements extends Controller {
     Assessment assessment = Assessment.findByCode(assessmentCode);
     notFoundIfNull(assessment);
     
-    // New Sub Metric
-    if ("sub_metric".equalsIgnoreCase(type)) {
+    // New Sub Metric or Question
+    if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
       // Add available metrics to the render arguments.
       List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
       renderArgs.put("metrics", metrics);
@@ -142,6 +155,12 @@ public class Elements extends Controller {
     String type = element.elementType();
     notFoundIfNull(type);
    
+    if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
+      // Add available metrics to the render arguments.
+      List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+      renderArgs.put("metrics", metrics);
+    }
+
     //long numOfRelatedResults = Account.find("SELECT DISTINCT a FROM Account a, BlockResult r WHERE r.actor=a AND r.assessment=?", assessment).fetch().size();      
     boolean preventRemoval = false;//Long.compare(numOfRelatedResults, 0) >0;
 
@@ -159,7 +178,12 @@ public class Elements extends Controller {
     assessment.elements.remove(code);    
     assessment.save();
     
-    element.delete();
+    try {
+      element.delete();      
+    } catch(Exception e) {
+      flash.error(Messages.get("assessments.elements.RemoveFailed"));      
+      AssessmentDesigner.elements(assessment.code);
+    }
     
     flash.success(Messages.get("assessments.elements.Removed"));
     
@@ -179,7 +203,17 @@ public class Elements extends Controller {
       }
     }
     assessment.save();
-    flash.success(Messages.get("assessments.elements.Reordered"));
+    renderText(Messages.get("assessments.elements.Reordered"));
+  }
+  
+  @Util
+  private static void addAdditionalRenderArgs() {
+    //TODO:
+  }
+  
+  public static List<SubMetricElement> getSubMetrics(MetricElement parent) {
+    List<SubMetricElement> subMetrics = SubMetricElement.find("byParent", parent).fetch();
+    return subMetrics;
   }
   
 }

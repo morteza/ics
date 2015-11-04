@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Elements' /}
+#{set title:'پرسش‌نامه' /}
 #{set assessmentCode:assessment.code /}
 
 #{set 'moreStyles'}
@@ -25,12 +25,12 @@
           <a href="@{Elements.create(assessmentCode,'metric')}" class="item">
             <i class="#{element.color 'metric' /} #{element.icon 'metric' /} circular inverted icon"></i> معیار اصلی
           </a>
-          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class="item">
+          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class=" #{if disableNewSubMetric}disabled#{/if} item">
             <i class="#{element.color 'sub_metric' /} #{element.icon 'sub_metric' /} circular inverted icon"></i> معیار فرعی
           </a>
         </div>
       </div>
-      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} labeled icon button">
+      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{if disableNewQuestion}disabled#{/if} labeled icon button">
         <i class="#{element.icon 'question' /} icon"></i> پرسش
       </a>
 	  </div>
@@ -43,7 +43,7 @@
 	      <i class="drag-handle bars icon"></i>
 	      #{/ifnot}
 	      <a href="@{Elements.preview(_)}">
-	        <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i>
+	        <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
 	        ${controllers.Elements.findElementByCode(_)?.title}
 	      </a>
 	      #{ifnot preventUpdate}
@@ -67,35 +67,35 @@
 	      <i class="top aligned right circle help icon"></i>
 	      <div class="content">
 	        <div class="header">معیار</div>
-	        <div class="description">Use this block to present information to the user.</div>
+	        <div class="description">هر معیار را می‌توان با چندین پرسش بررسی و ارزیابی نمود. پرسش‌نامه متشکل از یک یا چند معیار اصلی است.</div>
 	      </div>
 	    </div>
       <div class="item">
         <i class="top aligned right circle help icon"></i>
         <div class="content">
           <div class="header">معیار اصلی</div>
-          <div class="description">You can ask for long or short text answers to be typed in.</div>
+          <div class="description">.هر معیار اصلی متشکل از یک یا چند معیار فرعی است</div>
         </div>
       </div>
 	    <div class="item">
 	      <i class="top aligned right circle help icon"></i>
 	      <div class="content">
 	        <div class="header">معیار فرعی</div>
-	        <div class="description">Add as many choices as you want. You can also allow selection of multiple choices.</div>
+	        <div class="description">هر معیار فرعی شامل یک یا چند پرسش است.</div>
 	      </div>
 	    </div>
       <div class="item">
         <i class="top aligned right circle help icon"></i>
         <div class="content">
           <div class="header">پرسش</div>
-          <div class="description">You can ask for long or short text answers to be typed in.</div>
+          <div class="description">پرسش‌هایی که برای بررسی یک معیار در نظر گرفته می‌شوند باید به صورتی باشند که پاسخ‌های آن بلی، خیر، شامل نمی‌شود، و روش دیگر باشند.</div>
         </div>
       </div>
       <div class="item">
         <i class="top aligned right circle warning icon"></i>
         <div class="content">
           <div class="header"></div>
-          <div class="description">Any changes to the current experiment flow results in loss of previously stored data.</div>
+          <div class="description">هر تغییری در پرسش‌نامه‌ی این ارزیابی موجب از بین رفتن تمام اطلاعات مرتبط قبلی می‌شود.</div>
         </div>
       </div>
 	  </div>

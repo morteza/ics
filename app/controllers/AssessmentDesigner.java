@@ -16,6 +16,9 @@ import java.util.Date;
 
 import models.AccountRole;
 import models.assessment.Assessment;
+import models.elements.MetricElement;
+import models.elements.QuestionElement;
+import models.elements.SubMetricElement;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -101,7 +104,12 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
 
-    render("designer/elements.html", assessment);    
+    boolean disableNewQuestion = (0 == SubMetricElement.count("assessment", assessment));
+    boolean disableNewSubMetric = (0 == MetricElement.count("assessment", assessment));
+    
+    System.out.println(SubMetricElement.count("assessment", assessment));
+    
+    render("designer/elements.html", assessment, disableNewSubMetric, disableNewQuestion);    
   }
 
   public static void publish(String code) {

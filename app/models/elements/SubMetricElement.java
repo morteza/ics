@@ -33,5 +33,10 @@ public class SubMetricElement extends BaseElement {
     this.type = "sub_metric";
     this.parent = parent;
   }
+
+  public void setParent(MetricElement parent) {
+    this.parent = parent;
+    this.assessment = parent.assessment;
+  }
   
 }

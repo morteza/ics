@@ -86,6 +86,16 @@ assessment.designer.Elements=طراحی پرسش‌نامه
 assessment.designer.Question=پرسش
 assessment.designer.Metric=معیار
 
+assessments.elements.QuestionUpdated=پرسش مورد نظر تغییر یافت.
+assessments.elements.QuestionCreated=پرسش جدید به پرسش‌نامه افزوده شد.
+assessments.elements.SubMetricUpdated=معیار فرعی مورد نظر تغییر یافت.
+assessments.elements.SubMetricCreated=معیار فرعی جدید به پرسش‌نامه افزوده شد.
+assessments.elements.MetricUpdated=معیار اصلی مورد نظر تغییر یافت.
+assessments.elements.MetricCreated=معیار اصلی جدید به پرسش‌نامه افزوده شد.
+
+assessments.elements.Removed=حذف شد.
+assessments.elements.RemoveFailed=نمی‌توانید حذف کنید.
+
 assessment.results=نتایج
 
 assessor=ارزیاب

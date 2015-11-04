@@ -18,25 +18,16 @@
 	    </div>
 	    <div class="field">
 	      <label>توصیف</label>
-	      <textarea name="content" rows="5">${element?.content}</textarea>
+	      <textarea name="description" rows="5">${element?.description}</textarea>
 	    </div>
 	    <div class="field">
 	      <label>معیار اصلی</label>
 	      <select name="parent.id" class="ui fluid selection dropdown">
 	        #{list metrics}
-	        <option value="${_.id}">${_.title}</option>
+	        <option value="${_.id}" #{if element && _.id==element.parent.id}selected#{/if}>${_.title}</option>
 	        #{/list}
 	      </select>
 	    </div>
-	    <!-- 
-      <div class="field">
-        <div class="ui checkbox">
-          <input type="checkbox" id="isRequired" name="isRequired" value="true" #{if element?.isRequired==true}checked#{/if}>
-          <input type="hidden" name="isRequired" value="false" />
-          <label for="isRequired">Must be accepted.</label>
-        </div>
-      </div>
-      -->
 	  </form>
   </div>
   
