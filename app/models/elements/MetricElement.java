@@ -21,19 +21,15 @@ import models.assessment.Assessment;
 import play.i18n.Messages;
 
 @Entity(name="metric_element")
-public class MetricElement extends ModelWithTimestamp {
-  
-  @ManyToOne
-  public Assessment assessment;
-  
+public class MetricElement extends BaseElement {
+    
   public String description;
-
-  @OneToMany
-  public List<SubMetricElement> children;
-  
-  public MetricElement(Assessment assessment) {
-    this.assessment = assessment;
-    children = new ArrayList<SubMetricElement>();
+    
+  public MetricElement(Assessment assessment, String title, String description) {
+    super(assessment);
+    this.type = "metric";
+    this.title = title;
+    this.description = description;
   }
-  
+
 }

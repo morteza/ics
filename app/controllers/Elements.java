@@ -9,19 +9,27 @@
  *******************************************************************************/
 package controllers;
 
+import java.util.List;
+
+import javax.lang.model.element.Element;
+
+import models.Account;
 import models.AccountRole;
 import models.assessment.Assessment;
+import models.elements.BaseElement;
 import models.elements.MetricElement;
 import models.elements.QuestionElement;
 import models.elements.SubMetricElement;
+import play.i18n.Messages;
 import play.mvc.Controller;
+import play.mvc.Util;
 import play.mvc.With;
 import utils.SecurityCheck;
 
 @With(Security.class)
 @SecurityCheck(AccountRole.MAINTAINER)
 public class Elements extends Controller {
-  public static void saveQuestion(Assessment assessment, QuestionElement element) {
+  public static void saveQuestion(SubMetricElement parent, QuestionElement element) {
     //TODO: read parent sub metric from params, if available.
     String content = request.params.get("content");
     
@@ -31,26 +39,131 @@ public class Elements extends Controller {
     } else {
       // It is a new element.
     }
-    AssessmentDesigner.elements(assessment.code);
+    AssessmentDesigner.elements(element.assessment.code);
   }
   
   public static void saveMetric(Assessment assessment, MetricElement element) {
     String title = request.params.get("title");
-    String content = request.params.get("content");
+    String description = request.params.get("description");
+    
+    // Check if elements is new, or we are updating one.
+    if (element!=null && element.id!=null) {
+      element.title = title;
+      element.description = description;
+      element.save();
+      flash.success(Messages.get("assessments.elements.MetricUpdated"));
+    } else {
+      MetricElement elem = new MetricElement(assessment, title, description);
+      elem.save();
+      elem.code = "metric." + elem.id;
+      elem.save();
+      assessment.elements.add(elem.code);
+      assessment.save();
+      flash.success(Messages.get("assessments.elements.MetricCreated"));
+    }
+    AssessmentDesigner.elements(assessment.code);
   }
   
-  public static void saveSubMetric(Assessment assessment, SubMetricElement element) {
+  public static void saveSubMetric(MetricElement parent, SubMetricElement element) {
     //TODO: read parent metric from params, if available.    
     String title = request.params.get("title");
-    String content = request.params.get("content");
+    String description = request.params.get("description");
+
+    // Check if elements is new, or we are updating one.
+    if (element!=null && element.id!=null) {
+      element.title = title;
+      element.description = description;
+      element.save();
+      flash.success(Messages.get("assessments.elements.SubMetricUpdated"));
+    } else {
+      SubMetricElement elem = new SubMetricElement(parent);
+      elem.title = title;
+      elem.save();
+      elem.code = "sub_metric." + elem.id;
+      elem.save();
+      parent.assessment.elements.add(elem.code);
+      parent.assessment.save();
+      flash.success(Messages.get("assessments.elements.SubMetricCreated"));
+    }
+    AssessmentDesigner.elements(parent.assessment.code);
   }
   
   public static void create(String assessmentCode, String type) {
     Assessment assessment = Assessment.findByCode(assessmentCode);
     notFoundIfNull(assessment);
     
+    // New Sub Metric
+    if ("sub_metric".equalsIgnoreCase(type)) {
+      // Add available metrics to the render arguments.
+      List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+      renderArgs.put("metrics", metrics);
+    }
+    
     String viewPath = "elements/" + type + ".html";
     renderTemplate(viewPath, assessment);
+  }
+  
+  @Util
+  public static BaseElement findElementByCode(String code) {
+    if (code==null || !code.contains("."))
+      return null;
+
+    try {
+      String[] parts = code.split("\\.");
+      String elemType = parts[0];
+      
+      Long elemId = Long.parseLong(parts[1]);
+
+      switch(elemType.toLowerCase()) {
+      case "metric":
+        MetricElement mElement = MetricElement.findById(elemId);
+        return mElement;
+      case "sub_metric":
+        SubMetricElement smElement = SubMetricElement.findById(elemId);
+        return smElement;
+      case "question":
+        QuestionElement qElement = QuestionElement.findById(elemId);
+        return qElement;
+      }      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return null;
+  }
+
+  public static void preview(String code) {
+    BaseElement element = findElementByCode(code);
+    notFoundIfNull(element);
+
+    Assessment assessment = element.assessment;
+    notFoundIfNull(assessment);
+    
+    String type = element.elementType();
+    notFoundIfNull(type);
+   
+    //long numOfRelatedResults = Account.find("SELECT DISTINCT a FROM Account a, BlockResult r WHERE r.actor=a AND r.assessment=?", assessment).fetch().size();      
+    boolean preventRemoval = false;//Long.compare(numOfRelatedResults, 0) >0;
+
+    render("elements/" + type + ".html", assessment, element, preventRemoval);
+
+  }
+
+  public static void delete(String code) {
+    BaseElement element = findElementByCode(code);
+    notFoundIfNull(element);
+    
+    Assessment assessment = element.assessment;
+    notFoundIfNull(assessment);
+
+    assessment.elements.remove(code);    
+    assessment.save();
+    
+    element.delete();
+    
+    flash.success(Messages.get("assessments.elements.Removed"));
+    
+    AssessmentDesigner.elements(assessment.code);
   }
   
   /**
@@ -66,7 +179,7 @@ public class Elements extends Controller {
       }
     }
     assessment.save();
-    renderText("Elements have been reordered.");
+    flash.success(Messages.get("assessments.elements.Reordered"));
   }
   
 }

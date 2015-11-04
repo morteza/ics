@@ -121,3 +121,17 @@ margin-top: 1em !important;
 .muted {
   color: rgba(0,0,0,0.4);
 }
+
+
+/**********************
+ *  Sortable.min.js   *
+ **********************/
+
+.drag-handle {
+  cursor: move;
+  cursor: -webkit-grabbing;  /* overrides 'move' */
+}
+
+.sortable-ghost {
+  opacity: .2;
+}

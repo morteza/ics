@@ -17,16 +17,18 @@ import models.assessment.Assessment;
 import play.i18n.Messages;
 
 @Entity(name="question_element")
-public class QuestionElement extends ModelWithTimestamp {
-  
-  @ManyToOne
-  public Assessment assessment;
+public class QuestionElement extends BaseElement {
   
   public String content;
   public Integer rank;
+  
+  @ManyToOne
+  public SubMetricElement parent;
     
-  public QuestionElement(Assessment assessment) {
-    this.assessment = assessment;
+  public QuestionElement(SubMetricElement parent) {
+    super(parent.assessment);
+    this.type = "question";
+    this.parent = parent;
   }
   
 }

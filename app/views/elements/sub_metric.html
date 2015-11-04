@@ -19,7 +19,15 @@
 	    <div class="field">
 	      <label>توصیف</label>
 	      <textarea name="content" rows="5">${element?.content}</textarea>
-	    </div>	
+	    </div>
+	    <div class="field">
+	      <label>معیار اصلی</label>
+	      <select name="parent.id" class="ui fluid selection dropdown">
+	        #{list metrics}
+	        <option value="${_.id}">${_.title}</option>
+	        #{/list}
+	      </select>
+	    </div>
 	    <!-- 
       <div class="field">
         <div class="ui checkbox">
@@ -54,6 +62,7 @@ $('.ui.modal').modal({
   closable: false,
   duration: 100
 }).modal('show');
+$('.ui.dropdown').dropdown();
 $('#element-form').form({
   on: 'submit',
   inline: 'true',
