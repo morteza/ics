@@ -34,19 +34,28 @@ public class Assessments extends Controller {
     render("assessments/assessor.html");
   }
   
-  public static void saveAssessorInformation(Assessor assessor) {
-    assessor.save();
-    flash.success(Messages.get("assessor.Saved"));
-    Application.dashboard();
+  public static void standards(Assessor assessor) {
+    if (assessor!=null) {
+      assessor.save();
+      //flash.success(Messages.get("assessor.Saved"));
+    }
+    
+    List<Assessments> assessments = Assessment.all().fetch();
+    
+    render("assessments/standards.html", assessments);
   }
   
   /**
    * Starts an assessment, verify, check, or set cookies and other stuff.
    * @param code assessment code
    */
-  public static void start(String code) {
+  public static void startAssessment(String code) {
     Assessment assessment = Assessment.findByCode(code);
-    notFoundIfNull(assessment);
+    //notFoundIfNull(assessment);
+    if (assessment==null) {
+      flash.error(Messages.get("errors.SelectStandard"));
+      standards(null);
+    }
     
     Cookie assessmentCookie = request.cookies.get(ASSESSMENT_COOKIE_PREFIX + code);
     String assessmentSession = session.get(ASSESSMENT_COOKIE_PREFIX + code);
@@ -72,7 +81,7 @@ public class Assessments extends Controller {
     
     // Check if the assessment is already started for current session.
     if (!session.contains(PAGE_COOKIE_PREFIX + code) || !session.contains(ASSESSMENT_COOKIE_PREFIX + code)) {
-      start(code);
+      startAssessment(code);
     }
 
     int page = Integer.valueOf(session.get(PAGE_COOKIE_PREFIX + code));

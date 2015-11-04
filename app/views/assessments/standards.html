@@ -12,175 +12,24 @@
   <div class="ui clearing bottom attached segment" style="border-top: 1px solid #d4d4d5;">
     <div class="ui hidden divider"></div>         
 
-    <form class="ui form" action="@{Assessments.saveAssessorInformation}" method="POST" enctype="multipart/form-data">
+    <form class="ui form" action="@{Assessments.startAssessment}" method="POST" enctype="multipart/form-data">
             
-      <h3 class="ui dividing grey header">مشخصات سازمان</h3>
-      
-      <div class="two fields">
-        <div class="field">
-          <label>
-            نام سازمان
-            <i class="circle help icon link" data-content="نام سازمانی که مورد ارزیابی قرار می‌گیرد." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.orgName" />
-        </div>
-        <div class="field">
-          <label>
-            درجه اهمیت سازمان
-            <i class="circle help icon link" data-content="درجه‌ی اهمیت سازمان مورد ارزیابی، شامل مواردی مانند حیاتی، حساس و مهم." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <select name="assessor.orgGrade" class="ui fluid selection dropdown">
-            <option value="حیاتی" data-value-eng="">حیاتی</option>   
-            <option value="حساس" data-value-eng="">حساس</option>   
-            <option value="مهم" data-value-eng="">مهم</option>   
-            <option value="موارد دیگر" data-value-eng="">موارد دیگر</option>
-          </select> 
-        </div>
-      </div>      
-
-      <div class="two fields">
-        <div class="field">
-          <label>
-            استانداردهای به‌کارگرفته شده
-            <i class="circle help icon link" data-content="استانداردهایی که برای تامین امنیت سامانه‌های صنعتی در سازمان به کار گرفته شده است، مانند ایزو." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.orgStandards" />
-        </div>
-        <div class="field">
-          <label>
-            اطلاعات تماس
-            <i class="circle help icon link" data-content="اطلاعات تماس با سازمانِ مورد ارزیابی، شامل تلفن، کدپستی یا آدرس." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.orgContact" />
-        </div>
-      </div>  
-
-      <h3 class="ui dividing grey header">اطلاعات مسئول ارزیابی</h3>
-      
-      <div class="three fields">
-        <div class="field">
-          <label>
-            نام
-            <i class="circle help icon link" data-content="نام فرد تکمیل‌کننده‌ی پرسش‌نامه" data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.firstName" />
-        </div>
-        <div class="field">
-          <label>
-            نام‌خانوادگی
-            <i class="circle help icon link" data-content="نام خانوادگی فرد تکمیل‌کننده‌ی پرسش‌نامه" data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.lastName" />
-        </div>
-        <div class="field">
-          <label>
-            سِمَت
-            <i class="circle help icon link" data-content="سِمَت ارزیاب در سازمان متبوع" data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.role" />
-        </div>
+      <h3 class="ui dividing grey header">استانداردها</h3>
+      <div class="muted text">
+      در حال حاضر ارزیابی براساس استانداردهای زیر موجود است.
+      لطفا یکی از آن‌ها را برای ارزیابی انتخاب کنید. هر استاندارد معیارها و پرسش‌نامه‌های متفاوتی دارد.
+      برای اطلاع بیشتر از اهداف و جزییات هر استاندارد به <a href="/support">بخش پشتیبانی</a> مراجعه نمایید.
       </div>
- 
-      <div class="three fields">
+      <div class="ui hidden divider"></div>
+      <div class="grouped fields">      
+        #{list assessments}
         <div class="field">
-          <label>
-            پست الکترونیکی
-            <i class="circle help icon link" data-content="ایمیل ارزیاب، در صورت امکان ایمیل‌های داخلی را وارد نمایید." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="email" name="assessor.email" />
-        </div>
-        <div class="field">
-          <label>
-            شماره تماس
-            <i class="circle help icon link" data-content="شماره تلفن یا تلفن‌همراه فرد ارزیاب" data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.phone" />
-        </div>
-      </div>
-       
-      <h3 class="ui dividing grey header">مشخصات سایت تحت ارزیابی</h3>
-      
-      <div class="three fields">
-        <div class="field">
-          <label>
-            نام سایت
-            <i class="circle help icon link" data-content="در صورتی که تنها بخشی از سازمان مورد ارزیابی قرار می‌گیرد، نام سایت مورد ارزیابی را مشخص نمایید." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.siteName" />
-        </div>
-        <div class="field">
-          <label>
-            شهر
-            <i class="circle help icon link" data-content="شهر و استانی که سایت از نظر جغرافیایی در آن واقع شده است." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.siteCity" />
-        </div>
-        <div class="field">
-          <label>
-            منطقه‌ی جغرافیایی
-            <i class="circle help icon link" data-content="منطقه‌ی جغرافیایی که سایت در آن واقع شده است." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.siteRegion" />
-        </div>
-      </div>      
- 
-       <div class="three fields">
-        <div class="field">
-          <label>
-            آدرس شبکه‌ی سایت
-            <i class="circle help icon link" data-content="آدرس سایت در شبکه شامل مواردی مانند آی‌پی یا بازه‌ی آی‌پی‌ها." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="text" name="assessor.siteNetworkAddress" />
-        </div>
-        <div class="field">
-          <label>
-            بِرَند تجهیزات
-            <i class="circle help icon link" data-content="بِرَند تجهیزات اصلی مورد استفاده در سایتِ مورد ارزیابی." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <div class="ui fluid selection dropdown">
-            <input type="hidden" name="assessor.siteBrand" /> 
-            <i class="dropdown icon"></i>
-            <div class="default text">بِرَند تجهیزات</div>      
-            <div class="menu">
-              <div class="item" data-value="siemens">زیمنس</div>   
-              <div class="item" data-value="misc">متفرقه</div>   
-            </div>
+          <div class="ui radio checkbox">
+            <input type="radio" name="code" value="${_.code}" tabindex="0" class="hidden">
+            <label>${_.title}</label>
           </div>
         </div>
-        <div class="field">
-          <label>
-            مشخصات تکمیلی
-            <i class="circle help icon link" data-content="یک فایل (ترجیحا به فرمت پی‌دی‌اف یا مایکروسافت ورد) شامل اطلاعات فنی و جزییات سازمان و سایت را می‌توانید از این طریق ارسال نمایید. اطلاعات می‌تواند شامل مواردی مانند نقشه‌ی جغرافیایی، نقشه‌ی فنی و دیگر اطلاعات سازمان باشد." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <input type="file" name="assessor.supplementaryFile" />
-        </div>
-      </div>    
-                   
-      <h3 class="ui dividing grey header">اطلاعات تکمیلی</h3>
-      
-      <div class="two fields">
-        <div class="field">
-          <label>
-            دلایل ارزیابی
-            <i class="circle help icon link" data-content="هدف و دلایل فنی شما از این ارزیابی چیست؟ کشف یک آسیب‌پذیری، نیاز به دریافت یک استاندارد و مواردی از این دست را در این بخش توضیح دهید." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <textarea name="assessor.description"></textarea>
-        </div>
-        <div class="field">
-          <label>
-            شماره تلفن و آدرس اضطراری
-            <i class="circle help icon link" data-content="شماره تلفن و آدرس اضطراری را برای تماس در صورت لزوم در این بخش وارد نمایید." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <textarea name="assessor.contacts"></textarea>
-        </div>
-      </div>            
-
-      <div class="field">
-          <label>
-            نظرات
-            <i class="circle help icon link" data-content="هرگونه نقطه نظر و جزییاتی که می‌تواند در راستی‌آزمایی این ارزیابی کمک کند یا نکاتی که باید رعایت شود را در این بخش بیان نمایید." data-variation="tiny inverted" data-position="top center"></i>
-          </label>
-          <textarea name="assessor.comments"></textarea>
+        #{/list}
       </div>
       
       <div class="field">
@@ -198,5 +47,6 @@
 <script>
 $('.help.icon').popup();
 $('.ui.dropdown').dropdown();
+$('.ui.radio.checkbox').checkbox();
 </script>
 #{/set}

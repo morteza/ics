@@ -8,13 +8,13 @@
 #{/set}
 
 <section class="ui padded page stackable grid">
-<div class="ui twelve wide centered column">
+<div class="ui fourteen wide centered column">
+  #{assessmentSteps /}
   <div class="ui clearing segment">
     <div class="ui ribbon label">&{'page'} ${page+1} &{'of'} ${pages}</div>
     <form class="ui form" action="@{Assessments.next}" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="code" value="${assessment.code}" />
-      <input type="hidden" name="block.code" value="{block.code}" />
-      <input type="hidden" name="isUniversal" value="false" />
+      <input type="hidden" name="assessment.code" value="${assessment.code}" />
+      <input type="hidden" name="metric.code" value="{metric.code}" />
       
       #{list questions}
       <p>${_.raw()}</p>

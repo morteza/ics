@@ -101,5 +101,7 @@ assessment.results=نتایج
 assessor=ارزیاب
 assessor.Information=مشخصات سازمان و ارزیاب
 
+errors.SelectStandard=لطفا یک استاندارد را جهت ارزیابی انتخاب نمایید.
+
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
