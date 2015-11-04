@@ -82,6 +82,9 @@ assessment.designer.QuestionFileHasBeenImportedSuccessfully=سوالات با م
 assessment.UpdatedSuccessfully=ارزیابی به روز گردید.
 
 assessment.designer.FlowHasBeenUpdated=ساختار پرسش‌نامه به‌روز گردید.
+assessment.designer.Elements=طراحی پرسش‌نامه
+assessment.designer.Question=پرسش
+assessment.designer.Metric=معیار
 
 assessment.results=نتایج
 

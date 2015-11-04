@@ -19,14 +19,14 @@
   #{if assessmentCode}
     <!-- Assessment Designer menu -->
     <section class="secondary menu">
-      <a class="#{if request.action=='AssessmentDesigner.general'}active#{/if} icon item" href="@{AssessmentDesigner.general(assessmentCode)}">
-        <i class="settings blue icon"></i>
+      <a class="#{if request.action=='AssessmentDesigner.general'}active#{/if} item" href="@{AssessmentDesigner.general(assessmentCode)}">
+        <i class="settings icon"></i> تنظیمات
       </a>
-      <a class="#{if request.action=='AssessmentDesigner.elements'}active#{/if} icon item" href="@{AssessmentDesigner.elements(assessmentCode)}">
-        <i class="blue help icon"></i> 
+      <a class="#{if request.action=='AssessmentDesigner.elements'}active#{/if} item" href="@{AssessmentDesigner.elements(assessmentCode)}">
+        <i class="circle help icon"></i> پرسش‌نامه
       </a>
-      <a class="#{if request.action=='AssessmentDesigner.results'}active#{/if} icon item" href="@{AssessmentDesigner.results(assessmentCode)}">
-        <i class="area chart blue icon"></i>
+      <a class="#{if request.action=='AssessmentDesigner.results'}active#{/if} item" href="@{AssessmentDesigner.results(assessmentCode)}">
+        <i class="area chart icon"></i> نتایج
       </a>
       <a class="icon item" href="@{Assessments.start(AssessmentCode)}">
         <i class="green play icon"></i>

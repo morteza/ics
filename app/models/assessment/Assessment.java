@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -66,15 +67,19 @@ public class Assessment extends ModelWithTimestamp {
   
   public AssessmentType type;
 
-  @OneToMany
-  public List<MetricElement> metrics;
+  //@OneToMany
+  //public List<MetricElement> metrics;
   
-  @OneToMany
-  public List<QuestionElement> questions;
+  //@OneToMany
+  //public List<QuestionElement> questions;
 
+  @ElementCollection
+  public List<String> elements;
+  
   public Assessment() {
-    metrics = new ArrayList<MetricElement>();
-    questions = new ArrayList<QuestionElement>();
+    //metrics = new ArrayList<MetricElement>();
+    //questions = new ArrayList<QuestionElement>();
+    elements = new ArrayList<String>();
     code = generateCode(5);
     //TODO set isPublished to false, and add an action to publish it manually.
     isPublished = true;

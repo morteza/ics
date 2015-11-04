@@ -1,0 +1,64 @@
+#{extends 'main.html' /}
+#{set title:'معیار' /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<div class="ui small modal">
+  <div class="content">
+	  <form class="ui form" id="element-form" method="POST" action="@{Elements.saveMetric}" enctype="multipart/form-data">
+      <input type="hidden" name="assessment.id" value="${assessment.id}" />
+	    <input type="hidden" name="type" value="metric">
+      #{if element}
+      <input type="hidden" name="element.id" value="${element.id}" />
+      #{/if}
+	    <div class="field">
+	      <label>نام معیار</label>
+	      <input type="text" name="title" value="${element?.title}">
+	    </div>
+	    <div class="field">
+	      <label>توصیف معیار</label>
+	      <textarea name="content" rows="5">${element?.content}</textarea>
+	    </div>	
+	    <!-- 
+      <div class="field">
+        <div class="ui checkbox">
+          <input type="checkbox" id="isRequired" name="isRequired" value="true" #{if element?.isRequired==true}checked#{/if}>
+          <input type="hidden" name="isRequired" value="false" />
+          <label for="isRequired">Must be accepted.</label>
+        </div>
+      </div>
+      -->
+	  </form>
+  </div>
+  
+  <div class="actions">
+    #{if element && !preventRemoval}
+    <a href="@{Elements.delete(element.code)}" class="ui left floated red button">حذف</a>
+    #{/if}
+    <a href="@{AssessmentDesigner.elements(assessment.code)}" class="ui button">لغو عملیات</a>
+    <button type="submit" class="ui primary right aligned button" form="element-form">
+    #{if element}
+      اعمال تغییرات
+    #{/if}
+    #{else}
+      ساخت معیار
+    #{/else}
+    </button>
+  </div>
+</div>
+
+<script>
+$('.ui.modal').modal({
+  blurring: true,
+  closable: false,
+  duration: 100
+}).modal('show');
+$('#element-form').form({
+  on: 'submit',
+  inline: 'true',
+  fields: {
+    title: 'regExp[/^[a-z0-9_\.]{1,}$/]'
+  }
+});
+</script>

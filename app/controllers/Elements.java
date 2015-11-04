@@ -44,4 +44,29 @@ public class Elements extends Controller {
     String title = request.params.get("title");
     String content = request.params.get("content");
   }
+  
+  public static void create(String assessmentCode, String type) {
+    Assessment assessment = Assessment.findByCode(assessmentCode);
+    notFoundIfNull(assessment);
+    
+    String viewPath = "elements/" + type + ".html";
+    renderTemplate(viewPath, assessment);
+  }
+  
+  /**
+   * Updates and sort order of elements that belong to an experiment.
+   * @param experiment
+   * @param elements
+   */
+  public static void sortElements(Assessment assessment, String[] elements) {
+    assessment.elements.clear();
+    if (elements!=null) {
+      for (String element: elements) {
+        assessment.elements.add(element);
+      }
+    }
+    assessment.save();
+    renderText("Elements have been reordered.");
+  }
+  
 }
