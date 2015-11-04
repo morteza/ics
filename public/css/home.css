@@ -11,7 +11,7 @@
 }
 
 .masthead.segment {
-  min-height: 90vh;
+  min-height: 80vh;
   padding-top: 10em;
   background-image: url("/public/img/symphony.png");
   background-repeat: repeat-xy;
