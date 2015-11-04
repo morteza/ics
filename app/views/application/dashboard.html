@@ -28,9 +28,6 @@
 		          <i class="large options link icon"></i>
 		        </a>
 		        #{/security.check}
-		        <a href="@{Assessments.start(_.code)}" class="right floated">
-		          <i class="large green play link icon" title="Participate in this assessment"></i>
-		        </a>
 		        #{/ifnot}
 		        #{else}
 		        <div class="ui horizontal right floated red label">REMOVED</div>
@@ -73,9 +70,6 @@
               <i class="large options link icon"></i>
             </a>
             #{/security.check}
-            <a href="@{Assessments.start(_.code)}" class="right floated">
-              <i class="large green play link icon" title="Participate in this assessment"></i>
-            </a>
             #{/ifnot}
             #{else}
             <div class="ui horizontal right floated red label">REMOVED</div>

@@ -216,4 +216,11 @@ public class Elements extends Controller {
     return subMetrics;
   }
   
+  
+  @Util
+  public static List<QuestionElement> getQuestions(SubMetricElement subMetric) {
+    List<QuestionElement> questions = QuestionElement.find("parent", subMetric).fetch();
+    return questions;
+  }
+  
 }

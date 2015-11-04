@@ -15,11 +15,15 @@ import java.util.List;
 import models.Account;
 import models.AccountRole;
 import models.assessment.Response;
+import models.elements.MetricElement;
+import models.elements.QuestionElement;
+import models.elements.SubMetricElement;
 import models.assessment.Assessment;
 import models.assessment.Assessor;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Http.Cookie;
+import play.mvc.Util;
 import play.mvc.With;
 import utils.SecurityCheck;
 
@@ -40,8 +44,12 @@ public class Assessments extends Controller {
       //flash.success(Messages.get("assessor.Saved"));
     }
     
-    List<Assessments> assessments = Assessment.all().fetch();
-    
+    List<Assessment> assessments = Assessment.all().fetch();
+
+    for (Assessment assessment: assessments) {
+      session.current().remove(assessment.code + "_current");
+    }
+
     render("assessments/standards.html", assessments);
   }
   
@@ -49,86 +57,45 @@ public class Assessments extends Controller {
    * Starts an assessment, verify, check, or set cookies and other stuff.
    * @param code assessment code
    */
-  public static void startAssessment(String code) {
+  public static void questions(String code) {
     Assessment assessment = Assessment.findByCode(code);
     //notFoundIfNull(assessment);
     if (assessment==null) {
       flash.error(Messages.get("errors.SelectStandard"));
       standards(null);
     }
+
+    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+    int pages = metrics.size();
     
-    Cookie assessmentCookie = request.cookies.get(ASSESSMENT_COOKIE_PREFIX + code);
-    String assessmentSession = session.get(ASSESSMENT_COOKIE_PREFIX + code);
+    //1. Find current metric from session
+    String currentMetricCode = session.current().get(assessment.code + "_currrent");
+    MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
     
-    String md5Code = code; //TODO play.libs.Codec.hexMD5(code);
+    //TODO: 2. save results if any
     
-    int page = 0;
-    
-    if(!md5Code.equals(assessmentSession)) {
-      session.put(ASSESSMENT_COOKIE_PREFIX + code, md5Code);
-      session.put(PAGE_COOKIE_PREFIX + code, "" + page); // put the current step (first) into an assessment
+    //3. find next metric and the page
+    int page = metrics.indexOf(metric) + 1;
+    if (page>=pages) {
+      session.current().remove(assessment.code + "_current");
+      results(assessment.code);
     }
+    metric = metrics.get(page);
+    session.current().put(assessment.code + "_currrent", metric.code);
     
-    next(code, null, false);
-  }
-  
-  /**
-   * Move to the next page in a assessment. It's the main navigator of the assessment.
-   * @param code assessment code
-   * @param partialResult
-   */
-  public static void next(String code, String[] answers, boolean isUniversal) {
-    
-    // Check if the assessment is already started for current session.
-    if (!session.contains(PAGE_COOKIE_PREFIX + code) || !session.contains(ASSESSMENT_COOKIE_PREFIX + code)) {
-      startAssessment(code);
-    }
+    //4. Find sub-metrics
+    List<SubMetricElement> subMetrics = SubMetricElement.find("parent", metric).fetch();
+    renderArgs.put("subMetrics", subMetrics);
 
-    int page = Integer.valueOf(session.get(PAGE_COOKIE_PREFIX + code));
-    
-    // Increase page counter
-    session.put(PAGE_COOKIE_PREFIX + code, page+1);
-    
-    
-    Assessment assessment = Assessment.findByCode(code);
-    notFoundIfNull(assessment);
-    
-    Account me = Security.connected();
-
-    // Cleanup past assessment results
-    Response.delete("actor=? AND assessment=?", me, assessment);
-    
-    // Storing results.
-    if (answers!=null && answers.length>0) {
-      for (int i=0;i<answers.length; i++) {
-        Response a = null;
-        //TODO: save responses
-        a.save();
-      }      
-    }
-
-    
-    //TODO find total pages
-    int pages = 2;
-
-    if (page >= pages) {
-      results(code);
-    }
-    
-    
-    //TODO: find questions belong to the current page.
-    List<String> questions = null;
-            
-    render("assessments/questions.html", assessment, page, pages, questions);
-
+    //5. Render questions of this metrics and corresponding subMetrics
+    render("assessments/questions.html", assessment, metric, subMetrics, page, pages);
   }
 
   public static void results(String code) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    session.remove(ASSESSMENT_COOKIE_PREFIX + code);
-    session.remove(PAGE_COOKIE_PREFIX + code);
+    session.current().remove(assessment.code + "_current");
 
     Account me = Security.connected();
     
@@ -158,24 +125,16 @@ public class Assessments extends Controller {
     render("assessments/results.html", assessment, yess, nos, nones, alts);
   }
   
-  public static void finish(String code) {
-    Assessment assessment = Assessment.findByCode(code);
-    notFoundIfNull(assessment);
-    
-    session.remove(ASSESSMENT_COOKIE_PREFIX + code);
-    session.remove(PAGE_COOKIE_PREFIX + code);
-    
-    flash.success(Messages.get("ThankYou"));
-    
-    Application.dashboard();
-
-  }
-  
   /**
    * Move to the previous step of the assessment. It does not save the results.
    * @param code assessment code
    */
   public static void prev(String code) {
-    
+    todo();
   }
+  
+  public static void finish(String code) {
+    Application.index();
+  }
+
 }

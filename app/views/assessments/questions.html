@@ -12,12 +12,15 @@
   #{assessmentSteps /}
   <div class="ui clearing segment">
     <div class="ui ribbon label">&{'page'} ${page+1} &{'of'} ${pages}</div>
-    <form class="ui form" action="@{Assessments.next}" method="POST" enctype="multipart/form-data">
-      <input type="hidden" name="assessment.code" value="${assessment.code}" />
+    <form class="ui form" action="@{Assessments.questions}" method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="code" value="${assessment.code}" />
       <input type="hidden" name="metric.code" value="{metric.code}" />
+      <h1 class="ui dividing header">${metric.title} </h1>
       
-      #{list questions}
-      <p>${_.raw()}</p>
+      #{list subMetrics}
+      <div class="ui header">${_.title}</div>
+      #{list controllers.Elements.getQuestions(_)}
+      <p>${_.description.raw()}</p>
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">
@@ -46,13 +49,19 @@
       </div>
       <div class="ui divider"></div>
       #{/list}
+      #{/list}
             
       <div class="ui hidden divider"></div>
       
       <div class="field">
         <button type="submit" class="ui right floated right labeled icon primary button">
           <i class="right arrow icon"></i>
+          #{if page+1 != pages}
           &{'next'}
+          #{/if}
+          #{else}
+          &{'showResults'}
+          #{/else}
         </button>
       </div>
     </form>
