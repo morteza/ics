@@ -32,6 +32,15 @@
         #{/list}
       </div>
       
+      <div class="field" style="display:none;" id="level-field">
+        <label>&{'standards.levels'}</label>
+        <select name="level" class="ui selection dropdown">
+          <option value="LOW">&{'standards.levels.Low'}</option>
+          <option value="MODERATE" selected="selected">&{'standards.levels.Moderate'}</option>
+          <option value="HIGH">&{'standards.levels.High'}</option>
+        </select>
+      </div>
+      
       <div class="field">
         <button type="submit" class="ui right floated right labeled icon primary button">
           <i class="right arrow icon"></i>
@@ -48,5 +57,9 @@
 $('.help.icon').popup();
 $('.ui.dropdown').dropdown();
 $('.ui.radio.checkbox').checkbox();
+$('input[name="code"]').on('change', function() {
+  $('#level-field').hide(100);
+  $('#level-field').show(100);
+});
 </script>
 #{/set}

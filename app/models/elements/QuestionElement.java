@@ -25,11 +25,20 @@ public class QuestionElement extends BaseElement {
   public SubMetricElement parent;
   
   public String description;
-    
+  
+  public enum SeverityLevel {
+    LOW,
+    MODERATE,
+    HIGH
+  };
+  
+  public SeverityLevel level;
+  
   public QuestionElement(SubMetricElement parent) {
     super(parent.assessment);
     this.type = "question";
     this.parent = parent;
+    this.level = SeverityLevel.MODERATE;
   }
 
   public void setParent(SubMetricElement parent) {

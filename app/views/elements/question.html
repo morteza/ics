@@ -21,7 +21,17 @@
 	    <div class="field">
 	      <label>متن پرسش</label>
 	      <textarea name="description" rows="5">${element?.description}</textarea>
-	    </div>	
+	    </div>
+	    
+	    <div class="field">
+        <label>&{'standards.levels'}</label>
+        <select name="level" class="ui selection dropdown">
+          <option value="LOW" #{if element?.level==models.elements.QuestionElement.SeverityLevel.LOW} selected="selected"#{/if}>&{'standards.levels.Low'}</option>
+          <option value="MODERATE" #{if element?.level==models.elements.QuestionElement.SeverityLevel.MODERATE} selected="selected"#{/if}>&{'standards.levels.Moderate'}</option>
+          <option value="HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.HIGH} selected="selected"#{/if}>&{'standards.levels.High'}</option>
+        </select>
+      </div>
+	    
       <div class="field">
         <label>معیار فرعی</label>
         <div class="ui dropdown basic button">

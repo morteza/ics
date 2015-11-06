@@ -57,7 +57,7 @@ public class Assessments extends Controller {
    * Starts an assessment, verify, check, or set cookies and other stuff.
    * @param code assessment code
    */
-  public static void questions(String code) {
+  public static void questions(String code, String level) {
     Assessment assessment = Assessment.findByCode(code);
     //notFoundIfNull(assessment);
     if (assessment==null) {
@@ -69,7 +69,7 @@ public class Assessments extends Controller {
     int pages = metrics.size();
     
     //1. Find current metric from session
-    String currentMetricCode = session.current().get(assessment.code + "_currrent");
+    String currentMetricCode = session.current().get(assessment.code + "_current");
     MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
     
     //TODO: 2. save results if any
@@ -81,7 +81,7 @@ public class Assessments extends Controller {
       results(assessment.code);
     }
     metric = metrics.get(page);
-    session.current().put(assessment.code + "_currrent", metric.code);
+    session.current().put(assessment.code + "_current", metric.code);
     
     //4. Find sub-metrics
     List<SubMetricElement> subMetrics = SubMetricElement.find("parent", metric).fetch();

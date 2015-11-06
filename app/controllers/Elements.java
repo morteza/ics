@@ -33,11 +33,13 @@ public class Elements extends Controller {
     //TODO: read parent metric from params, if available.    
     String title = request.params.get("title");
     String description = request.params.get("description");
+    String level = request.params.get("level");
 
     // Check if elements is new, or we are updating one.
     if (element!=null && element.id!=null) {
       element.title = title;
       element.description = description;
+      element.level = QuestionElement.SeverityLevel.valueOf(level);
       element.setParent(parent);
       element.save();
       flash.success(Messages.get("assessments.elements.QuestionUpdated"));
@@ -45,6 +47,7 @@ public class Elements extends Controller {
       QuestionElement elem = new QuestionElement(parent);
       elem.title = title;
       elem.description = description;
+      element.level = QuestionElement.SeverityLevel.valueOf(level);
       elem.save();
       elem.code = "question." + elem.id;
       elem.save();

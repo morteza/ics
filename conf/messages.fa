@@ -106,3 +106,8 @@ errors.SelectStandard=لطفا یک استاندارد را جهت ارزیاب�
 
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
+standards.levels=سطح ارزیابی
+standards.levels.High=بالا
+standards.levels.Moderate=متعادل
+standards.levels.Low=پایین
+
