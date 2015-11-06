@@ -31,15 +31,13 @@ import utils.SecurityCheck;
 @SecurityCheck(AccountRole.GUEST)
 public class Assessments extends Controller {
   
-  private static String ASSESSMENT_COOKIE_PREFIX = "itrc_ics_assessment_";
-  private static String PAGE_COOKIE_PREFIX = "itrc_ics_element_";
-  
   public static void assessorInformation() {    
     render("assessments/assessor.html");
   }
   
   public static void standards(Assessor assessor) {
     if (assessor!=null) {
+      assessor.account = Security.connected();
       assessor.save();
       //flash.success(Messages.get("assessor.Saved"));
     }
@@ -50,14 +48,14 @@ public class Assessments extends Controller {
       session.current().remove(assessment.code + "_current");
     }
 
-    render("assessments/standards.html", assessments);
+    render("assessments/standards.html", assessments, assessor);
   }
   
   /**
    * Starts an assessment, verify, check, or set cookies and other stuff.
    * @param code assessment code
    */
-  public static void questions(String code, String level) {
+  public static void questions(String code, Assessor assessor, String level) {
     Assessment assessment = Assessment.findByCode(code);
     //notFoundIfNull(assessment);
     if (assessment==null) {
@@ -72,7 +70,18 @@ public class Assessments extends Controller {
     String currentMetricCode = session.current().get(assessment.code + "_current");
     MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
     
-    //TODO: 2. save results if any
+    //2. save results if any
+    for (String key: params.all().keySet()) {
+      if (key.startsWith("response_")) {
+        String strQuestionId = key.substring(9); // find question id
+        QuestionElement qElement = (QuestionElement) Elements.findElementByCode("question." + strQuestionId);
+        String content = params.get(key);
+        Response response = new Response(Security.connected(), qElement, content);
+        response.save();
+        assessor.responses.add(response);
+        assessor.save();
+      }
+    }
     
     //3. find next metric and the page
     int page = metrics.indexOf(metric) + 1;
@@ -88,7 +97,7 @@ public class Assessments extends Controller {
     renderArgs.put("subMetrics", subMetrics);
 
     //5. Render questions of this metrics and corresponding subMetrics
-    render("assessments/questions.html", assessment, metric, subMetrics, page, pages);
+    render("assessments/questions.html", assessment, assessor, metric, subMetrics, page, pages);
   }
 
   public static void results(String code) {

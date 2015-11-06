@@ -30,9 +30,9 @@ public class Response extends ModelWithTimestamp {
   
   public String content;
   
-  public Response(Account actor, Assessment assessment, QuestionElement question, String content) {
+  public Response(Account actor, QuestionElement question, String content) {
     this.actor = actor;
-    this.assessment = assessment;
+    this.assessment = question.assessment;
     this.question = question;
     this.content = content;
   }

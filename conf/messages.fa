@@ -96,7 +96,10 @@ assessments.elements.MetricCreated=معیار اصلی جدید به پرسش‌
 
 assessments.elements.Removed=حذف شد.
 assessments.elements.RemoveFailed=نمی‌توانید حذف کنید.
+assessments.elements.Reordered=ترتیب بخش‌های پرسش‌نامه تغییر یافت.
 
+
+assessments.Standards=استانداردها
 assessment.results=نتایج
 
 assessor=ارزیاب

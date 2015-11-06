@@ -13,7 +13,8 @@
     <div class="ui hidden divider"></div>         
 
     <form class="ui form" action="@{Assessments.questions}" method="POST" enctype="multipart/form-data">
-            
+      <input type="hidden" name="assessor.id" value="${assessor.id}" />
+      
       <h3 class="ui dividing grey header">استانداردها</h3>
       <div class="muted text">
       در حال حاضر ارزیابی براساس استانداردهای زیر موجود است.

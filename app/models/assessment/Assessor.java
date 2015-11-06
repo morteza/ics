@@ -1,10 +1,16 @@
 package models.assessment;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import models.Account;
 import models.ModelWithTimestamp;
 import play.data.validation.MaxSize;
 import play.db.jpa.Blob;
@@ -42,4 +48,14 @@ public class Assessor extends ModelWithTimestamp {
   @Lob
   @Column(columnDefinition="TEXT")
   public String contacts;
+  
+  @ManyToOne
+  public Account account;
+  
+  @OneToMany
+  public List<Response> responses;
+  
+  public Assessor(Account account) {
+    
+  }
 }

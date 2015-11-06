@@ -106,9 +106,7 @@ public class AssessmentDesigner extends Controller {
 
     boolean disableNewQuestion = (0 == SubMetricElement.count("assessment", assessment));
     boolean disableNewSubMetric = (0 == MetricElement.count("assessment", assessment));
-    
-    System.out.println(SubMetricElement.count("assessment", assessment));
-    
+        
     render("designer/elements.html", assessment, disableNewSubMetric, disableNewQuestion);    
   }
 

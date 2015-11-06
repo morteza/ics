@@ -14,6 +14,7 @@
     <div class="ui ribbon label">&{'page'} ${page+1} &{'of'} ${pages}</div>
     <form class="ui form" action="@{Assessments.questions}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${assessment.code}" />
+      <input type="hidden" name="assessor.id" value="${assessor.id}" />
       <input type="hidden" name="metric.code" value="{metric.code}" />
       <h1 class="ui dividing header">${metric.title} </h1>
       
@@ -24,25 +25,25 @@
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answers[${_index}]" value="yes" />
+            <input type="radio" name="response_${_.id}" value="yes" />
             <label>بلی</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answers[${_index}]" value="no" />
+            <input type="radio" name="response_${_.id}" value="no" />
             <label>خیر</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answers[${_index}]" value="alt" />
+            <input type="radio" name="response_${_.id}" value="alt" />
             <label>شامل نمی‌شود</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
-            <input type="radio" name="answers[${_index}]" value="none" />
+            <input type="radio" name="response_${_.id}" value="none" />
             <label>موارد دیگر</label>
           </div>
         </div>
