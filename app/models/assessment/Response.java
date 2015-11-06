@@ -10,6 +10,7 @@
 package models.assessment;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import models.Account;
@@ -20,19 +21,11 @@ import models.elements.QuestionElement;
 public class Response extends ModelWithTimestamp {
   
   @ManyToOne
-  Assessment assessment;
-  
-  @ManyToOne
-  Account actor;
-    
-  @ManyToOne
   QuestionElement question;
   
   public String content;
   
-  public Response(Account actor, QuestionElement question, String content) {
-    this.actor = actor;
-    this.assessment = question.assessment;
+  public Response(QuestionElement question, String content) {
     this.question = question;
     this.content = content;
   }

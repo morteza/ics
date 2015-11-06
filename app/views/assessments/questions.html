@@ -15,12 +15,13 @@
     <form class="ui form" action="@{Assessments.questions}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${assessment.code}" />
       <input type="hidden" name="assessor.id" value="${assessor.id}" />
-      <input type="hidden" name="metric.code" value="{metric.code}" />
+      <input type="hidden" name="metric.code" value="${metric.code}" />
+      <input type="hidden" name="level" value="${level}" />
       <h1 class="ui dividing header">${metric.title} </h1>
       
       #{list subMetrics}
       <div class="ui header">${_.title}</div>
-      #{list controllers.Elements.getQuestions(_)}
+      #{list controllers.Elements.getQuestions(_, level)}
       <p>${_.description.raw()}</p>
       <div class="inline fields">
         <div class="field">

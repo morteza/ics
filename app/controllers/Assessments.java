@@ -36,11 +36,12 @@ public class Assessments extends Controller {
   }
   
   public static void standards(Assessor assessor) {
-    if (assessor!=null) {
-      assessor.account = Security.connected();
-      assessor.save();
-      //flash.success(Messages.get("assessor.Saved"));
+    if (assessor == null) {
+      flash.error(Messages.get("errors.NoAssessorInfo"));
+      assessorInformation();
     }
+    assessor.account = Security.connected();
+    assessor.save();
     
     List<Assessment> assessments = Assessment.all().fetch();
 
@@ -60,7 +61,7 @@ public class Assessments extends Controller {
     //notFoundIfNull(assessment);
     if (assessment==null) {
       flash.error(Messages.get("errors.SelectStandard"));
-      standards(null);
+      standards(assessor);
     }
 
     List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
@@ -76,7 +77,7 @@ public class Assessments extends Controller {
         String strQuestionId = key.substring(9); // find question id
         QuestionElement qElement = (QuestionElement) Elements.findElementByCode("question." + strQuestionId);
         String content = params.get(key);
-        Response response = new Response(Security.connected(), qElement, content);
+        Response response = new Response(qElement, content);
         response.save();
         assessor.responses.add(response);
         assessor.save();
@@ -87,7 +88,7 @@ public class Assessments extends Controller {
     int page = metrics.indexOf(metric) + 1;
     if (page>=pages) {
       session.current().remove(assessment.code + "_current");
-      results(assessment.code);
+      results(assessment.code, assessor.id);
     }
     metric = metrics.get(page);
     session.current().put(assessment.code + "_current", metric.code);
@@ -97,41 +98,33 @@ public class Assessments extends Controller {
     renderArgs.put("subMetrics", subMetrics);
 
     //5. Render questions of this metrics and corresponding subMetrics
-    render("assessments/questions.html", assessment, assessor, metric, subMetrics, page, pages);
+    render("assessments/questions.html", assessment, assessor, metric, subMetrics, page, pages, level);
   }
 
-  public static void results(String code) {
+  public static void results(String code, Long assessorId) {    
+    notFoundIfNull(assessorId);
+    
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
-    
-    session.current().remove(assessment.code + "_current");
 
-    Account me = Security.connected();
-    
-    List<Response> yess = Response.find("actor=:me AND assessment=:assessment AND content='yes'")
-        .setParameter("me", me)
-        .setParameter("assessment", assessment)
-        .fetch();
+    Assessor assessor = Assessor.findById(assessorId);
+    notFoundIfNull(assessor);
 
+    System.out.println("results for " + assessor);
+        
+    List<Response> yess = new ArrayList<Response>();
+    List<Response> nos = new ArrayList<Response>();
+    List<Response> nones = new ArrayList<Response>();
+    List<Response> alts = new ArrayList<Response>();
     
-    List<Response> nos = Response.find("actor=:me AND assessment=:assessment AND content='no'")
-        .setParameter("me", me)
-        .setParameter("assessment", assessment)
-        .fetch();
-
+    for (Response r:assessor.responses) {
+      if ("yes".equalsIgnoreCase(r.content)) yess.add(r);
+      if ("no".equalsIgnoreCase(r.content)) nos.add(r);
+      if ("none".equalsIgnoreCase(r.content)) nones.add(r);
+      if ("alt".equalsIgnoreCase(r.content)) alts.add(r);
+    }
     
-    List<Response> nones = Response.find("actor=:me AND assessment=:assessment AND content='none'")
-        .setParameter("me", me)
-        .setParameter("assessment", assessment)
-        .fetch();
-
-    
-    List<Response> alts = Response.find("actor=:me AND assessment=:assessment AND content='alt'")
-        .setParameter("me", me)
-        .setParameter("assessment", assessment)
-        .fetch();
-    
-    render("assessments/results.html", assessment, yess, nos, nones, alts);
+    render("assessments/results.html", assessment, assessor, yess, nos, nones, alts);
   }
   
   /**

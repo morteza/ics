@@ -19,6 +19,7 @@ import models.assessment.Assessment;
 import models.elements.BaseElement;
 import models.elements.MetricElement;
 import models.elements.QuestionElement;
+import models.elements.QuestionElement.SeverityLevel;
 import models.elements.SubMetricElement;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -53,6 +54,7 @@ public class Elements extends Controller {
       elem.save();
       elem.assessment.elements.add(elem.code);
       elem.assessment.save();
+      reassignQuestionRanks(elem.assessment);
       flash.success(Messages.get("assessments.elements.QuestionCreated"));
     }
     AssessmentDesigner.elements(parent.assessment.code);
@@ -207,6 +209,9 @@ public class Elements extends Controller {
       }
     }
     assessment.save();
+    
+    reassignQuestionRanks(assessment);
+    
     renderText(Messages.get("assessments.elements.Reordered"));
   }
   
@@ -222,9 +227,24 @@ public class Elements extends Controller {
   
   
   @Util
-  public static List<QuestionElement> getQuestions(SubMetricElement subMetric) {
-    List<QuestionElement> questions = QuestionElement.find("parent", subMetric).fetch();
+  public static List<QuestionElement> getQuestions(SubMetricElement subMetric, String level) {
+    QuestionElement.SeverityLevel sLevel = SeverityLevel.valueOf(level);
+    //TODO check if sLevel is not null, or return all questions if it's null.   
+    
+    List<QuestionElement> questions = QuestionElement.find("byParentAndLevel", subMetric, sLevel).fetch();
     return questions;
+  }
+  
+  @Util
+  private static void reassignQuestionRanks(Assessment assessment) {
+    int rankIndex = 0;
+    for (String elementCode: assessment.elements) {
+      if (elementCode.startsWith("question")) {
+        QuestionElement element = (QuestionElement) findElementByCode(elementCode);
+        element.rank = (++rankIndex);
+        element.save();
+      }
+    }
   }
   
 }
