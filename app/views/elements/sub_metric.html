@@ -24,7 +24,7 @@
 	      <label>معیار اصلی</label>
 	      <select name="parent.id" class="ui fluid selection dropdown">
 	        #{list metrics}
-	        <option value="${_.id}" #{if element && _.id==element.parent.id}selected#{/if}>${_.title}</option>
+	        <option value="${_.id}" #{if element && _.id==element.parent.id}selected="selected"#{/if}>${_.title}</option>
 	        #{/list}
 	      </select>
 	    </div>

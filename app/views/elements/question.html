@@ -9,7 +9,7 @@
 	  <form class="ui form" id="element-form" method="POST" action="@{Elements.saveQuestion}" enctype="multipart/form-data">
 	    <input type="hidden" name="type" value="question">
       #{if element}
-      <input type="hidden" name="element.id" value="${element.id}" />
+      <input type="hidden" name="element.id" value="${element?.id}" />
       #{/if}
 	    <div class="field">
 	      <label>عنوان پرسش</label>

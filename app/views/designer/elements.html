@@ -34,10 +34,11 @@
         <i class="#{element.icon 'question' /} icon"></i> پرسش
       </a>
 	  </div>
-	  <div class="ui divider"></div>
-	  
-	  <div id="current-elements">
+	  <div class="ui hidden divider"></div>
+	  <div class="ui dividing header">&{'metrics'}</div>
+	  <div id="current-metrics">
 		  #{list assessment.elements}
+		  #{if _.startsWith('metric')}
 	    <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
         #{ifnot preventUpdate}
 	      <i class="drag-handle bars icon"></i>
@@ -52,10 +53,55 @@
 	      </div>
 	      #{/ifnot}
 	    </div>
+	    #{/if}
 		  #{/list}
-		  #{else}
-		  #{/else}
 	  </div>
+	  
+	  <div class="ui hidden divider"></div>
+	  <div class="ui dividing header">&{'subMetrics'}</div>
+	  <div id="current-submetrics">
+      #{list assessment.elements}
+      #{if _.startsWith('sub_metric')}
+      <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
+        #{ifnot preventUpdate}
+        <i class="drag-handle bars icon"></i>
+        #{/ifnot}
+        <a href="@{Elements.preview(_)}">
+          <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
+          ${controllers.Elements.findElementByCode(_)?.title}
+        </a>
+        #{ifnot preventUpdate}
+        <div class="detail">
+          <a href="@{Elements.delete(_)}" title="Remove this element."><i class="red link delete icon"></i></a>
+        </div>
+        #{/ifnot}
+      </div>
+      #{/if}
+      #{/list}
+    </div>
+    
+    <div class="ui hidden divider"></div>
+    <div class="ui dividing header">&{'questions'}</div>
+    <div id="current-questions">
+      #{list assessment.elements}
+      #{if _.startsWith('question')}
+      <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
+        #{ifnot preventUpdate}
+        <i class="drag-handle bars icon"></i>
+        #{/ifnot}
+        <a href="@{Elements.preview(_)}">
+          <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
+          ${controllers.Elements.findElementByCode(_)?.title}
+        </a>
+        #{ifnot preventUpdate}
+        <div class="detail">
+          <a href="@{Elements.delete(_)}" title="Remove this element."><i class="red link delete icon"></i></a>
+        </div>
+        #{/ifnot}
+      </div>
+      #{/if}
+      #{/list}
+    </div>
 	</div>
   </div> <!-- /.segment -->
 
@@ -107,8 +153,18 @@
 #{ifnot preventUpdate}
   <script src="@{'/public/js/sortable.min.js'}"></script>
   <script>
-  var elements = document.getElementById('current-elements');
-  Sortable.create(elements, {
+  var metrics = document.getElementById('current-metrics');
+  var subMetrics = document.getElementById('current-submetrics');
+  var questions = document.getElementById('current-questions');
+
+  Sortable.create(metrics, {
+    animation: 150,
+    handle: ".bars.icon"});
+  Sortable.create(subMetrics, {
+    animation: 150,
+    handle: ".bars.icon"});
+  
+  Sortable.create(questions, {
     animation: 150,
     handle: ".bars.icon",
     onUpdate: function (evt){

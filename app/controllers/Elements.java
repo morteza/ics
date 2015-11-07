@@ -100,8 +100,8 @@ public class Elements extends Controller {
       elem.save();
       elem.code = "sub_metric." + elem.id;
       elem.save();
-      parent.assessment.elements.add(elem.code);
-      parent.assessment.save();
+      elem.assessment.elements.add(elem.code);
+      elem.assessment.save();
       flash.success(Messages.get("assessments.elements.SubMetricCreated"));
     }
     AssessmentDesigner.elements(parent.assessment.code);
@@ -114,7 +114,7 @@ public class Elements extends Controller {
     // New Sub Metric or Question
     if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
       // Add available metrics to the render arguments.
-      List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+      List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
       renderArgs.put("metrics", metrics);
     }
     
@@ -163,7 +163,7 @@ public class Elements extends Controller {
    
     if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
       // Add available metrics to the render arguments.
-      List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+      List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
       renderArgs.put("metrics", metrics);
     }
 
