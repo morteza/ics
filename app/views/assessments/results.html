@@ -11,10 +11,16 @@
 <div class="ui twelve wide centered column">
   <div class="ui clearing segment">
     <div class="ui ribbon label">&{'assessment.results'}</div>
+
+    <div class="ui message">
+     با توجه به پاسخ‌های شما مواردی که نیاز به بررسی یا اعمال در سازمان شما دارند استخراج گردید. برای اطلاع از این موارد
+     به <a href="@{Assessments.problems(assessment.code, assessor.id)}" target="_blank">لیست مشکلات</a> مراجعه نمایید.
+    </div>
+ 
     <div class="ui default message">
     نمودارهای زیر نتایج مستخرج از پاسخ‌های شما به پرسش‌نامه را نشان می‌دهد.    
     </div>
-
+    
     <div class="ui basic segment"> 
       <canvas id="radarChart"></canvas>
     </div> <!-- /.segment -->

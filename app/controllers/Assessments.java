@@ -109,8 +109,6 @@ public class Assessments extends Controller {
 
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
-
-    System.out.println("results for " + assessor);
         
     List<Response> yess = new ArrayList<Response>();
     List<Response> nos = new ArrayList<Response>();
@@ -127,6 +125,23 @@ public class Assessments extends Controller {
     render("assessments/results.html", assessment, assessor, yess, nos, nones, alts);
   }
   
+  public static void problems(String code, Long assessorId) {
+    notFoundIfNull(assessorId);
+    
+    Assessment assessment = Assessment.findByCode(code);
+    notFoundIfNull(assessment);
+
+    Assessor assessor = Assessor.findById(assessorId);
+    notFoundIfNull(assessor);
+    
+    List<Response> nos = new ArrayList<Response>();
+
+    for (Response r:assessor.responses) {
+      if ("no".equalsIgnoreCase(r.content)) nos.add(r);
+    }
+    render("assessments/problems.html", assessment, assessor, nos);
+  }
+ 
   /**
    * Move to the previous step of the assessment. It does not save the results.
    * @param code assessment code

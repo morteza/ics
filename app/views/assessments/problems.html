@@ -1,0 +1,51 @@
+#{extends 'main.html' /}
+#{set 'title'}&{'assessments.Problems'}#{/set}
+#{set hideHeader:'true' /}
+#{set hideFooter:'true' /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui page centered padded stackable grid">
+  <div class="twelve wide column">
+      <h2 class="ui header">
+        <div class="content">
+          &{'assessments.Problems'}
+          <div class="sub header">با توجه به پاسخ‌های شما، مشکلات و مسائل مورد توجه در سازمان شما به ترتیب اهمیت به شرح زیر است.</div>
+        </div>
+      </h2>
+
+  </div> <!-- /.column -->
+
+	<div class="four wide column">
+	  <div class="ui small side-help list">
+	    <div class="item">
+	      <i class="top aligned right circle help icon"></i>
+	      <div class="content">
+	        <div class="header">جدول مشکلات</div>
+	        <div class="description">توضیحات کلی مربوط به جدول مشکلات در اینجا می‌آید.</div>
+	      </div>
+	    </div>
+	    <div class="item">
+	      <i class="top aligned right circle help icon"></i>
+	      <div class="content">
+	        <div class="header">پرسش مربوطه</div>
+	        <div class="description">پرسشی که منجر به استتناج وجود این مشکل در سازمان گردید.</div>
+	      </div>
+	    </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">درجه اهمیت</div>
+          <div class="description">درجه‌ی اهمیت یک مشکل تاثیر این مشکل در امتیازدهی را مشخص می‌سازد. هر چه یک مسله تاثیر بیشتری داشته باشد، امتیاز بیشتری را کسر می‌نماید.</div>
+        </div>
+      </div>
+	  </div>
+	</div>
+</section>
+
+#{set 'moreScripts'}
+<script>
+
+</script>
+#{/set}
