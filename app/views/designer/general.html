@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'Edit Assessment' /}
+#{set 'title'}&{'assessments.designer.GeneralSettings'}#{/set}
 #{set assessmentCode:assessment.code /}
 
 #{set 'moreStyles'}
@@ -10,7 +10,7 @@
       <h2 class="ui header">
         <i class="settings icon"></i>
         <div class="content">
-          &{'assessment.designer.GeneralSettings'}
+          &{'assessments.designer.GeneralSettings'}
         </div>
       </h2>
 
@@ -30,7 +30,7 @@
         <div class="three fields">
           <div class="field">
 	          <label>آستانه‌ی تضمین امنیتی (آلفا)</label>
-	          <input type="number" value="${assessment.complianceThreshold}" name="assessment.complianceThreshold" style="direction:ltr"/>
+	          <input type="text" value="${assessment.complianceThreshold?.format('0.00')}" name="assessment.complianceThreshold" style="direction:ltr"/>
           </div>
         </div>
 

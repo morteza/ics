@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set 'title'}&{'assessments.Problems'}#{/set}
+#{set 'title'}&{'assessments.Concerns'}#{/set}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
 
@@ -7,11 +7,45 @@
 #{/set}
 
 <section class="ui centered padded stackable grid">
+
   <div class="sixteen wide column">
       <h2 class="ui header">
         <div class="content">
-          &{'assessments.Problems'}
-          <div class="sub header">با توجه به پاسخ‌های شما، مشکلات و مسائل مورد توجه در سازمان شما به ترتیب اهمیت به شرح زیر است.</div>
+          &{'assessments.Concerns'} بر حسب دسته‌بندی
+          <div class="sub header">نگرانی‌های امنیتی بر حسب دسته‌بندی آن‌ها به شرح زیر است.</div>
+        </div>
+      </h2>
+
+  </div> <!-- /.column -->
+
+  <div class="sixteen wide column">
+    <table class="ui celled padded green table">
+      <thead>
+        <tr>
+          <th class="one wide center aligned">رتبه</th>
+          <th class="eleven wide">دسته</th>
+          <th class="one wide center aligned">تعداد پرسش‌ها</th>
+          <th class="one wide center aligned">نسبت</th>
+        </tr>
+      </thead>
+
+      #{list metrics}
+      <tr>
+        <td class="center aligned">${_index}</td>
+        <td><strong>${_.title}</strong><br /> <div class="muted">${_.description}</div></td>
+        <td class="center aligned">${metricCounts.get(_index-1)}</td>
+        <td class="center aligned">${metricWeights.get(_index-1).format('0.00')}</td>
+      </tr>
+      #{/list}
+    </table>
+  </div>
+
+  
+  <div class="sixteen wide column">
+      <h2 class="ui header">
+        <div class="content">
+          &{'assessments.Concerns'} بر حسب مورد
+          <div class="sub header">با توجه به پاسخ‌های شما، نگرانی‌ها و مسائل مورد توجه در سازمان شما به ترتیب اهمیت به شرح زیر است.</div>
         </div>
       </h2>
 
@@ -22,13 +56,15 @@
       <thead>
         <tr>
           <th class="one wide center aligned">رتبه</th>
-          <th class="fourteen wide">پرسش مرتبط</th>
+          <th class="three wide">معیار</th>
+          <th class="eleven wide">پرسش مرتبط</th>
           <th class="one wide center aligned">درجه‌ی تاثیر (درصد)</th>
         </tr>
       </thead>
       #{list questions}
       <tr>
         <td class="center aligned">${_index}</td>
+        <td class=""><strong>${_.parent.parent.title}</strong><br/> ${_.parent.title}</td>
         <td>${_.description}</td>
         <td class="center aligned">${weights.get(_index-1).format('0.00')}</td>
       </tr>
@@ -40,7 +76,7 @@
 	    <div class="item">
 	      <i class="top aligned right circle help icon"></i>
 	      <div class="content">
-	        <div class="header">جدول مشکلات</div>
+	        <div class="header">جدول نگرانی‌ها بر حسب پرسش</div>
 	        <div class="description">توضیحات کلی مربوط به جدول مشکلات در اینجا می‌آید.</div>
 	      </div>
 	    </div>
@@ -59,6 +95,12 @@
         </div>
       </div>
 	  </div>
+	</div>
+	
+	<div class="ui divider"></div>
+	<div class="sixteen wide left alignd column">
+    <a class="ui disabled primary button">چاپ گزارش</a>
+    <a class="ui disabled primary button">ذخیره به فرمت پی‌دی‌اف</a>
 	</div>
 </section>
 

@@ -80,7 +80,7 @@ description=توضیحات
 assessment.designer.newRegularAssessment=پرسش‌نامه‌ی جدید
 assessment.designer.newStandardAssessment=استانداردِ جدید
 
-assessment.designer.GeneralSettings=تنظیمات عمومی
+assessments.designer.GeneralSettings=تنظیمات عمومی
 assessment.designer.RemoveThisAssessment=حذف این پرسش‌نامه
 assessment.designer.RemoveAssessment=حذف پرسش‌نامه و اطلاعات مرتبط
 assessment.designer.Results=نتایج
@@ -107,7 +107,7 @@ assessments.elements.Reordered=ترتیب بخش‌های پرسش‌نامه ت
 
 assessments.Standards=استانداردها
 assessment.results=نتایج
-assessments.Problems=مشکلات
+assessments.Concerns=نگرانی‌های امنیتی
 assessor=ارزیاب
 assessor.Information=مشخصات سازمان و ارزیاب
 
@@ -115,7 +115,7 @@ errors.SelectStandard=لطفا یک استاندارد را جهت ارزیاب�
 
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
-standards.levels=سطح ارزیابی
+standards.levels=سطح تضمین امنیتی
 standards.levels.VeryHigh=خیلی بالا
 standards.levels.High=بالا
 standards.levels.Moderate=متوسط

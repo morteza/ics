@@ -125,7 +125,7 @@ public class Assessments extends Controller {
     render("assessments/results.html", assessment, assessor, yess, nos, nones, alts);
   }
   
-  public static void problems(String code, Long assessorId) {
+  public static void concerns(String code, Long assessorId) {
     notFoundIfNull(assessorId);
     
     Assessment assessment = Assessment.findByCode(code);
@@ -134,11 +134,26 @@ public class Assessments extends Controller {
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
     
+    //1. Calculate top categories of concerns (same as metrics)
+    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m, response r, question_element q, "
+        + "Assessor a WHERE a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND q.parent.parent=m "
+        + "AND r.content!='yes'").setParameter("assessor", assessor).fetch();
+    List<Double> metricWeights = new ArrayList<Double>();
+    List<Integer> metricCounts = new ArrayList<Integer>();
+    for (MetricElement m: metrics) {
+      //TODO: calculate and add weights in the same order of the metrics
+      metricWeights.add(0.1);
+      metricCounts.add(10);
+    }    
+    renderArgs.put("metrics", metrics);
+    renderArgs.put("metricWeights", metricWeights);
+    renderArgs.put("metricCounts", metricCounts);
+    
     List<QuestionElement> questions;
 
     //Add all questions with no response
     questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
-        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND r.content='no'").setParameter("assessor", assessor).fetch();
+        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND r.content!='yes'").setParameter("assessor", assessor).fetch();
     
     List<Double> weights = new ArrayList<Double>();
     for (QuestionElement q: questions) {
@@ -146,7 +161,7 @@ public class Assessments extends Controller {
       weights.add(0.1);
     }
     
-    render("assessments/problems.html", assessment, assessor, questions, weights);
+    render("assessments/concerns.html", assessment, assessor, questions, weights);
   }
  
   /**
