@@ -134,12 +134,19 @@ public class Assessments extends Controller {
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
     
-    List<Response> nos = new ArrayList<Response>();
+    List<QuestionElement> questions;
 
-    for (Response r:assessor.responses) {
-      if ("no".equalsIgnoreCase(r.content)) nos.add(r);
+    //Add all questions with no response
+    questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
+        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND r.content='no'").setParameter("assessor", assessor).fetch();
+    
+    List<Double> weights = new ArrayList<Double>();
+    for (QuestionElement q: questions) {
+      //TODO: calculate and add weights in the same order of the questions
+      weights.add(0.1);
     }
-    render("assessments/problems.html", assessment, assessor, nos);
+    
+    render("assessments/problems.html", assessment, assessor, questions, weights);
   }
  
   /**

@@ -6,8 +6,8 @@
 #{set 'moreStyles'}
 #{/set}
 
-<section class="ui page centered padded stackable grid">
-  <div class="twelve wide column">
+<section class="ui centered padded stackable grid">
+  <div class="sixteen wide column">
       <h2 class="ui header">
         <div class="content">
           &{'assessments.Problems'}
@@ -17,6 +17,24 @@
 
   </div> <!-- /.column -->
 
+  <div class="twelve wide column">
+    <table class="ui celled padded blue table">
+      <thead>
+        <tr>
+          <th class="one wide center aligned">رتبه</th>
+          <th class="fourteen wide">پرسش مرتبط</th>
+          <th class="one wide center aligned">درجه‌ی تاثیر (درصد)</th>
+        </tr>
+      </thead>
+      #{list questions}
+      <tr>
+        <td class="center aligned">${_index}</td>
+        <td>${_.description}</td>
+        <td class="center aligned">${weights.get(_index-1).format('0.00')}</td>
+      </tr>
+      #{/list}
+    </table>
+  </div>
 	<div class="four wide column">
 	  <div class="ui small side-help list">
 	    <div class="item">
@@ -36,7 +54,7 @@
       <div class="item">
         <i class="top aligned right circle help icon"></i>
         <div class="content">
-          <div class="header">درجه اهمیت</div>
+          <div class="header">رتبه</div>
           <div class="description">درجه‌ی اهمیت یک مشکل تاثیر این مشکل در امتیازدهی را مشخص می‌سازد. هر چه یک مسله تاثیر بیشتری داشته باشد، امتیاز بیشتری را کسر می‌نماید.</div>
         </div>
       </div>
