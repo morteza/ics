@@ -14,7 +14,10 @@ since.months  = %s ماه پیش
 since.years   = %s سال پیش
 since.format  = yyyy/MMMM/d
 
-None=نامشخص
+yes=بلی
+no=خیر
+none=قابل اعمال نیست
+alt=روش جایگزین استفاده شده است
 
 home=خانه
 dashboard=داشبورد
@@ -110,7 +113,8 @@ errors.SelectStandard=لطفا یک استاندارد را جهت ارزیاب�
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
 standards.levels=سطح ارزیابی
+standards.levels.VeryHigh=خیلی بالا
 standards.levels.High=بالا
-standards.levels.Moderate=متعادل
+standards.levels.Moderate=متوسط
 standards.levels.Low=پایین
 

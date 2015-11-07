@@ -20,32 +20,37 @@
       <h1 class="ui dividing header">${metric.title} </h1>
       
       #{list subMetrics}
-      <div class="ui header">${_.title}</div>
+      <div class="ui header">
+        ${_.title}
+        <div class="sub header">
+          ${_.description}
+        </div>
+      </div>
       #{list controllers.Elements.getQuestions(_, level)}
       <p>${_.description.raw()}</p>
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_.id}" value="yes" />
-            <label>بلی</label>
+            <label>&{'yes'}</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_.id}" value="no" />
-            <label>خیر</label>
+            <label>&{'no'}</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_.id}" value="alt" />
-            <label>شامل نمی‌شود</label>
+            <label>&{'none'}</label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_.id}" value="none" />
-            <label>موارد دیگر</label>
+            <label>&{'alt'}</label>
           </div>
         </div>
       </div>

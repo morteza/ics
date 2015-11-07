@@ -48,7 +48,7 @@ public class Elements extends Controller {
       QuestionElement elem = new QuestionElement(parent);
       elem.title = title;
       elem.description = description;
-      element.level = QuestionElement.SeverityLevel.valueOf(level);
+      elem.level = QuestionElement.SeverityLevel.valueOf(level);
       elem.save();
       elem.code = "question." + elem.id;
       elem.save();

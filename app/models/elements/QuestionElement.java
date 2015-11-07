@@ -29,7 +29,8 @@ public class QuestionElement extends BaseElement {
   public enum SeverityLevel {
     LOW,
     MODERATE,
-    HIGH
+    HIGH,
+    VERY_HIGH
   };
   
   public SeverityLevel level;
