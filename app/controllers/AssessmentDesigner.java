@@ -12,6 +12,7 @@ package controllers;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -106,16 +107,21 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
-        + "m.assessment=:assessment AND (concat('metric.',cast(m.id as string)) MEMBER of m.assessment.elements)")
-        .setParameter("assessment", assessment).fetch();
+    List<MetricElement> metrics = new ArrayList<MetricElement>();
+    List<SubMetricElement> subMetrics = new ArrayList<SubMetricElement>();
+    List<QuestionElement> questions = new ArrayList<QuestionElement>();
     
-    List<MetricElement> subMetrics = MetricElement.find("SELECT DISTINCT sm FROM sub_metric_element sm WHERE "
-        + "sm.assessment=:assessment AND (concat('sub_metric.',cast(sm.id as string)) MEMBER of sm.assessment.elements)")
-        .setParameter("assessment", assessment).fetch();
-    List<MetricElement> questions = MetricElement.find("SELECT DISTINCT q FROM question_element q WHERE "
-        + "q.assessment=:assessment AND (concat('question.',cast(q.id as string)) MEMBER of q.assessment.elements)")
-        .setParameter("assessment", assessment).fetch();
+    for (String elementCode: assessment.elements) {
+      BaseElement element = Elements.findElementByCode(elementCode);
+
+      if (elementCode.startsWith("metric.")) {
+        metrics.add((MetricElement)element);
+      } else if (elementCode.startsWith("sub_metric.")) {
+        subMetrics.add((SubMetricElement)element);        
+      } else if (elementCode.startsWith("question.")) {
+        questions.add((QuestionElement)element);       
+      }
+    }
     
     render("designer/elements.html", assessment, metrics, subMetrics, questions);    
   }
@@ -140,4 +146,35 @@ public class AssessmentDesigner extends Controller {
     Application.dashboard();
   }
 
+  
+  public static void cleanup(String code) {
+    Assessment assessment = Assessment.findByCode(code);
+    notFoundIfNull(assessment);
+    
+    assessment.elements.clear();
+
+    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
+        + "m.assessment=:assessment")
+        .setParameter("assessment", assessment).fetch();
+    List<SubMetricElement> subMetrics = SubMetricElement.find("SELECT DISTINCT sm FROM sub_metric_element sm WHERE "
+        + "sm.assessment=:assessment")
+        .setParameter("assessment", assessment).fetch();
+    List<QuestionElement> questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q WHERE "
+        + "q.assessment=:assessment")
+        .setParameter("assessment", assessment).fetch();
+    
+    for (MetricElement m: metrics) {
+      assessment.elements.add("metric."+m.id);
+    }
+    for (SubMetricElement sm: subMetrics) {
+      assessment.elements.add("sub_metric."+sm.id);
+    }
+    for (QuestionElement q: questions) {
+      assessment.elements.add("question."+q.id);
+    }
+    assessment.save();
+    
+    flash.success("Cleaned Up!");
+    elements(assessment.code);
+  }
 }

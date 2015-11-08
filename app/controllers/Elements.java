@@ -97,6 +97,7 @@ public class Elements extends Controller {
     } else {
       SubMetricElement elem = new SubMetricElement(parent);
       elem.title = title;
+      elem.description = description;
       elem.save();
       elem.code = "sub_metric." + elem.id;
       elem.save();
@@ -205,10 +206,12 @@ public class Elements extends Controller {
   public static void sortElements(Assessment assessment, String[] elements) {
     assessment.elements.clear();
     if (elements!=null) {
-      for (String element: elements) {
-        assessment.elements.add(element);
+      for (String elementCode: elements) {
+        assessment.elements.add(elementCode);
+        System.out.println(elementCode);
       }
     }
+    
     assessment.save();
     
     reassignQuestionRanks(assessment);
@@ -252,5 +255,5 @@ public class Elements extends Controller {
       }
     }
   }
-  
+
 }
