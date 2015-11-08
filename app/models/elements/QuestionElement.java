@@ -9,11 +9,14 @@
  *******************************************************************************/
 package models.elements;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import models.ModelWithTimestamp;
 import models.assessment.Assessment;
+import play.data.validation.MaxSize;
 import play.i18n.Messages;
 
 @Entity(name="question_element")
@@ -24,6 +27,9 @@ public class QuestionElement extends BaseElement {
   @ManyToOne
   public SubMetricElement parent;
   
+  @MaxSize(100000)
+  @Lob
+  @Column(columnDefinition="TEXT")
   public String description;
   
   public enum SeverityLevel {
