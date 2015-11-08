@@ -23,11 +23,12 @@
       <div class="ui header">
         ${_.title}
         <div class="sub header">
+          #{if _.description && _.description.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
           ${_.description}
         </div>
       </div>
       #{list controllers.Elements.getQuestions(_, level)}
-      <p>${_.description.raw()}</p>
+      <p><strong>${_index}-</strong> ${_.description.raw()}</p>
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">

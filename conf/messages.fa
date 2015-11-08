@@ -104,6 +104,7 @@ assessments.elements.Removed=حذف شد.
 assessments.elements.RemoveFailed=نمی‌توانید حذف کنید.
 assessments.elements.Reordered=ترتیب بخش‌های پرسش‌نامه تغییر یافت.
 
+assessments.SubMetricDescription=پیش‌سوال/توضیحات:
 
 assessments.Standards=استانداردها
 assessment.results=نتایج
