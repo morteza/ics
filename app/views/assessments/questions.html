@@ -24,7 +24,7 @@
         ${_.title}
         <div class="sub header">
           #{if _.description && _.description.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
-          ${_.description}
+          ${_.description.raw()}
         </div>
       </div>
       #{list controllers.Elements.getQuestions(_, level)}
