@@ -25,81 +25,75 @@
           <a href="@{Elements.create(assessmentCode,'metric')}" class="item">
             <i class="#{element.color 'metric' /} #{element.icon 'metric' /} circular inverted icon"></i> معیار اصلی
           </a>
-          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class=" #{if disableNewSubMetric}disabled#{/if} item">
+          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class="#{ifnot metrics?.size()>0}disabled#{/ifnot} item">
             <i class="#{element.color 'sub_metric' /} #{element.icon 'sub_metric' /} circular inverted icon"></i> معیار فرعی
           </a>
         </div>
       </div>
-      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{if disableNewQuestion}disabled#{/if} labeled icon button">
+      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{ifnot subMetrics?.size()>0}disabled#{/ifnot} labeled icon button">
         <i class="#{element.icon 'question' /} icon"></i> پرسش
       </a>
 	  </div>
 	  <div class="ui hidden divider"></div>
 	  <div class="ui dividing header">&{'metrics'}</div>
 	  <div id="current-metrics">
-		  #{list assessment.elements}
-		  #{if _.startsWith('metric')}
-	    <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
+		  #{list metrics}
+	    <div class="ui large #{element.color _.elementType() /} label" style="margin-bottom:5px;" data-element="metric.${_.id}">
         #{ifnot preventUpdate}
 	      <i class="drag-handle bars icon"></i>
 	      #{/ifnot}
-	      <a href="@{Elements.preview(_)}">
-	        <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
-	        ${controllers.Elements.findElementByCode(_)?.title}
+	      <a href="@{Elements.preview('metric.'+_.id)}">
+	        <!-- <i class="#{element.icon _.elementType() /} icon"></i> -->
+	        ${_?.title}
 	      </a>
 	      #{ifnot preventUpdate}
 	      <div class="detail">
-	        <a href="@{Elements.delete(_)}" title="Remove this element."><i class="red link delete icon"></i></a>
+	        <a href="@{Elements.delete('metric.'+_.id)}" title="Remove this element."><i class="red link delete icon"></i></a>
 	      </div>
 	      #{/ifnot}
 	    </div>
-	    #{/if}
 		  #{/list}
 	  </div>
 	  
 	  <div class="ui hidden divider"></div>
 	  <div class="ui dividing header">&{'subMetrics'}</div>
 	  <div id="current-submetrics">
-      #{list assessment.elements}
-      #{if _.startsWith('sub_metric')}
-      <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
+      #{list subMetrics}
+      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="sub_metric.${_.id}">
         #{ifnot preventUpdate}
         <i class="drag-handle bars icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview(_)}">
-          <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
-          ${controllers.Elements.findElementByCode(_)?.title}
+        <a href="@{Elements.preview('sub_metric.'+_.id)}">
+          <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
+          ${_?.title}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete(_)}" title="Remove this element."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('sub_metric.'+_.id)}" title="Remove this element."><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>
-      #{/if}
       #{/list}
     </div>
     
     <div class="ui hidden divider"></div>
     <div class="ui dividing header">&{'questions'}</div>
     <div id="current-questions">
-      #{list assessment.elements}
-      #{if _.startsWith('question')}
-      <div class="ui large #{element.color controllers.Elements.findElementByCode(_)?.elementType() /} label" style="margin-bottom:5px;" data-element="${_}">
+      #{list questions}
+      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="question.${_.id}">
         #{ifnot preventUpdate}
         <i class="drag-handle bars icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview(_)}">
-          <!-- <i class="#{element.icon controllers.Elements.findElementByCode(_)?.elementType() /} icon"></i> -->
-          ${controllers.Elements.findElementByCode(_)?.title}
+        <a href="@{Elements.preview('question.'+_.id)}">
+          <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
+          ${_?.title}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete(_)}" title="Remove this element."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('question.'+_.id)}" title="Remove this question."><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>
-      #{/if}
       #{/list}
     </div>
 	</div>
@@ -157,33 +151,48 @@
   var subMetrics = document.getElementById('current-submetrics');
   var questions = document.getElementById('current-questions');
 
+  function updateElementsOrder(evt) {
+    var elementsArray = [];
+    $('#current-metrics').children().each(function(){
+      elementsArray.push($(this).data('element'));
+    });
+    $('#current-subMetrics').children().each(function(){
+      elementsArray.push($(this).data('element'));
+    });
+    $('#current-questions').children().each(function(){
+      elementsArray.push($(this).data('element'));
+    });
+    $.post("@{Elements.sortElements}", {
+      'assessment.id': '${assessment.id}',
+      'elements[]': elementsArray
+    }).done(function(data) {
+      $.growl.notice({
+        title:'',
+        message:data,
+        location:'br'
+      });
+    }); 
+  };
+  
+  
   Sortable.create(metrics, {
     animation: 150,
-    handle: ".bars.icon"});
+    handle: ".bars.icon",
+    onUpdate: updateElementsOrder
+  });
+  
   Sortable.create(subMetrics, {
     animation: 150,
-    handle: ".bars.icon"});
+    handle: ".bars.icon",
+    onUpdate: updateElementsOrder
+  });
   
   Sortable.create(questions, {
     animation: 150,
     handle: ".bars.icon",
-    onUpdate: function (evt){
-      var elementsArray = [];
-      $('#current-elements').children().each(function(){
-        elementsArray.push($(this).data('element'));
-      });
-      $.post("@{Elements.sortElements}", {
-        'assessment.id': '${assessment.id}',
-        'elements[]': elementsArray
-      }).done(function(data) {
-        $.growl.notice({
-          title:'',
-          message:data,
-          location:'br'
-        });
-      }); 
-    }
+    onUpdate: updateElementsOrder
   }); // That's all.
+
   $('.metric.dropdown').dropdown({
     action: 'hide',
     transition: 'drop'

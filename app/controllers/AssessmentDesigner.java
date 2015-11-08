@@ -13,9 +13,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Date;
+import java.util.List;
 
 import models.AccountRole;
 import models.assessment.Assessment;
+import models.elements.BaseElement;
 import models.elements.MetricElement;
 import models.elements.QuestionElement;
 import models.elements.SubMetricElement;
@@ -103,11 +105,19 @@ public class AssessmentDesigner extends Controller {
   public static void elements(String code) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
-
-    boolean disableNewQuestion = (0 == SubMetricElement.count("assessment", assessment));
-    boolean disableNewSubMetric = (0 == MetricElement.count("assessment", assessment));
-        
-    render("designer/elements.html", assessment, disableNewSubMetric, disableNewQuestion);    
+    
+    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
+        + "m.assessment=:assessment AND (concat('metric.',cast(m.id as string)) MEMBER of m.assessment.elements)")
+        .setParameter("assessment", assessment).fetch();
+    
+    List<MetricElement> subMetrics = MetricElement.find("SELECT DISTINCT sm FROM sub_metric_element sm WHERE "
+        + "sm.assessment=:assessment AND (concat('sub_metric.',cast(sm.id as string)) MEMBER of sm.assessment.elements)")
+        .setParameter("assessment", assessment).fetch();
+    List<MetricElement> questions = MetricElement.find("SELECT DISTINCT q FROM question_element q WHERE "
+        + "q.assessment=:assessment AND (concat('question.',cast(q.id as string)) MEMBER of q.assessment.elements)")
+        .setParameter("assessment", assessment).fetch();
+    
+    render("designer/elements.html", assessment, metrics, subMetrics, questions);    
   }
 
   public static void publish(String code) {

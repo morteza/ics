@@ -163,7 +163,9 @@ public class Elements extends Controller {
    
     if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
       // Add available metrics to the render arguments.
-      List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+      List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
+          + "m.assessment=:assessment AND (concat('metric.',cast(m.id as string)) MEMBER of m.assessment.elements)")
+          .setParameter("assessment", assessment).fetch();
       renderArgs.put("metrics", metrics);
     }
 
@@ -180,12 +182,11 @@ public class Elements extends Controller {
     
     Assessment assessment = element.assessment;
     notFoundIfNull(assessment);
-
-    assessment.elements.remove(code);    
-    assessment.save();
     
     try {
-      element.delete();      
+      element.delete();  
+      assessment.elements.remove(code);    
+      assessment.save();
     } catch(Exception e) {
       flash.error(Messages.get("assessments.elements.RemoveFailed"));      
       AssessmentDesigner.elements(assessment.code);
@@ -241,8 +242,13 @@ public class Elements extends Controller {
     for (String elementCode: assessment.elements) {
       if (elementCode.startsWith("question")) {
         QuestionElement element = (QuestionElement) findElementByCode(elementCode);
-        element.rank = (++rankIndex);
-        element.save();
+        if (element!=null) {
+          element.rank = (++rankIndex);
+          element.save();         
+        } else {
+          //assessment.elements.remove(elementCode);
+          //assessment.save();
+        }
       }
     }
   }
