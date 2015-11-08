@@ -208,7 +208,6 @@ public class Elements extends Controller {
     if (elements!=null) {
       for (String elementCode: elements) {
         assessment.elements.add(elementCode);
-        System.out.println(elementCode);
       }
     }
     
