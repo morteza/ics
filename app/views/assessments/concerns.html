@@ -32,7 +32,7 @@
       #{list metrics}
       <tr>
         <td class="center aligned">${_index}</td>
-        <td><strong>${_.title}</strong><br /> <div class="muted">${_.description}</div></td>
+        <td><strong>${_.title}</strong><br /> <div class="muted">${_.description.raw()}</div></td>
         <td class="center aligned">${metricCounts.get(_index-1)}</td>
         <td class="center aligned">${metricWeights.get(_index-1).format('0.00')}</td>
       </tr>
@@ -65,7 +65,7 @@
       <tr>
         <td class="center aligned">${_index}</td>
         <td class=""><strong>${_.parent.parent.title}</strong><br/> ${_.parent.title}</td>
-        <td>${_.description}</td>
+        <td>${_.description.raw()}</td>
         <td class="center aligned">${weights.get(_index-1).format('0.00')}</td>
       </tr>
       #{/list}

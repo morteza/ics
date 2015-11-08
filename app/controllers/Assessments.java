@@ -137,7 +137,7 @@ public class Assessments extends Controller {
     //1. Calculate top categories of concerns (same as metrics)
     List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m, response r, question_element q, "
         + "Assessor a WHERE a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND q.parent.parent=m "
-        + "AND r.content!='yes'").setParameter("assessor", assessor).fetch();
+        + "AND (r.content='no' OR r.content='' OR r.content=null)").setParameter("assessor", assessor).fetch();
     List<Double> metricWeights = new ArrayList<Double>();
     List<Integer> metricCounts = new ArrayList<Integer>();
     for (MetricElement m: metrics) {
