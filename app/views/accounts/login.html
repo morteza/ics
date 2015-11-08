@@ -35,13 +35,13 @@
         <form class="ui fluid form" action="@{Security.authenticate()}" method="POST">
           <div class="field">
             <label>&{'email'}</label>
-            <input type="email" name="username" required autofocus value="${flash.email}" />
+            <input type="email" name="username" required autofocus value="${flash.email}"  style="direction:ltr"/>
           </div>
           <div class="field">
             <label>&{'password'}
               <a href="@{Accounts.resetPassword()}" class="#{if play.i18n.Lang.get()=='fa'}rtl#{/if} push right">&{'security.forgetPassword'}</a>
             </label>
-            <input type="password" name="password" required value="${flash.email}" />
+            <input type="password" name="password" required value="${flash.email}" style="direction:ltr"/>
           </div>
           
           <div class="field">

@@ -2,6 +2,7 @@
 #{set title:'معیار فرعی' /}
 
 #{set 'moreStyles'}
+  <link rel="stylesheet" href="@{'/public/css/pen.css'}">
 #{/set}
 
 <div class="ui small modal">
@@ -18,7 +19,8 @@
 	    </div>
 	    <div class="field">
 	      <label>پیش‌سوال</label>
-	      <textarea name="description" rows="5">${element?.description}</textarea>
+        <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description.raw()}</div>
+	      <input type="hidden" name="description" />
 	    </div>
 	    <div class="field">
 	      <label>معیار اصلی</label>
@@ -47,9 +49,11 @@
   </div>
 </div>
 
+
+#{set 'moreScripts'}
 <script>
 $('.ui.modal').modal({
-  blurring: true,
+  blurring: false,
   closable: false,
   duration: 100
 }).modal('show');
@@ -62,3 +66,27 @@ $('#element-form').form({
   }
 });
 </script>
+
+<script src="@{'/public/js/pen.js'}"></script>
+<script>
+// config
+var options = {
+  // toolbar: document.getElementById('.toolbar'),
+  editor: document.querySelector('.wysiwyg'),
+  debug: false,
+  stay: false,
+  list: [
+    'bold', 'italic', 'underline', 'createlink'
+  ]
+};
+
+// create editor
+var pen = new Pen(options);
+
+$('#element-form').on('submit', function(e) {
+  var name_regex = /^[a-z0-9_]{1,}$/i;
+  $('[name="description"]').val($('#description-editor').html());
+});
+</script>
+
+#{/set}
