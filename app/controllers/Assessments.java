@@ -153,12 +153,12 @@ public class Assessments extends Controller {
 
     //Add all questions with no response
     questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
-        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND r.content!='yes'").setParameter("assessor", assessor).fetch();
+        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='' OR r.content=null)").setParameter("assessor", assessor).fetch();
     
     List<Double> weights = new ArrayList<Double>();
     for (QuestionElement q: questions) {
       //TODO: calculate and add weights in the same order of the questions
-      weights.add(0.1);
+      weights.add(0.0);
     }
     
     render("assessments/concerns.html", assessment, assessor, questions, weights);
