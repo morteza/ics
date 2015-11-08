@@ -59,9 +59,10 @@
       #{/list}
       #{/list}
             
-      <div class="ui hidden divider"></div>
+      <div class="ui divider"></div>
       
       <div class="field">
+        <a href="@{Assessments.finish(assessment.code)}" class="ui right aligned red button">خروج</a>
         <button type="submit" class="ui right floated right labeled icon primary button">
           <i class="right arrow icon"></i>
           #{if page+1 != pages}
