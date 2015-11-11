@@ -1,7 +1,7 @@
 # Farsi i18n messages.
 #
 
-app.name=ارزیابی سامانه‌های کنترل صنعتی
+app.name=ارزیابی امنیت سامانه‌های کنترل صنعتی
 
 homepage.GetStarted=داشبورد
 
@@ -28,7 +28,7 @@ privacy=حقوق شخصی
 support=پشتیبانی
 status=وضعیت
 
-homepage.masthead.title=ارزیابی سامانه‌های کنترل صنعتی
+homepage.masthead.title=ارزیابی امنیت سامانه‌های کنترل صنعتی
 homepage.masthead.description=
 
 copyright.notice=&copy; ۱۳۹۴ مرکز تحقیقات مخابرات ایران. تمامی حقوق قانونی محفوظ است.
