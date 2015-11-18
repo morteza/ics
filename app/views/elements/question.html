@@ -35,21 +35,17 @@
 	    
       <div class="field">
         <label>معیار فرعی</label>
-        <div class="ui dropdown basic button">
+        <div class="ui scrolling dropdown basic button">
           <span class="text">انتخاب</span>
           <input type="hidden" name="parent.id" value="${element?.parent?.id}" />
           <div class="menu">
-          #{list metrics}
-          <div class="item">
-            <i class="dropdown icon"></i>
-            <span class="text">${_.title}</span>
-	          <div class="menu">
-	            #{list controllers.Elements.getSubMetrics(_)}
-	            <div class="item" data-value="${_.id}">${_.title}</div>
-	            #{/list}     
-	          </div>
-          </div>
-          #{/list}
+            #{list metrics}
+            <div class="grey header">${_.title}</div>
+	          #{list controllers.Elements.getSubMetrics(_)}
+	          <div class="item" data-value="${_.id}">${_.title}</div>
+	          #{/list}
+	          <div class="ui divider"></div>
+            #{/list}
           </div>
         </div>
       </div>
