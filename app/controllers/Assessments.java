@@ -98,7 +98,7 @@ public class Assessments extends Controller {
     renderArgs.put("subMetrics", subMetrics);
 
     //5. Render questions of this metrics and corresponding subMetrics
-    render("assessments/questions.html", assessment, assessor, metric, subMetrics, page, pages, level);
+    render("assessments/questions.html", assessment, assessor, metrics, metric, subMetrics, page, pages, level);
   }
 
   public static void results(String code, Long assessorId) {    
