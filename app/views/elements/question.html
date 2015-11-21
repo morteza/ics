@@ -19,18 +19,24 @@
 	    
 	    <div class="field">
 	      <label>متن پرسش</label>
-        <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description.raw()}</div>
+        <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description?.raw()}</div>
         <input type="hidden" name="description" />
       </div>
 	    
-	    <div class="field">
-        <label>&{'standards.levels'}</label>
-        <select name="level" class="ui selection dropdown">
-          <option value="LOW" #{if element?.level==models.elements.QuestionElement.SeverityLevel.LOW} selected="selected"#{/if}>&{'standards.levels.Low'}</option>
-          <option value="MODERATE" #{if element?.level==models.elements.QuestionElement.SeverityLevel.MODERATE} selected="selected"#{/if}>&{'standards.levels.Moderate'}</option>
-          <option value="HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.HIGH} selected="selected"#{/if}>&{'standards.levels.High'}</option>
-          <option value="VERY_HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.VERY_HIGH} selected="selected"#{/if}>&{'standards.levels.VeryHigh'}</option>
-        </select>
+	    <div class="two fields">
+	      <div class="field">
+	        <label>رتبه اهمیت پرسش</label>
+	        <input type="number" name="rank" value="#{if element?.rank}${element.rank}#{/if}#{else}0#{/else}" />
+	      </div>
+	      <div class="field">
+          <label>&{'standards.levels'}</label>
+          <select name="level" class="ui selection dropdown">
+            <option value="LOW" #{if element?.level==models.elements.QuestionElement.SeverityLevel.LOW} selected="selected"#{/if}>&{'standards.levels.Low'}</option>
+            <option value="MODERATE" #{if element?.level==models.elements.QuestionElement.SeverityLevel.MODERATE} selected="selected"#{/if}>&{'standards.levels.Moderate'}</option>
+            <option value="HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.HIGH} selected="selected"#{/if}>&{'standards.levels.High'}</option>
+            <option value="VERY_HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.VERY_HIGH} selected="selected"#{/if}>&{'standards.levels.VeryHigh'}</option>
+          </select>
+        </div>
       </div>
 	    
       <div class="field">

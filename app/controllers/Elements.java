@@ -35,12 +35,14 @@ public class Elements extends Controller {
     String title = request.params.get("title");
     String description = request.params.get("description");
     String level = request.params.get("level");
+    String rank = request.params.get("rank");
 
     // Check if elements is new, or we are updating one.
     if (element!=null && element.id!=null) {
       element.title = title;
       element.description = description;
       element.level = QuestionElement.SeverityLevel.valueOf(level);
+      element.rank = Integer.valueOf(rank);
       element.setParent(parent);
       element.save();
       flash.success(Messages.get("assessments.elements.QuestionUpdated"));
@@ -49,12 +51,13 @@ public class Elements extends Controller {
       elem.title = title;
       elem.description = description;
       elem.level = QuestionElement.SeverityLevel.valueOf(level);
+      element.rank = Integer.valueOf(rank);
       elem.save();
       elem.code = "question." + elem.id;
       elem.save();
       elem.assessment.elements.add(elem.code);
       elem.assessment.save();
-      reassignQuestionRanks(elem.assessment);
+      //reassignQuestionRanks(elem.assessment);
       flash.success(Messages.get("assessments.elements.QuestionCreated"));
     }
     AssessmentDesigner.elements(parent.assessment.code);
@@ -213,7 +216,7 @@ public class Elements extends Controller {
     
     assessment.save();
     
-    reassignQuestionRanks(assessment);
+    //reassignQuestionRanks(assessment);
     
     renderText(Messages.get("assessments.elements.Reordered"));
   }
