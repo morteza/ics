@@ -51,7 +51,7 @@ public class Elements extends Controller {
       elem.title = title;
       elem.description = description;
       elem.level = QuestionElement.SeverityLevel.valueOf(level);
-      element.rank = Integer.valueOf(rank);
+      elem.rank = Integer.valueOf(rank);
       elem.save();
       elem.code = "question." + elem.id;
       elem.save();
