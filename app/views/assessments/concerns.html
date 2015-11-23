@@ -33,10 +33,14 @@
       <tr>
         <td class="center aligned">${_index}</td>
         <td><strong>${_.title}</strong><br /> <div class="muted">${_?.description?.raw()}</div></td>
-        <td class="center aligned">${metricCounts.get(_index-1)}</td>
-        <td class="center aligned">${metricWeights.get(_index-1).format('0.00')}</td>
+        <td class="center aligned">${failures.get(_.id).format('0.00')}</td>
+        <td class="center aligned">${weights.get(_.id).format('0.00')}</td>
       </tr>
       #{/list}
+      <tr>
+        <td colspan="3"></td>
+        <td class="warning center aligned"><strong>100.00</strong></td>
+      </tr>
     </table>
   </div>
 

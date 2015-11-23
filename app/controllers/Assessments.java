@@ -10,7 +10,9 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import models.Account;
 import models.AccountRole;
@@ -172,31 +174,62 @@ public class Assessments extends Controller {
     List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m, response r, question_element q, "
         + "Assessor a WHERE a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND q.parent.parent=m "
         + "AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
-    List<Double> metricWeights = new ArrayList<Double>();
-    List<Integer> metricCounts = new ArrayList<Integer>();
+
+    Map<Long, Double> failures = new HashMap<Long, Double>();
+    Map<Long, Double> weights = new HashMap<Long, Double>();
+
     for (MetricElement m: allMetrics) {
-      //TODO: calculate and add weights in the same order of the metrics
-      metricWeights.add(0.0);
-      metricCounts.add(0);
+      failures.put(m.id, 0.0);
+      weights.put(m.id, 0.0);
     }    
     //renderArgs.put("allMetrics", allMetrics);
-    renderArgs.put("metrics", metrics);
-    renderArgs.put("metricWeights", metricWeights);
-    renderArgs.put("metricCounts", metricCounts);
+    renderArgs.put("metrics", allMetrics);
     
     List<QuestionElement> questions;
-
+    
     //Add all questions with no response
     questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
         + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
     
-    List<Double> weights = new ArrayList<Double>();
+    MetricElement parentMetric;
+    
+    long numOfAllQuestions = QuestionElement.count("assessment=?", assessment);
+    double totalWeight = 0.0;//(numOfAllQuestions*(numOfAllQuestions+1))/2.0;
+        
     for (QuestionElement q: questions) {
       //TODO: calculate and add weights in the same order of the questions
-      weights.add(0.0);
+      //weights.add(0.0);
+      parentMetric = q.parent.parent;
+      Double parentFailures = failures.get(parentMetric.id);
+      if (parentFailures == null) parentFailures = 0.0;
+      failures.put(parentMetric.id, parentFailures+1.0);
+      
+      Double parentWeight = weights.get(parentMetric.id);
+      if (parentWeight == null) parentWeight = 0.0;
+      double w = 1.0 + ((1-q.rank)/(numOfAllQuestions));
+      weights.put(parentMetric.id, parentWeight+(w));
+      totalWeight += w;
     }
     
-    render("assessments/concerns.html", assessment, assessor, questions, weights);
+    for (Long mId: failures.keySet()) {
+      double failureCount = failures.get(mId);
+      long numOfQ = ((MetricElement)MetricElement.findById(mId)).numOfQuestions();
+      double failurePercentage = 0.0;
+      if (numOfQ>0)
+        failurePercentage = 100 * failureCount / numOfQ;
+      failures.put(mId, failurePercentage);
+    }
+    
+    if (Double.compare(totalWeight, 0.0)>0) {
+      for (Long mId: weights.keySet()) {
+        double w = weights.get(mId);
+        double normalizedW = (100.0 * w / totalWeight);
+        weights.put(mId, normalizedW);
+      }      
+    }
+
+    
+    render("assessments/concerns.html", assessment, assessor, questions, weights, failures);
   }
  
   /**
