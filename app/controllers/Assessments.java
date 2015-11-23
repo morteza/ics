@@ -51,7 +51,40 @@ public class Assessments extends Controller {
 
     render("assessments/standards.html", assessments, assessor);
   }
+  
+  /**
+   * 
+   * @param code
+   * @param assessor
+   * @param level
+   * @param step
+   */
+  public static void jumpToQuestionsPage(String code, Long assessorId, String level, int page) {
+    Assessment assessment = Assessment.findByCode(code);
+    Assessor assessor = Assessor.findById(assessorId);
+    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+    if (page>metrics.size()) {
+      results(code, assessor.id);
+    }
+    if (page<1) {
+      standards(assessor);
+    }
     
+    int pages = metrics.size();
+    MetricElement metric = metrics.get(page-1);
+    session.current().put(assessment.code + "_current", metric.code);
+    
+    //. Find sub-metrics
+    List<SubMetricElement> subMetrics = SubMetricElement.find("parent", metric).fetch();
+    renderArgs.put("subMetrics", subMetrics);
+
+    // This is the previous page
+    page--;
+    
+    //. Render questions of this metrics and corresponding subMetrics
+    render("assessments/questions.html", assessment, assessor, metrics, metric, subMetrics, page, pages, level);
+  }
+  
   /**
    * Starts an assessment, verify, check, or set cookies and other stuff.
    * @param code assessment code
@@ -134,17 +167,19 @@ public class Assessments extends Controller {
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
     
+    List<MetricElement> allMetrics = MetricElement.find("byAssessment", assessment).fetch();
     //1. Calculate top categories of concerns (same as metrics)
     List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m, response r, question_element q, "
         + "Assessor a WHERE a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND q.parent.parent=m "
-        + "AND (r.content='no' OR r.content='' OR r.content=null)").setParameter("assessor", assessor).fetch();
+        + "AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
     List<Double> metricWeights = new ArrayList<Double>();
     List<Integer> metricCounts = new ArrayList<Integer>();
-    for (MetricElement m: metrics) {
+    for (MetricElement m: allMetrics) {
       //TODO: calculate and add weights in the same order of the metrics
-      metricWeights.add(0.1);
-      metricCounts.add(10);
+      metricWeights.add(0.0);
+      metricCounts.add(0);
     }    
+    //renderArgs.put("allMetrics", allMetrics);
     renderArgs.put("metrics", metrics);
     renderArgs.put("metricWeights", metricWeights);
     renderArgs.put("metricCounts", metricCounts);
@@ -153,7 +188,7 @@ public class Assessments extends Controller {
 
     //Add all questions with no response
     questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
-        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='' OR r.content=null)").setParameter("assessor", assessor).fetch();
+        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
     
     List<Double> weights = new ArrayList<Double>();
     for (QuestionElement q: questions) {

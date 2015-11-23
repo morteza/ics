@@ -23,16 +23,16 @@
       <thead>
         <tr>
           <th class="one wide center aligned">رتبه</th>
-          <th class="eleven wide">دسته</th>
-          <th class="one wide center aligned">تعداد پرسش‌ها</th>
-          <th class="one wide center aligned">نسبت</th>
+          <th class="eleven wide">معیار</th>
+          <th class="one wide center aligned">٪ عدم موفقیت</th>
+          <th class="one wide center aligned">٪ وزن اختصاص یافته</th>
         </tr>
       </thead>
 
       #{list metrics}
       <tr>
         <td class="center aligned">${_index}</td>
-        <td><strong>${_.title}</strong><br /> <div class="muted">${_.description.raw()}</div></td>
+        <td><strong>${_.title}</strong><br /> <div class="muted">${_?.description?.raw()}</div></td>
         <td class="center aligned">${metricCounts.get(_index-1)}</td>
         <td class="center aligned">${metricWeights.get(_index-1).format('0.00')}</td>
       </tr>
@@ -57,8 +57,7 @@
         <tr>
           <th class="one wide center aligned">رتبه</th>
           <th class="three wide">معیار</th>
-          <th class="eleven wide">پرسش مرتبط</th>
-          <th class="one wide center aligned">درجه‌ی تاثیر (درصد)</th>
+          <th class="eleven wide">پرسش مربوطه</th>
         </tr>
       </thead>
       #{list questions}
@@ -66,7 +65,6 @@
         <td class="center aligned">${_index}</td>
         <td class=""><strong>${_.parent.parent.title}</strong><br/> ${_.parent.title}</td>
         <td>${_.description.raw()}</td>
-        <td class="center aligned">${weights.get(_index-1).format('0.00')}</td>
       </tr>
       #{/list}
     </table>

@@ -16,7 +16,7 @@
         <div class="text">&{'page'} ${page+1} &{'of'} ${pages}</div>
         <div class="menu">
           #{list metrics}
-	        <a href="#" class="item">${_.title}</a>
+	        <a href="@{Assessments.jumpToQuestionsPage(assessment.code, assessor.id, level, _index)}" class="item">${_.title}</a>
 	        #{/list}
         </div>
       </div>
@@ -62,6 +62,7 @@
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_.id}" value="none" />
+            <input type="hidden" name="response_${_.id}" value="" />
             <label>&{'alt'}</label>
           </div>
         </div>

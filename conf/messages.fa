@@ -108,7 +108,7 @@ assessments.SubMetricDescription=پیش‌سوال/توضیحات:
 
 assessments.Standards=استانداردها
 assessment.results=نتایج
-assessments.Concerns=نگرانی‌های امنیتی
+assessments.Concerns=وزن‌دهی معیارهای اصلی
 assessor=ارزیاب
 assessor.Information=مشخصات سازمان و ارزیاب
 
@@ -116,7 +116,7 @@ errors.SelectStandard=لطفا یک استاندارد را جهت ارزیاب�
 
 CVSSCalculator=سامانه امتیازدهی آسیب‌پذیری‌های معمول
 
-standards.levels=سطح تضمین امنیتی
+standards.levels=سطح تضمین امنیتی (SAL)
 standards.levels.VeryHigh=خیلی بالا
 standards.levels.High=بالا
 standards.levels.Moderate=متوسط
