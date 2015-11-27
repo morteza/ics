@@ -10,7 +10,7 @@
   <h2 class="ui header">
     <i class="sort alphabet ascending icon"></i>
     <div class="content">
-      &{'assessment.designer.Elements'}
+      &{'assessment.designer.SubMetrics'}
       <div class="sub header">طراحی و تغییر معیارها و پرسش‌ها</div>
     </div>
   </h2>
@@ -18,31 +18,44 @@
   <div class="ui segment">
     
     <div class="ui basic center aligned segment">
+      <div class="ui large #{element.color 'metric' /} floating metric dropdown labeled icon button">
+        <i class="#{element.icon 'metric' /} icon"></i>
+        معیار
+        <div class="menu">
+          <a href="@{Elements.create(assessmentCode,'metric')}" class="item">
+            <i class="#{element.color 'metric' /} #{element.icon 'metric' /} circular inverted icon"></i> معیار اصلی
+          </a>
+          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class="#{ifnot metrics?.size()>0}disabled#{/ifnot} item">
+            <i class="#{element.color 'sub_metric' /} #{element.icon 'sub_metric' /} circular inverted icon"></i> معیار فرعی
+          </a>
+        </div>
+      </div>
       <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{ifnot subMetrics?.size()>0}disabled#{/ifnot} labeled icon button">
         <i class="#{element.icon 'question' /} icon"></i> پرسش
       </a>
     </div>
     
     <div class="ui hidden divider"></div>
-    <div class="ui dividing header">&{'questions'}</div>
-    <div id="current-questions">
-      #{list questions}
-      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="question.${_.id}">
+    <div class="ui dividing header">&{'subMetrics'}</div>
+    <div id="current-submetrics">
+      #{list subMetrics}
+      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="sub_metric.${_.id}">
         #{ifnot preventUpdate}
         <i class="drag-handle bars icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview('question.'+_.id)}">
+        <a href="@{Elements.preview('sub_metric.'+_.id)}">
           <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
           ${_?.title}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete('question.'+_.id)}" title="Remove this question."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('sub_metric.'+_.id)}" title="Remove this element."><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>
       #{/list}
     </div>
+
   </div>
   </div> <!-- /.segment -->
 
@@ -50,6 +63,27 @@
   <div class="four wide column">
   <div class="ui sticky">
     <div class="ui small side-help list">
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">معیار</div>
+          <div class="description">هر معیار را می‌توان با چندین پرسش بررسی و ارزیابی نمود. پرسش‌نامه متشکل از یک یا چند معیار اصلی است.</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">معیار اصلی</div>
+          <div class="description">.هر معیار اصلی متشکل از یک یا چند معیار فرعی است</div>
+        </div>
+      </div>
+      <div class="item">
+        <i class="top aligned right circle help icon"></i>
+        <div class="content">
+          <div class="header">معیار فرعی</div>
+          <div class="description">هر معیار فرعی شامل یک یا چند پرسش است.</div>
+        </div>
+      </div>
       <div class="item">
         <i class="top aligned right circle help icon"></i>
         <div class="content">
@@ -73,12 +107,11 @@
 #{ifnot preventUpdate}
   <script src="@{'/public/js/sortable.min.js'}"></script>
   <script>
-  var questions = document.getElementById('current-questions');
+  var subMetrics = document.getElementById('current-submetrics');
 
   function updateElementsOrder(evt) {
     var elementsArray = [];
-
-    $('#current-questions').children().each(function(){
+    $('#current-submetrics').children().each(function(){
       elementsArray.push($(this).data('element'));
     });
     $.post("@{Elements.sortElements}", {
@@ -93,13 +126,16 @@
     }); 
   };
   
-    
-  Sortable.create(questions, {
+  Sortable.create(subMetrics, {
     animation: 150,
     handle: ".bars.icon",
     onUpdate: updateElementsOrder
-  }); // That's all.
+  });
 
+  $('.metric.dropdown').dropdown({
+    action: 'hide',
+    transition: 'drop'
+  });
   </script>
 #{/ifnot}
 #{/set}

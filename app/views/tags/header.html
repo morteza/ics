@@ -22,11 +22,17 @@
       <a class="#{if request.action=='AssessmentDesigner.general'}active#{/if} item" href="@{AssessmentDesigner.general(assessmentCode)}">
         <i class="settings icon"></i> تنظیمات
       </a>
+      <a class="#{if request.action=='AssessmentDesigner.metrics'}active#{/if} item" href="@{AssessmentDesigner.metrics(assessmentCode)}">
+        معیارهای اصلی
+      </a>
+      <a class="#{if request.action=='AssessmentDesigner.subMetrics'}active#{/if} item" href="@{AssessmentDesigner.subMetrics(assessmentCode)}">
+        معیارهای فرعی
+      </a>
       <a class="#{if request.action=='AssessmentDesigner.elements'}active#{/if} item" href="@{AssessmentDesigner.elements(assessmentCode)}">
-        <i class="circle help icon"></i> پرسش‌نامه
+        <i class="circle help icon"></i> پرسش ها
       </a>
       <a class="#{if request.action=='AssessmentDesigner.results'}active#{/if} item" href="@{AssessmentDesigner.results(assessmentCode)}">
-        <i class="area chart icon"></i> نتایج
+        <i class="area chart icon"></i> آنالیز نتایج
       </a>
     </section>
   #{/if}

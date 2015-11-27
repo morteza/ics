@@ -98,6 +98,45 @@ public class AssessmentDesigner extends Controller {
 
   }
  
+  /**
+   * Show a view to manage assessment elements.
+   * @param code assessment code
+   */
+  public static void metrics(String code) {
+    Assessment assessment = Assessment.findByCode(code);
+    notFoundIfNull(assessment);
+    
+    List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+    
+    render("designer/metrics.html", assessment, metrics);    
+  }
+  
+  /**
+   * Show a view to manage assessment elements.
+   * @param code assessment code
+   */
+  public static void subMetrics(String code) {
+    Assessment assessment = Assessment.findByCode(code);
+    notFoundIfNull(assessment);
+    
+    List<MetricElement> metrics = new ArrayList<MetricElement>();
+    List<SubMetricElement> subMetrics = new ArrayList<SubMetricElement>();
+    List<QuestionElement> questions = new ArrayList<QuestionElement>();
+    
+    for (String elementCode: assessment.elements) {
+      BaseElement element = Elements.findElementByCode(elementCode);
+
+      if (elementCode.startsWith("metric.")) {
+        metrics.add((MetricElement)element);
+      } else if (elementCode.startsWith("sub_metric.")) {
+        subMetrics.add((SubMetricElement)element);        
+      } else if (elementCode.startsWith("question.")) {
+        questions.add((QuestionElement)element);       
+      }
+    }
+    
+    render("designer/sub_metrics.html", assessment, metrics, subMetrics, questions);    
+  }
 
   /**
    * Show a view to manage assessment elements.

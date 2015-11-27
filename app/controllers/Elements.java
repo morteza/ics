@@ -82,7 +82,7 @@ public class Elements extends Controller {
       assessment.save();
       flash.success(Messages.get("assessments.elements.MetricCreated"));
     }
-    AssessmentDesigner.elements(assessment.code);
+    AssessmentDesigner.metrics(assessment.code);
   }
   
   public static void saveSubMetric(MetricElement parent, SubMetricElement element) {
