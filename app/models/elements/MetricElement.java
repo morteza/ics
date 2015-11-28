@@ -39,7 +39,7 @@ public class MetricElement extends BaseElement {
   }
   
   public long numOfQuestions() {
-    long size = QuestionElement.count("parent.parent.id="+this.id);
+    long size = QuestionElement.count("parent.parent.id=?",this.id);
     return size;
   }
 

@@ -185,18 +185,22 @@ public class Assessments extends Controller {
     //renderArgs.put("allMetrics", allMetrics);
     renderArgs.put("metrics", allMetrics);
     
-    List<QuestionElement> questions;
+    List<QuestionElement> noAndNoneAndUA;
     
     //Add all questions with no response
-    questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
+    noAndNoneAndUA = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
         + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
+    
+    //Add all questions with no response
+    List<QuestionElement>  yesAndAlt = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
+        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='yes' OR r.content='alt')").setParameter("assessor", assessor).fetch();
     
     MetricElement parentMetric;
     
     long numOfAllQuestions = QuestionElement.count("assessment=?", assessment);
     double totalWeight = 0.0;//(numOfAllQuestions*(numOfAllQuestions+1))/2.0;
         
-    for (QuestionElement q: questions) {
+    for (QuestionElement q: noAndNoneAndUA) {
       //TODO: calculate and add weights in the same order of the questions
       //weights.add(0.0);
       parentMetric = q.parent.parent;
@@ -229,7 +233,7 @@ public class Assessments extends Controller {
     }
 
     
-    render("assessments/concerns.html", assessment, assessor, questions, weights, failures);
+    render("assessments/concerns.html", assessment, assessor, weights, failures);
   }
  
   /**
