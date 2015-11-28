@@ -18,12 +18,11 @@
   <div class="ui segment">
     
     <div class="ui basic center aligned segment">
-      <a class="ui large #{element.color 'metric' /} labeled icon button" href="@{Elements.create(assessmentCode,'metric')}">
+      <a class="ui large primary labeled icon button" href="@{Elements.create(assessmentCode,'metric')}">
         <i class="#{element.icon 'metric' /} icon"></i> معیار اصلی جدید
       </a>
     </div>
     <div class="ui hidden divider"></div>
-    <div class="ui dividing header">&{'metrics'}</div>
     <div id="current-metrics">
       #{list metrics}
       <div class="ui large #{element.color _.elementType() /} label" style="margin-bottom:5px;" data-element="metric.${_.id}">

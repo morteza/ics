@@ -62,7 +62,7 @@
     #{if element && !preventRemoval}
     <a href="@{Elements.delete(element.code)}" class="ui left floated red button">حذف</a>
     #{/if}
-    <a href="@{AssessmentDesigner.elements(assessment.code)}" class="ui button">لغو عملیات</a>
+    <a href="@{AssessmentDesigner.questions(assessment.code)}" class="ui button">لغو عملیات</a>
     <button type="submit" class="ui primary right aligned button" form="element-form">
     #{if element}
       اعمال تغییرات

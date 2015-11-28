@@ -87,19 +87,19 @@ public class AssessmentDesigner extends Controller {
     } catch (Exception e) {
       e.printStackTrace();
       flash.error(Messages.get("An error occured while reading questions file."));
-      elements(assessment.code);
+      questions(assessment.code);
     }
     
     assessment.save();
     
     flash.success(Messages.get("ics.designer.QuestionFileHasBeenImportedSuccessfully"));
     
-    elements(code);
+    questions(code);
 
   }
  
   /**
-   * Show a view to manage assessment elements.
+   * Show a view to manage assessment metrics.
    * @param code assessment code
    */
   public static void metrics(String code) {
@@ -112,37 +112,23 @@ public class AssessmentDesigner extends Controller {
   }
   
   /**
-   * Show a view to manage assessment elements.
+   * Show a view to manage assessment sub-metrics.
    * @param code assessment code
    */
   public static void subMetrics(String code) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = new ArrayList<MetricElement>();
-    List<SubMetricElement> subMetrics = new ArrayList<SubMetricElement>();
-    List<QuestionElement> questions = new ArrayList<QuestionElement>();
+    List<MetricElement> subMetrics = SubMetricElement.find("byAssessment", assessment).fetch();
     
-    for (String elementCode: assessment.elements) {
-      BaseElement element = Elements.findElementByCode(elementCode);
-
-      if (elementCode.startsWith("metric.")) {
-        metrics.add((MetricElement)element);
-      } else if (elementCode.startsWith("sub_metric.")) {
-        subMetrics.add((SubMetricElement)element);        
-      } else if (elementCode.startsWith("question.")) {
-        questions.add((QuestionElement)element);       
-      }
-    }
-    
-    render("designer/sub_metrics.html", assessment, metrics, subMetrics, questions);    
+    render("designer/sub_metrics.html", assessment, subMetrics);    
   }
 
   /**
    * Show a view to manage assessment elements.
    * @param code assessment code
    */
-  public static void elements(String code) {
+  public static void questions(String code) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
@@ -162,7 +148,7 @@ public class AssessmentDesigner extends Controller {
       }
     }
     
-    render("designer/elements.html", assessment, metrics, subMetrics, questions);    
+    render("designer/questions.html", assessment, metrics, subMetrics, questions);    
   }
 
   public static void publish(String code) {
@@ -214,6 +200,6 @@ public class AssessmentDesigner extends Controller {
     assessment.save();
     
     flash.success("Cleaned Up!");
-    elements(assessment.code);
+    metrics(assessment.code);
   }
 }

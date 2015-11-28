@@ -92,6 +92,9 @@ assessment.designer.FlowHasBeenUpdated=ساختار پرسش‌نامه به‌�
 assessment.designer.Elements=طراحی پرسش‌نامه
 assessment.designer.Question=پرسش
 assessment.designer.Metric=معیار
+assessment.designer.Metrics=معیارهای اصلی
+assessment.designer.SubMetrics=معیارهای فرعی
+assessment.designer.Questions=پرسش‌ها
 
 assessments.elements.QuestionUpdated=پرسش مورد نظر تغییر یافت.
 assessments.elements.QuestionCreated=پرسش جدید به پرسش‌نامه افزوده شد.

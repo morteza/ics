@@ -11,32 +11,19 @@
     <i class="sort alphabet ascending icon"></i>
     <div class="content">
       &{'assessment.designer.SubMetrics'}
-      <div class="sub header">طراحی و تغییر معیارها و پرسش‌ها</div>
+      <div class="sub header">طراحی و تغییر معیارهای فرعی</div>
     </div>
   </h2>
 
   <div class="ui segment">
     
     <div class="ui basic center aligned segment">
-      <div class="ui large #{element.color 'metric' /} floating metric dropdown labeled icon button">
-        <i class="#{element.icon 'metric' /} icon"></i>
-        معیار
-        <div class="menu">
-          <a href="@{Elements.create(assessmentCode,'metric')}" class="item">
-            <i class="#{element.color 'metric' /} #{element.icon 'metric' /} circular inverted icon"></i> معیار اصلی
-          </a>
-          <a href="@{Elements.create(assessmentCode,'sub_metric')}" class="#{ifnot metrics?.size()>0}disabled#{/ifnot} item">
-            <i class="#{element.color 'sub_metric' /} #{element.icon 'sub_metric' /} circular inverted icon"></i> معیار فرعی
-          </a>
-        </div>
-      </div>
-      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{ifnot subMetrics?.size()>0}disabled#{/ifnot} labeled icon button">
-        <i class="#{element.icon 'question' /} icon"></i> پرسش
+      <a class="ui large primary labeled icon button" href="@{Elements.create(assessmentCode,'sub_metric')}">
+        <i class="#{element.icon 'sub_metric' /} icon"></i> معیار فرعی جدید
       </a>
     </div>
     
     <div class="ui hidden divider"></div>
-    <div class="ui dividing header">&{'subMetrics'}</div>
     <div id="current-submetrics">
       #{list subMetrics}
       <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="sub_metric.${_.id}">

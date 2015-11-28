@@ -11,20 +11,19 @@
     <i class="sort alphabet ascending icon"></i>
     <div class="content">
       &{'assessment.designer.Elements'}
-      <div class="sub header">طراحی و تغییر معیارها و پرسش‌ها</div>
+      <div class="sub header">طراحی و تغییر پرسش‌ها</div>
     </div>
   </h2>
 
   <div class="ui segment">
-    
+
     <div class="ui basic center aligned segment">
-      <a href="@{Elements.create(assessmentCode,'question')}" class="ui large #{element.color 'question' /} #{ifnot subMetrics?.size()>0}disabled#{/ifnot} labeled icon button">
-        <i class="#{element.icon 'question' /} icon"></i> پرسش
+      <a class="ui large primary labeled icon #{if disableNewElement}disabled#{/if}button" href="@{Elements.create(assessmentCode,'question')}">
+        <i class="#{element.icon 'question' /} icon"></i> پرسش جدید
       </a>
     </div>
     
     <div class="ui hidden divider"></div>
-    <div class="ui dividing header">&{'questions'}</div>
     <div id="current-questions">
       #{list questions}
       <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="question.${_.id}">

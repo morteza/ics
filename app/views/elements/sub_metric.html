@@ -19,7 +19,7 @@
 	    </div>
 	    <div class="field">
 	      <label>پیش‌سوال</label>
-        <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description.raw()}</div>
+        <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description?.raw()}</div>
 	      <input type="hidden" name="description" />
 	    </div>
 	    <div class="field">
@@ -37,7 +37,7 @@
     #{if element && !preventRemoval}
     <a href="@{Elements.delete(element.code)}" class="ui left floated red button">حذف</a>
     #{/if}
-    <a href="@{AssessmentDesigner.elements(assessment.code)}" class="ui button">لغو عملیات</a>
+    <a href="@{AssessmentDesigner.subMetrics(assessment.code)}" class="ui button">لغو عملیات</a>
     <button type="submit" class="ui primary right aligned button" form="element-form">
     #{if element}
       اعمال تغییرات

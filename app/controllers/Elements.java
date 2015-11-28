@@ -60,7 +60,7 @@ public class Elements extends Controller {
       //reassignQuestionRanks(elem.assessment);
       flash.success(Messages.get("assessments.elements.QuestionCreated"));
     }
-    AssessmentDesigner.elements(parent.assessment.code);
+    AssessmentDesigner.questions(parent.assessment.code);
   }
   
   public static void saveMetric(Assessment assessment, MetricElement element) {
@@ -108,7 +108,7 @@ public class Elements extends Controller {
       elem.assessment.save();
       flash.success(Messages.get("assessments.elements.SubMetricCreated"));
     }
-    AssessmentDesigner.elements(parent.assessment.code);
+    AssessmentDesigner.subMetrics(parent.assessment.code);
   }
   
   public static void create(String assessmentCode, String type) {
@@ -192,13 +192,15 @@ public class Elements extends Controller {
       assessment.elements.remove(code);    
       assessment.save();
     } catch(Exception e) {
-      flash.error(Messages.get("assessments.elements.RemoveFailed"));      
-      AssessmentDesigner.elements(assessment.code);
+      flash.error(Messages.get("assessments.elements.RemoveFailed"));     
+      //TODO: move to appropriate page
+      AssessmentDesigner.metrics(assessment.code);
     }
     
     flash.success(Messages.get("assessments.elements.Removed"));
     
-    AssessmentDesigner.elements(assessment.code);
+    //TODO: move to appropriate page  
+    AssessmentDesigner.metrics(assessment.code);
   }
   
   /**
