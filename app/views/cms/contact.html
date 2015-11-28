@@ -1,0 +1,53 @@
+#{extends 'main.html' /}
+#{set title:'ارسال نظر' /}
+
+<div class="ui padded stackable page grid">
+  <div class="four wide left aligned column">
+  <h2 class="ui dividing header">ارسال نظر</h2>
+        <p>
+          Do you need a feature and it's missing? Do you have a question our
+          <a href="@{cms.CMS.support()}">support</a> page does not answer?
+          Whatever it is, drop us a line.
+        </p>
+
+  </div>
+    <div class="twelve wide column">
+      <div class="ui segment">
+        #{ifnot feedback?.id}
+        <form class="ui form" action="@{cms.CMS.saveFeedback}" method="POST">
+          <input type="hidden" name="feedback.actor.id" value="${feedback?.actor.id}" />
+          <div class="field">
+            <label>نام</label>
+            <input type="text" name="feedback.authorName" value="${feedback?.authorName}" />
+          </div>
+          <div class="required field">
+            <label>پست الکترونیکی</label>
+            <input type="email" name="feedback.authorEmail" value="${feedback?.authorEmail}" required />
+          </div>
+          <div class="field">
+            <label>پیام</label>
+            <textarea name="feedback.content" rows="5">${feedback?.content}</textarea>
+          </div>
+          <div class="three fields">
+            <div class="field">
+            <label>لطفا کُد زیر را وارد نمایید:</label>
+            <img src="@{Application.captcha(randomUUID)}" class="image" />
+            <input type="text" name="human" size="18" value="" />
+            <input type="hidden" name="randomUUID" value="${randomUUID}" />
+            </div>
+            <div class="field"></div>
+            <div class="field"></div>
+          </div>
+          <div class="field">
+            <button class="ui primary button" type="submit">ارسال</button>
+          </div>
+        </form>
+        #{/ifnot}
+				#{else}
+				  <div class="">
+				    با تشکر از ارسال نظرتان. از نظرات شما برای بهبود عملکردمان استفاده می کنیم و در صورت لزوم برای کسب اطلاعات بیشتر یا تشکر با شما تماس خواهیم گرفت.
+				  </div>
+				#{/else}
+      </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+#{extends 'main.html' /}
+#{set title:page.title /}
+
+#{set 'moreStyles'}
+<style>
+  body {
+    background-color: white;
+  }
+</style>
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="ui twelve wide centered column">
+  <div class="ui article segment">
+    <h2 class="ui header">
+      ${page.title}
+    </h2>
+    <div class="content">
+      ${page.content.raw()}
+    </div>
+  </div>
+</div>
+</section>
+
+#{set 'moreScripts'}
+#{/set}

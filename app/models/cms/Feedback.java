@@ -4,7 +4,7 @@
  * Description: User feedbacks.
  *      Author: Morteza Ansarinia <ansarinia@me.com>
  *  Created on: November 16, 2014
- *     Project: itrc.ics
+ *     Project: cg125.cut
  *   Copyright: See the file "LICENSE" for the full license governing this code.
  *******************************************************************************/
 package models.cms;
@@ -13,6 +13,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import models.Account;
 import models.ModelWithTimestamp;
@@ -20,11 +21,8 @@ import play.data.validation.MaxSize;
 import play.data.validation.Required;
 import controllers.Security;
 
-/**
- * User feedbacks.
- *
- */
 @Entity
+@Table(name="cms_feedback")
 public class Feedback extends ModelWithTimestamp {
   
   @ManyToOne

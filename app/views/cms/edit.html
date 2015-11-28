@@ -1,0 +1,93 @@
+#{extends 'main.html' /}
+#{set title:"New Page" /}
+
+#{set 'moreStyles'}
+  <link rel="stylesheet" href="@{'/public/css/pen.css'}">
+#{/set}
+
+<section class="ui padded page stackable grid">
+  <div class="ui twelve wide centered column">
+    <form class="ui form" id="newPageForm" action="@{cms.Admin.save()}" method="POST">
+      <input type="hidden" name="page.id" value="${page?.id}" />
+      <input type="hidden" name="page.author.id" value="${page?.author.id}" />
+      <div class="field">
+        <label>نوع محتوا</label>
+        <select class="ui fluid dropdown" name="page.template" required>
+          <option value="blog_entry.html" selected>خبر</option>
+          <option value="static.html">صفحه ثابت</option>
+          <option value="support_entry.html">پشتیبانی</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>آدرس یکتا</label>
+        <input type="text" name="page.name" value="${page?.name}" pattern="^[a-z0-9_]{1,}$"  min="1" required data-validate="name" />
+        <small class="ui muted">
+         آدرس باید از حروف کوچک انگلیسی، خط تیره یا اعداد تشکیل شده باشد. از فاصله، حروف فارسی و حروف بزرگ انگلیسی استفاده نکنید.
+        </small>
+      </div>
+      <div class="field">
+        <label>عنوان</label>
+        <input type="text" name="page.title" value="${page?.title}" />
+      </div>
+      <div class="field">
+        <label>متن</label>
+        <div id="pageContent" class="ui wysiwyg segment" contenteditable="true">${page?.content.raw()}</div>
+        <input type="hidden" name="page.content" />
+      </div>
+      <div class="field">
+        <button type="submit" class="ui primary button">
+          &{'ذخیره'}
+        </button>
+        <a href="@{index()}" class="ui button">بازگشت</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+#{set 'moreScripts'}
+<script src="@{'/public/js/pen.js'}"></script>
+<script>
+  $(document).ready(function(){
+    #{if page && page.template}
+      $('select[name="page.template"]').val('${page.template}');
+    #{/if}
+    $('select.dropdown').dropdown();
+  });
+// config
+var options = {
+  // toolbar: document.getElementById('.toolbar'),
+  editor: document.querySelector('.wysiwyg'),
+  debug: false,
+  stay: false,
+  list: [
+    'bold', 'italic', 'underline', 'h2', 'h3', 'p', 'code', 'blockquote', 'insertorderedlist',
+    'insertunorderedlist', 'indent', 'outdent', 'insertimage', 'createlink'
+  ]
+};
+
+// create editor
+var pen = new Pen(options);
+
+$('#newPageForm').form({
+  on: 'blur',
+  inline: 'true',
+  fields: {
+    name: 'regExp[/^[a-z0-9_]{1,}$/]'
+  }
+});
+
+$('#newPageForm').on('submit', function(e) {
+  //TODO check with the server if the page.name is unique
+  var name_regex = /^[a-z0-9_]{1,}$/i;
+  if (!name_regex.test($('input[name="page.name"]').val())) {
+    $.growl.error({
+      title:'Invalid Name',
+      message:'Please update the page name and save it again.',
+      location:'br'
+    });
+    e.preventDefault();
+  }
+  $('[name="page.content"]').val($('#pageContent').html());
+});
+</script>
+#{/set}

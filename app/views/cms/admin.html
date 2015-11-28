@@ -1,0 +1,45 @@
+#{extends 'main.html' /}
+#{set title:"مدیریت محتوا" /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="four wide column">
+  <h2 class="ui dividing header">محتوا</h2>
+	<a href="@{add()}" class="ui fluid big button">محتوای جدید</a>
+  <div class="ui small warning message">
+    شما در صفحه مدیریت محتوا قرار دارید. برای ثبت و بروزرسانی خبر،
+    مقاله، محتوای پشتیبانی مانند راهنما و صفحه
+    ثابت از این بخش استفاده کنید.
+    
+  </div>  
+  <a href="@{feedbacks()}" class="ui fluid compact left labeled icon button">
+    <i class="users icon"></i>
+    نظرات کاربران
+  </a>
+
+</div>
+<div class="twelve wide column">
+  #{list pages}
+  <div class="ui segment" style="min-height:130px">
+    <div class="ui header">
+	    <div class="ui vertical right floated labeled tiny icon buttons">
+        <a href="@{cms.CMS.show(_.name)}" class="ui button"><i class="eye icon"></i>نمایش</a>
+	      <a href="@{edit(_.name)}" class="ui primary button"><i class="pencil icon"></i>ویرایش</a>
+	      <a href="@{delete(_.name)}" class="ui red button"><i class="remove icon"></i>حذف</a>
+	    </div>
+	    <div class="content">
+	      ${_.title}
+	      <div class="sub header">${_.createdAt.format('MMM dd, yyyy')}</div>
+	    </div>
+    </div>
+    <div class="">${_.snippet().raw()}</div>
+  </div>
+  #{/list}
+</div>
+</section>
+
+
+#{set 'moreScripts'}
+#{/set}

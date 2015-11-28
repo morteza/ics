@@ -1,0 +1,37 @@
+#{extends 'main.html' /}
+#{set title:"نظرات کاربران" /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="four wide column">
+  <h2 class="ui dividing header">نظرات کاربران</h2>
+  <p class="small warning message">
+    نظرات و بازخوردهایی که کاربران ارسال نمودند را میتوانید مشاهده کنید.
+  </p>
+  <a href="@{index()}" class="ui fluid compact left labeled icon button">
+    <i class="left arrow icon"></i>
+    &{'cms.Admin'}
+  </a>
+</div>
+<div class="twelve wide column">
+  #{list feedbacks}
+  <div class="ui segment">
+    <h3 class="ui header">
+    <a href="@{deleteFeedback(_.id)}" class="ui right floated compact tiny red button">حذف</a>
+
+	    <div class="content">
+	      ${_.authorName} <small>(${_.authorEmail})</small>
+	      <div class="sub header">${_.createdAt.format('MMM dd, yyyy')}</div>
+	    </div>
+    </h3>
+    <div class="">${_.content.replaceAll("\n","<br />").raw()}</div>
+  </div>
+  #{/list}
+</div>
+</section>
+
+
+#{set 'moreScripts'}
+#{/set}

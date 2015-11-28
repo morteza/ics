@@ -32,5 +32,12 @@ GET     /favicon.ico                            404
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+GET     /contact                                cms.CMS.contact
+*       /contact                                cms.CMS.saveFeedback
+GET     /blog                                   cms.CMS.blog
+GET     /support                                cms.CMS.support
+GET     /{name}/edit                            cms.Admin.edit
+GET     /{name}                                 cms.CMS.show
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

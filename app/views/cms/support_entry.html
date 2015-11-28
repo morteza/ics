@@ -1,0 +1,28 @@
+#{extends 'main.html' /}
+#{set title:page.title /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="four wide column">
+  <a href="@{cms.CMS.support()}" class="ui compact fluid labeled icon button">
+    <i class="left arrow icon"></i>
+    پشتیبانی
+  </a>
+</div>
+<div class="twelve wide column">
+  <div class="ui segment">
+    <h2 class="ui header">
+      ${page.title}
+      <div class="sub header">${page.createdAt.format("MMMM dd, yyyy")}</div>
+    </h2>
+    <p>
+      ${page.content.raw()}
+    </p>
+  </div>
+</div>
+</section>
+
+#{set 'moreScripts'}
+#{/set}

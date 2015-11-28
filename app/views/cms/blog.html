@@ -1,0 +1,40 @@
+#{extends 'main.html' /}
+#{set title:"اخبار" /}
+
+#{set 'moreStyles'}
+<style>
+  body {
+    background-color: white;
+  }
+</style>
+#{/set}
+
+<section class="ui padded page stackable grid">
+  <div class="four wide column">
+    <h2 class="ui dividing header">اخبار</h2>
+    <p> کسب اطلاع از آخرین اخبار، بروزرسانی ها و مقالات</p>
+    <h4 class="ui dividing header">آخرین اخبار</h4>
+    <div class="ui link list">
+    #{list pages}
+      <a class="item" href="@{cms.CMS.show(_.name)}">${_.title}</a>
+    #{/list}
+    </div>
+  </div>
+	<div class="twelve wide column">
+	  #{list pages}
+	  <div class="ui article segment">
+	    <h2 class="ui header">
+		    <div class="content">
+	        <div class="sub header">${_.createdAt.format('MMMM dd, yyyy')}</div>
+		      <a href="@{cms.CMS.show(_.name)}">${_.title}</a>
+		    </div>
+	    </h2>
+	    <div class="content">${_.content.raw()}</div>
+	  </div>
+	  #{/list}
+	</div>
+
+</section>
+
+#{set 'moreScripts'}
+#{/set}

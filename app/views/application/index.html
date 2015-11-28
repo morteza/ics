@@ -82,15 +82,33 @@
     <div class="ui grid">
       <div class="eight wide column">
         <div class="ui basic segment">
-          <div class="ui dividing header">اخبار</div>
-          <div class="">...</div>
+          <div class="ui dividing header"><a href="@{cms.CMS.blog()}"">&{'اخبار'}</a></div>
+          #{if news && news.size()>0}
+          #{list news}
+            <a href="@{cms.CMS.show(_.name)}" class="content">
+              ${_.title}
+            </a>
+          #{/list}
+          #{/if}
+          #{else}
+          <div class="">خبری موجود نیست.</div>
+          #{/else}
         </div>
       </div>
       <div class="eight wide column">
         <div class="ui basic segment">
-          <div class="ui dividing header">پشتیبانی</div>
-          <div class="">...</div>
-        </div>
+          <div class="ui dividing header"><a href="@{cms.CMS.support()}"">&{'پشتیبانی'}</a></div>
+          #{if supports && supports.size()>0}
+          #{list supports}
+            <a href="@{cms.CMS.show(_.name)}" class="content">
+              ${_.title}
+            </a>
+          #{/list}
+          #{/if}
+          #{else}
+          <div class="">راهنمایی موجود نیست.</div>
+          #{/else}
+          </div>
       </div>
 
     </div>

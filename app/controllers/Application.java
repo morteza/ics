@@ -14,6 +14,7 @@ import java.util.List;
 import models.Account;
 import models.AccountRole;
 import models.assessment.Assessment;
+import models.cms.Page;
 import play.CorePlugin;
 import play.cache.Cache;
 import play.i18n.Lang;
@@ -36,7 +37,13 @@ public class Application extends Controller {
    */
   @NoSecurityCheck
   public static void index() {
-    render("application/index.html");
+    List<Page> news = Page.find("template=:template AND isPublished=true ORDER BY createdAt DESC")
+        .setParameter("template", "blog_entry.html")
+        .fetch(5);
+    List<Page> supports = Page.find("template=:template AND isPublished=true ORDER BY createdAt DESC")
+        .setParameter("template", "support_entry.html")
+        .fetch(5);
+    render("application/index.html", news, supports);
   }
 
   /**

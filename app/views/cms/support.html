@@ -1,0 +1,35 @@
+#{extends 'main.html' /}
+#{set title:"Support" /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui padded page stackable grid">
+  <div class="four wide column">
+    <h2 class="ui dividing header">پشتیبانی</h2>
+    <div class="ui link list">
+    #{list pages}
+      <a class="item" href="@{cms.CMS.show(_.name)}">${_.title}</a>
+    #{/list}
+    </div>
+  </div>
+	<div class="twelve wide column">
+	  #{list pages}
+	  <div class="ui segment">
+	    <h3 class="ui header">
+	        ${_.title}
+	    </h3>
+	    <div class="">${_.snippet().raw()}</div>
+	    <br />
+      <a class="ui tiny compact basic right bottom attached label" href="@{cms.CMS.show(_.name)}">
+        جزییات بیشتر
+      </a>
+
+	  </div>
+	  #{/list}
+	</div>
+
+</section>
+
+#{set 'moreScripts'}
+#{/set}
