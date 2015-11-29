@@ -5,18 +5,52 @@
 #{set 'moreStyles'}
 #{/set}
 
-<section class="ui page centered padded stackable grid">
+<section class="ui page centered stackable grid" style="min-height:60vh">
   <div class="twelve wide column" id="sticker">
-  <h2 class="ui header">
+  <div class="ui header">
+    <div class="sub header">طراحی و تغییر پرسش‌ها</div>
     <i class="sort alphabet ascending icon"></i>
     <div class="content">
       &{'assessment.designer.Elements'}
-      <div class="sub header">طراحی و تغییر پرسش‌ها</div>
     </div>
-  </h2>
+  </div>
 
   <div class="ui segment">
-
+    
+    #{if metrics}
+    <div class="ui right floated scrolling link dropdown">
+        #{if parent}
+        <div class="text">${parent.title}</div>
+        #{/if}
+        #{else}
+        <div class="default text">معیار اصلی</div>   
+        #{/else}
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          #{list metrics}
+          <a class="#{if parent?.id==_.id}active#{/if} item" href="@{AssessmentDesigner.questions(assessment.code, _.id, null)}">${_.title}</a>
+          #{/list}
+        </div>
+    </div>
+    #{/if}
+    
+    #{if parent}
+    <br />
+    <div class="ui right floated scrolling link dropdown">
+        #{if level}
+        <div class="text">${level}</div>
+        #{/if}
+        #{else}
+        <div class="default text">سطح تضمین امنیتی (SAL)</div>   
+        #{/else}
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          #{list models.elements.QuestionElement.SeverityLevel}
+          #{/list}
+        </div>
+    </div>
+    #{/if}
+    
     <div class="ui basic center aligned segment">
       <a class="ui large primary labeled icon #{if disableNewElement}disabled#{/if}button" href="@{Elements.create(assessmentCode,'question')}">
         <i class="#{element.icon 'question' /} icon"></i> پرسش جدید
@@ -98,7 +132,8 @@
     handle: ".bars.icon",
     onUpdate: updateElementsOrder
   }); // That's all.
-
+  
+  $('.ui.dropdown').dropdown();
   </script>
 #{/ifnot}
 #{/set}

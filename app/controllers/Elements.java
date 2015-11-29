@@ -47,20 +47,20 @@ public class Elements extends Controller {
       element.save();
       flash.success(Messages.get("assessments.elements.QuestionUpdated"));
     } else {
-      QuestionElement elem = new QuestionElement(parent);
-      elem.title = title;
-      elem.description = description;
-      elem.level = QuestionElement.SeverityLevel.valueOf(level);
-      elem.rank = Integer.valueOf(rank);
-      elem.save();
-      elem.code = "question." + elem.id;
-      elem.save();
-      elem.assessment.elements.add(elem.code);
-      elem.assessment.save();
+      element = new QuestionElement(parent);
+      element.title = title;
+      element.description = description;
+      element.level = QuestionElement.SeverityLevel.valueOf(level);
+      element.rank = Integer.valueOf(rank);
+      element.save();
+      element.code = "question." + element.id;
+      element.save();
+      element.assessment.elements.add(element.code);
+      element.assessment.save();
       //reassignQuestionRanks(elem.assessment);
       flash.success(Messages.get("assessments.elements.QuestionCreated"));
     }
-    AssessmentDesigner.questions(parent.assessment.code);
+    AssessmentDesigner.questions(parent.assessment.code, parent.parent.id, element.level);
   }
   
   public static void saveMetric(Assessment assessment, MetricElement element) {

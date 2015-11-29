@@ -21,6 +21,7 @@ import models.assessment.Assessment;
 import models.elements.BaseElement;
 import models.elements.MetricElement;
 import models.elements.QuestionElement;
+import models.elements.QuestionElement.SeverityLevel;
 import models.elements.SubMetricElement;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -87,14 +88,14 @@ public class AssessmentDesigner extends Controller {
     } catch (Exception e) {
       e.printStackTrace();
       flash.error(Messages.get("An error occured while reading questions file."));
-      questions(assessment.code);
+      questions(assessment.code, null, null);
     }
     
     assessment.save();
     
     flash.success(Messages.get("ics.designer.QuestionFileHasBeenImportedSuccessfully"));
     
-    questions(code);
+    questions(code, null, null);
 
   }
  
@@ -128,27 +129,37 @@ public class AssessmentDesigner extends Controller {
    * Show a view to manage assessment elements.
    * @param code assessment code
    */
-  public static void questions(String code) {
+  public static void questions(String code, Long parentId, SeverityLevel level) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = new ArrayList<MetricElement>();
-    List<SubMetricElement> subMetrics = new ArrayList<SubMetricElement>();
-    List<QuestionElement> questions = new ArrayList<QuestionElement>();
+    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+    List<QuestionElement> questions;
+    MetricElement parent = null;
     
-    for (String elementCode: assessment.elements) {
-      BaseElement element = Elements.findElementByCode(elementCode);
-
-      if (elementCode.startsWith("metric.")) {
-        metrics.add((MetricElement)element);
-      } else if (elementCode.startsWith("sub_metric.")) {
-        subMetrics.add((SubMetricElement)element);        
-      } else if (elementCode.startsWith("question.")) {
-        questions.add((QuestionElement)element);       
-      }
+    if (parentId!=null) {
+      parent = MetricElement.findById(parentId);
     }
     
-    render("designer/questions.html", assessment, metrics, subMetrics, questions);    
+    // Fetch questions
+    if (parent!=null) {
+      if (level!=null) {
+        // Find all elements regarding the passed metric and level
+        questions = QuestionElement.find("parent.parent=:parent AND level=:level")
+          .setParameter("parent", parent)
+          .setParameter("level", level)
+          .fetch();
+      } else {
+        // Find all questions regardless of level
+        questions = QuestionElement.find("parent.parent=:parent")
+            .setParameter("parent", parent)
+            .fetch();
+      }
+      renderArgs.put("parent", parent);
+      renderArgs.put("questions", questions);
+    }
+
+    render("designer/questions.html", assessment, metrics);    
   }
 
   public static void publish(String code) {
