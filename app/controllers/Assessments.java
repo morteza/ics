@@ -45,7 +45,7 @@ public class Assessments extends Controller {
     assessor.account = Security.connected();
     assessor.save();
     
-    List<Assessment> assessments = Assessment.all().fetch();
+    List<Assessment> assessments = Assessment.find("isDeleted=false and isPublished=true").fetch();
 
     for (Assessment assessment: assessments) {
       session.current().remove(assessment.code + "_current");
