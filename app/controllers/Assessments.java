@@ -223,6 +223,8 @@ public class Assessments extends Controller {
       failures.put(mId, failurePercentage);
     }
     
+    Double normalizedTotalWeight = totalWeight;
+    
     if (Double.compare(totalWeight, 0.0)>0) {
       for (Long mId: weights.keySet()) {
         double w = weights.get(mId);
@@ -230,13 +232,12 @@ public class Assessments extends Controller {
         weights.put(mId, normalizedW);
       }      
       //FIXME: this is extreme stupidity!
-      totalWeight = 100 * totalWeight / totalWeight;
+      normalizedTotalWeight = 100 * totalWeight / totalWeight;
 
     }
-    
-    System.out.println("tw:" + totalWeight);
+
         
-    render("assessments/concerns.html", assessment, assessor, weights, totalWeight, failures);
+    render("assessments/concerns.html", assessment, assessor, weights, normalizedTotalWeight, totalWeight, failures);
   }
  
   /**

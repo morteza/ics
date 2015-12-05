@@ -24,8 +24,8 @@
         <tr>
           <th class="one wide center aligned">رتبه</th>
           <th class="nine wide">معیار</th>
-          <th class="three wide center aligned">٪ عدم موفقیت</th>
-          <th class="three wide center aligned">٪ وزن اختصاص یافته</th>
+          <th class="three wide center aligned">٪ عدم موفقیت معیار</th>
+          <th class="three wide center aligned">٪ وزن اختصاص یافته نسبت به کل معیارها</th>
         </tr>
       </thead>
 
@@ -41,7 +41,7 @@
           </div>
         </td>
         <td class="center aligned">
-          <div class="ui blue progress" data-percent="${weights.get(_.id).format('0.00')}">
+          <div class="ui yellow progress" data-percent="${weights.get(_.id).format('0.00')}">
             <div class="bar">
               <div class="progress"></div>
             </div>
@@ -50,8 +50,8 @@
       </tr>
       #{/list}
       <tr>
-        <td colspan="3"></td>
-        <td class="warning center aligned"><strong>${totalWeight}</strong></td>
+        <td colspan="3" class="right aligned">مجموع وزن ها قبل از نرمال سازی: ${totalWeight}</td>
+        <td class="warning center aligned"><strong>${normalizedTotalWeight}</strong></td>
       </tr>
     </table>
   </div>
@@ -80,7 +80,7 @@
       <tr>
         <td class="center aligned">${_index}</td>
         <td class=""><strong>${_.parent.parent.title}</strong><br/> ${_.parent.title}</td>
-        <td>${_.description.raw()}</td>
+        <td>${_.description?.raw()}</td>
       </tr>
       #{/list}
     </table>
