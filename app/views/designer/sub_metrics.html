@@ -17,10 +17,29 @@
 
   <div class="ui segment">
     
-    <div class="ui basic center aligned segment">
-      <a class="ui large primary labeled icon button" href="@{Elements.create(assessmentCode,'sub_metric')}">
-        <i class="#{element.icon 'sub_metric' /} icon"></i> معیار فرعی جدید
-      </a>
+    <div class="ui compact buttons">
+      #{if metrics}
+      <div class="ui scrolling link dropdown button">
+          #{if parent}
+          <div class="text">${parent.title}</div>
+          #{/if}
+          #{else}
+          <div class="default text">معیار اصلی را انتخاب نمایید</div>   
+          #{/else}
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            #{list metrics}
+            <a class="#{if parent?.id==_.id}active#{/if} item" href="@{AssessmentDesigner.subMetrics(assessment.code, _.id)}">${_.title}</a>
+            #{/list}
+          </div>
+      </div>
+      #{/if}
+      
+      #{if parent!=null}
+        <a class="ui large primary right labeled icon #{if disableNewElement}disabled#{/if}button" href="@{Elements.create(assessmentCode,'sub_metric')}">
+          <i class="#{element.icon 'sub_metric' /} icon"></i> معیار فرعی جدید
+        </a>
+      #{/if}
     </div>
     
     <div class="ui hidden divider"></div>
@@ -41,6 +60,9 @@
         #{/ifnot}
       </div>
       #{/list}
+      #{else}
+        <div class="ui fluid message">هیچ معیار فرعی مرتبط با انتخاب شما یافت نشد. لطفا معیار اصلی مورد نظر را انتخاب نمایید.</div>
+      #{/else}
     </div>
 
   </div>
@@ -119,7 +141,7 @@
     onUpdate: updateElementsOrder
   });
 
-  $('.metric.dropdown').dropdown({
+  $('.ui.dropdown').dropdown({
     action: 'hide',
     transition: 'drop'
   });

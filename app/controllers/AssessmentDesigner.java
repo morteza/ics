@@ -115,14 +115,26 @@ public class AssessmentDesigner extends Controller {
   /**
    * Show a view to manage assessment sub-metrics.
    * @param code assessment code
+   * @param parentId Parent metric id.
    */
-  public static void subMetrics(String code) {
+  public static void subMetrics(String code, Long parentId) {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
+
+    MetricElement parent = null;
+    if (parentId!=null) {
+      parent = MetricElement.findById(parentId);
+      renderArgs.put("parent", parent);
+    }
+
+    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+
+    List<MetricElement> subMetrics = SubMetricElement.find("assessment=:assessment AND parent=:parent")
+        .setParameter("assessment", assessment)
+        .setParameter("parent", parent)
+        .fetch();
     
-    List<MetricElement> subMetrics = SubMetricElement.find("byAssessment", assessment).fetch();
-    
-    render("designer/sub_metrics.html", assessment, subMetrics);    
+    render("designer/sub_metrics.html", assessment, metrics, subMetrics);    
   }
 
   /**
@@ -139,6 +151,7 @@ public class AssessmentDesigner extends Controller {
     
     if (parentId!=null) {
       parent = MetricElement.findById(parentId);
+      renderArgs.put("parent", parent);
     }
     
     // Fetch questions
@@ -155,7 +168,6 @@ public class AssessmentDesigner extends Controller {
             //.setParameter("parent", parent)
             //.fetch();
       }
-      renderArgs.put("parent", parent);
       renderArgs.put("questions", questions);
     }
 

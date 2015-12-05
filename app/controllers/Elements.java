@@ -222,11 +222,6 @@ public class Elements extends Controller {
     renderText(Messages.get("assessments.elements.Reordered"));
   }
   
-  @Util
-  private static void addAdditionalRenderArgs() {
-    //TODO:
-  }
-  
   public static List<SubMetricElement> getSubMetrics(MetricElement parent) {
     List<SubMetricElement> subMetrics = SubMetricElement.find("byParent", parent).fetch();
     return subMetrics;
@@ -243,7 +238,7 @@ public class Elements extends Controller {
   }
   
   @Util
-  private static void reassignQuestionRanks(Assessment assessment) {
+  private static void autoAssignQuestionRanks(Assessment assessment) {
     int rankIndex = 0;
     for (String elementCode: assessment.elements) {
       if (elementCode.startsWith("question")) {
