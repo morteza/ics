@@ -151,15 +151,15 @@ public class AssessmentDesigner extends Controller {
           .fetch();
       } else {
         // Find all questions regardless of level
-        questions = QuestionElement.find("parent.parent=:parent")
-            .setParameter("parent", parent)
-            .fetch();
+        questions = null;//QuestionElement.find("parent.parent=:parent")
+            //.setParameter("parent", parent)
+            //.fetch();
       }
       renderArgs.put("parent", parent);
       renderArgs.put("questions", questions);
     }
 
-    render("designer/questions.html", assessment, metrics);    
+    render("designer/questions.html", assessment, metrics, level);    
   }
 
   public static void publish(String code) {

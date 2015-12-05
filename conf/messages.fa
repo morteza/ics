@@ -125,4 +125,10 @@ standards.levels.High=بالا
 standards.levels.Moderate=متوسط
 standards.levels.Low=پایین
 
+standards.levels.VERY_HIGH=خیلی بالا
+standards.levels.HIGH=بالا
+standards.levels.MODERATE=متوسط
+standards.levels.LOW=پایین
+
+
 cms.Admin=مدیریت محتوا

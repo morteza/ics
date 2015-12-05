@@ -5,25 +5,27 @@
 #{set 'moreStyles'}
 #{/set}
 
-<section class="ui page centered stackable grid" style="min-height:60vh">
+<section class="ui page centered padded stackable grid" style="min-height:60vh">
   <div class="twelve wide column" id="sticker">
-  <div class="ui header">
-    <div class="sub header">طراحی و تغییر پرسش‌ها</div>
+  <h2 class="ui header">
     <i class="sort alphabet ascending icon"></i>
     <div class="content">
       &{'assessment.designer.Elements'}
+      <div class="sub header">طراحی و تغییر پرسش‌ها</div>
     </div>
-  </div>
+    
+  </h2>
 
   <div class="ui segment">
     
+    <div class="ui compact buttons">
     #{if metrics}
-    <div class="ui right floated scrolling link dropdown">
+    <div class="ui scrolling link dropdown button">
         #{if parent}
         <div class="text">${parent.title}</div>
         #{/if}
         #{else}
-        <div class="default text">معیار اصلی</div>   
+        <div class="default text">معیار اصلی را انتخاب نمایید</div>   
         #{/else}
         <i class="dropdown icon"></i>
         <div class="menu">
@@ -36,27 +38,29 @@
     
     #{if parent}
     <br />
-    <div class="ui right floated scrolling link dropdown">
+    <div class="ui scrolling link dropdown button">
         #{if level}
-        <div class="text">${level}</div>
+        <div class="text">&{'standards.levels.'+level}</div>
         #{/if}
         #{else}
-        <div class="default text">سطح تضمین امنیتی (SAL)</div>   
+        <div class="default text">سطح تضمین امنیتی (SAL) را انتخاب نمایید.</div>   
         #{/else}
         <i class="dropdown icon"></i>
         <div class="menu">
-          #{list models.elements.QuestionElement.SeverityLevel}
+          #{list models.elements.QuestionElement.SeverityLevel.values()}
+          <a class="#{if level==_}active#{/if} item" href="@{AssessmentDesigner.questions(assessment.code, parent.id, _)}">&{'standards.levels.'+_}</a>
           #{/list}
         </div>
     </div>
-    #{/if}
+    #{/if}    
     
-    <div class="ui basic center aligned segment">
-      <a class="ui large primary labeled icon #{if disableNewElement}disabled#{/if}button" href="@{Elements.create(assessmentCode,'question')}">
+    #{if parent!=null & metrics!=null & level!=null}
+      <a class="ui large primary right labeled icon #{if disableNewElement}disabled#{/if}button" href="@{Elements.create(assessmentCode,'question')}">
         <i class="#{element.icon 'question' /} icon"></i> پرسش جدید
       </a>
+    #{/if}
     </div>
-    
+
     <div class="ui hidden divider"></div>
     <div id="current-questions">
       #{list questions}
