@@ -108,7 +108,7 @@ public class Elements extends Controller {
       elem.assessment.save();
       flash.success(Messages.get("assessments.elements.SubMetricCreated"));
     }
-    AssessmentDesigner.subMetrics(parent.assessment.code);
+    AssessmentDesigner.subMetrics(parent.assessment.code, parent.id);
   }
   
   public static void create(String assessmentCode, String type) {
