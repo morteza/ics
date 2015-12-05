@@ -164,15 +164,14 @@ public class Elements extends Controller {
     
     String type = element.elementType();
     notFoundIfNull(type);
-   
+
+    // New Sub Metric or Question
     if ("sub_metric".equalsIgnoreCase(type) || "question".equalsIgnoreCase(type)) {
       // Add available metrics to the render arguments.
-      List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
-          + "m.assessment=:assessment AND (concat('metric.',cast(m.id as string)) MEMBER of m.assessment.elements)")
-          .setParameter("assessment", assessment).fetch();
+      List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
       renderArgs.put("metrics", metrics);
     }
-
+   
     //long numOfRelatedResults = Account.find("SELECT DISTINCT a FROM Account a, BlockResult r WHERE r.actor=a AND r.assessment=?", assessment).fetch().size();      
     boolean preventRemoval = false;//Long.compare(numOfRelatedResults, 0) >0;
 
