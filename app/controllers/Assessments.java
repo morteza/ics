@@ -230,10 +230,12 @@ public class Assessments extends Controller {
         double normalizedW = (100.0 * w / totalWeight);
         weights.put(mId, normalizedW);
       }      
-    }
+      //FIXME: this is extreme stupidity!
+      totalWeight = 100 * totalWeight / totalWeight;
 
-    
-    render("assessments/concerns.html", assessment, assessor, weights, failures);
+    }
+        
+    render("assessments/concerns.html", assessment, assessor, weights, totalWeight, failures);
   }
  
   /**
