@@ -17,11 +17,13 @@ import javax.persistence.ManyToOne;
 import models.ModelWithTimestamp;
 import models.assessment.Assessment;
 import play.data.validation.MaxSize;
+import play.data.validation.Required;
 import play.i18n.Messages;
 
 @Entity(name="question_element")
 public class QuestionElement extends BaseElement {
   
+  @Required
   public Integer rank;
   
   @ManyToOne
@@ -46,6 +48,7 @@ public class QuestionElement extends BaseElement {
     this.type = "question";
     this.parent = parent;
     this.level = SeverityLevel.MODERATE;
+    this.rank = 0;
   }
 
   public void setParent(SubMetricElement parent) {

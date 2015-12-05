@@ -17,10 +17,12 @@
       <div class="title">پرسش‌نامه</div>
     </div>
   </div>
-  <div class="#{if request.action=='Assessments.results'}active#{/if}#{else}disabled#{/else} step">
+  #{if _assessorId && _assessmentCode}
+  <div class="step">
     <i class="pie chart icon"></i>
     <div class="content">
-      <div class="title">نتایج</div>
+      <a class="title" href="@{Assessments.results(_assessmentCode, _assessorId)}">نتایج</a>
     </div>
   </div>
+  #{/if}
 </div>

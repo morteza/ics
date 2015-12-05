@@ -144,7 +144,9 @@ public class Assessments extends Controller {
 
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
-        
+
+    session.current().remove(assessment.code + "_current");
+
     List<Response> yess = new ArrayList<Response>();
     List<Response> nos = new ArrayList<Response>();
     List<Response> nones = new ArrayList<Response>();
@@ -171,9 +173,6 @@ public class Assessments extends Controller {
     
     List<MetricElement> allMetrics = MetricElement.find("byAssessment", assessment).fetch();
     //1. Calculate top categories of concerns (same as metrics)
-    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m, response r, question_element q, "
-        + "Assessor a WHERE a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND q.parent.parent=m "
-        + "AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
 
     Map<Long, Double> failures = new HashMap<Long, Double>();
     Map<Long, Double> weights = new HashMap<Long, Double>();
@@ -190,11 +189,7 @@ public class Assessments extends Controller {
     //Add all questions with no response
     noAndNoneAndUA = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
         + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='no' OR r.content='none' OR r.content='')").setParameter("assessor", assessor).fetch();
-    
-    //Add all questions with no response
-    List<QuestionElement>  yesAndAlt = QuestionElement.find("SELECT DISTINCT q FROM question_element q, response r, Assessor a WHERE "
-        + "a=:assessor AND (r MEMBER OF a.responses) AND r.question=q AND (r.content='yes' OR r.content='alt')").setParameter("assessor", assessor).fetch();
-    
+
     MetricElement parentMetric;
     
     long numOfAllQuestions = QuestionElement.count("assessment=?", assessment);
@@ -203,6 +198,10 @@ public class Assessments extends Controller {
     for (QuestionElement q: noAndNoneAndUA) {
       //TODO: calculate and add weights in the same order of the questions
       //weights.add(0.0);
+      //FIXME: workaround
+      if (q.rank==null)
+        q.rank = 1;
+      
       parentMetric = q.parent.parent;
       Double parentFailures = failures.get(parentMetric.id);
       if (parentFailures == null) parentFailures = 0.0;
@@ -234,6 +233,8 @@ public class Assessments extends Controller {
       totalWeight = 100 * totalWeight / totalWeight;
 
     }
+    
+    System.out.println("tw:" + totalWeight);
         
     render("assessments/concerns.html", assessment, assessor, weights, totalWeight, failures);
   }

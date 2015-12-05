@@ -36,10 +36,9 @@
       <div class="field" style="display:none;" id="level-field">
         <label>&{'standards.levels'}</label>
         <select name="level" class="ui selection dropdown">
-          <option value="LOW">&{'standards.levels.Low'}</option>
-          <option value="MODERATE" selected="selected">&{'standards.levels.Moderate'}</option>
-          <option value="HIGH">&{'standards.levels.High'}</option>
-          <option value="VERY_HIGH">&{'standards.levels.VeryHigh'}</option>
+          #{list models.elements.QuestionElement.SeverityLevel.values()}
+          <option value="${_}" class="#{if level==LOW}selected="selected"#{/if}>&{'standards.levels.'+_}</option>
+          #{/list}
         </select>
       </div>
       

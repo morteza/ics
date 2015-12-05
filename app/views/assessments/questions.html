@@ -9,7 +9,7 @@
 
 <section class="ui padded page stackable grid">
 <div class="ui fourteen wide centered column">
-  #{assessmentSteps /}
+  #{assessmentSteps assessorId:assessor.id, assessmentCode:assessment.code/}
   <div class="ui clearing segment">
     <div class="ui ribbon label">
       <div class="ui floating link tiny scrolling dropdown button">
@@ -35,6 +35,20 @@
         <div class="sub header">
           #{if subMetric.description && subMetric.description.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
           ${subMetric.description.raw()}
+        </div>
+        <div class="inline fields content">
+	        <div class="field">
+	          <div class="ui radio checkbox">
+	            <input type="radio" name="response_${_.id}" value="yes" />
+	            <label>&{'yes'}</label>
+	          </div>
+	        </div>
+	        <div class="field">
+	          <div class="ui radio checkbox">
+	            <input type="radio" name="response_${_.id}" value="no" />
+	            <label>&{'no'}</label>
+	          </div>
+	        </div>
         </div>
       </div>
       #{list controllers.Elements.getQuestions(subMetric, level)}
