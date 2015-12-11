@@ -66,19 +66,22 @@ public class Elements extends Controller {
   public static void saveMetric(Assessment assessment, MetricElement element) {
     String title = request.params.get("title");
     String description = request.params.get("description");
-    
+    String level = request.params.get("level");
+
     // Check if elements is new, or we are updating one.
     if (element!=null && element.id!=null) {
       element.title = title;
       element.description = description;
+      element.level = QuestionElement.SeverityLevel.valueOf(level);
       element.save();
       flash.success(Messages.get("assessments.elements.MetricUpdated"));
     } else {
-      MetricElement elem = new MetricElement(assessment, title, description);
-      elem.save();
-      elem.code = "metric." + elem.id;
-      elem.save();
-      assessment.elements.add(elem.code);
+      element = new MetricElement(assessment, title, description);
+      element.level = QuestionElement.SeverityLevel.valueOf(level);
+      element.save();
+      element.code = "metric." + element.id;
+      element.save();
+      element.assessment.elements.add(element.code);
       assessment.save();
       flash.success(Messages.get("assessments.elements.MetricCreated"));
     }

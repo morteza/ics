@@ -12,11 +12,22 @@
       #{if element}
       <input type="hidden" name="element.id" value="${element?.id}" />
       #{/if}
-	    <div class="field">
-	      <label>عنوان پرسش</label>
-	      <input type="text" name="title" value="${element?.title}">
-	    </div>
-	    
+
+      <div class="two fields">
+        <div class="field">
+          <label>عنوان پرسش</label>
+          <input type="text" name="title" value="${element?.title}">
+        </div>
+        <div class="field">
+          <label>&{'standards.levels'}</label>       
+          <select name="level" class="ui selection dropdown">
+            #{list models.elements.QuestionElement.SeverityLevel.values()}
+            <option class="item" value="${_}" #{if element?.level==_}selected="selected"#{/if}>&{'standards.levels.'+_}</option>
+            #{/list}
+          </select>
+        </div>
+      </div>
+      
 	    <div class="field">
 	      <label>متن پرسش</label>
         <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description?.raw()}</div>
@@ -28,15 +39,6 @@
 	        <label>رتبه اهمیت پرسش</label>
 	        <input type="number" name="rank" value="#{if element?.rank}${element.rank}#{/if}#{else}0#{/else}" />
 	      </div>
-	      <div class="field">
-          <label>&{'standards.levels'}</label>
-          <select name="level" class="ui selection dropdown">
-            <option value="LOW" #{if element?.level==models.elements.QuestionElement.SeverityLevel.LOW} selected="selected"#{/if}>&{'standards.levels.Low'}</option>
-            <option value="MODERATE" #{if element?.level==models.elements.QuestionElement.SeverityLevel.MODERATE} selected="selected"#{/if}>&{'standards.levels.Moderate'}</option>
-            <option value="HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.HIGH} selected="selected"#{/if}>&{'standards.levels.High'}</option>
-            <option value="VERY_HIGH" #{if element?.level==models.elements.QuestionElement.SeverityLevel.VERY_HIGH} selected="selected"#{/if}>&{'standards.levels.VeryHigh'}</option>
-          </select>
-        </div>
       </div>
 	    
       <div class="field">

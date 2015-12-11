@@ -20,7 +20,9 @@ import javax.persistence.OneToMany;
 
 import models.ModelWithTimestamp;
 import models.assessment.Assessment;
+import models.elements.QuestionElement.SeverityLevel;
 import play.data.validation.MaxSize;
+import play.data.validation.Required;
 import play.i18n.Messages;
 
 @Entity(name="metric_element")
@@ -30,12 +32,16 @@ public class MetricElement extends BaseElement {
   @Lob
   @Column(columnDefinition="TEXT")
   public String description;
-    
+
+  @Required
+  public SeverityLevel level;
+  
   public MetricElement(Assessment assessment, String title, String description) {
     super(assessment);
     this.type = "metric";
     this.title = title;
     this.description = description;
+    this.level = SeverityLevel.ALL;
   }
   
   public long numOfQuestions() {
