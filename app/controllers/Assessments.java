@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Query;
+
 import models.Account;
 import models.AccountRole;
 import models.assessment.Response;
@@ -22,6 +24,7 @@ import models.elements.QuestionElement;
 import models.elements.SubMetricElement;
 import models.assessment.Assessment;
 import models.assessment.Assessor;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Http.Cookie;
@@ -68,7 +71,11 @@ public class Assessments extends Controller {
   public static void jumpToQuestionsPage(String code, Long assessorId, String level, int page) {
     Assessment assessment = Assessment.findByCode(code);
     Assessor assessor = Assessor.findById(assessorId);
-    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+    Query metricQuery = JPA.em().createQuery("SELECT m.id, m.code, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment ORDER BY m.rank ASC");
+    metricQuery.setParameter("assessment", assessment);
+    List<Object[]> metrics = metricQuery.getResultList();
+    
     if (page>metrics.size()) {
       results(code, assessor.id);
     }
@@ -77,11 +84,17 @@ public class Assessments extends Controller {
     }
     
     int pages = metrics.size();
-    MetricElement metric = metrics.get(page-1);
-    session.current().put(assessment.code + "_current", metric.code);
+    String currentMetricCode = (String) metrics.get(page-1)[1];
+
+    session.current().put(assessment.code + "_current", currentMetricCode);
+    
+    MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
     
     //. Find sub-metrics
-    List<SubMetricElement> subMetrics = SubMetricElement.find("parent", metric).fetch();
+    Query query = JPA.em().createQuery("SELECT sm.id, sm.title, sm.description FROM models.elements.SubMetricElement sm "
+        + "WHERE sm.parent=:parent ORDER BY sm.rank ASC");
+    query.setParameter("parent", metric);
+    List<Object[]> subMetrics = query.getResultList();
     renderArgs.put("subMetrics", subMetrics);
 
     // This is the previous page
@@ -103,17 +116,22 @@ public class Assessments extends Controller {
       standards(assessor);
     }
 
-    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
-    int pages = metrics.size();
+    Query query = JPA.em().createQuery("SELECT m.id, m.code, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment ORDER BY m.rank ASC");
+    query.setParameter("assessment", assessment);
+    List<Object[]> metrics = query.getResultList();
     
+    int pages = metrics.size();
+
     //1. Find current metric from session
     String currentMetricCode = session.current().get(assessment.code + "_current");
     MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
-    
+    System.out.println("[1] currentMetricCode=" + currentMetricCode);
+
     //2. save results if any
     for (String key: params.all().keySet()) {
       if (key.startsWith("response_")) {
-        String strQuestionId = key.substring(9); // find question id
+        String strQuestionId = key.substring(9); // find question id (i.e. from 'question.*' strings).
         QuestionElement qElement = (QuestionElement) Elements.findElementByCode("question." + strQuestionId);
         String content = params.get(key);
         Response response = new Response(qElement, content);
@@ -124,16 +142,19 @@ public class Assessments extends Controller {
     }
     
     //3. find next metric and the page
-    int page = metrics.indexOf(metric) + 1;
+    int page = (metric==null)?0:(metric.rank);
     if (page>=pages) {
       session.current().remove(assessment.code + "_current");
       results(assessment.code, assessor.id);
     }
-    metric = metrics.get(page);
+    metric = MetricElement.findById(metrics.get(page)[0]);
     session.current().put(assessment.code + "_current", metric.code);
     
     //4. Find sub-metrics
-    List<SubMetricElement> subMetrics = SubMetricElement.find("parent", metric).fetch();
+    query = JPA.em().createQuery("SELECT sm.id, sm.title, sm.description FROM models.elements.SubMetricElement sm "
+        + "WHERE sm.parent=:parent ORDER BY sm.rank ASC");
+    query.setParameter("parent", metric);
+    List<Object[]> subMetrics = query.getResultList();
     renderArgs.put("subMetrics", subMetrics);
 
     //5. Render questions of this metrics and corresponding subMetrics

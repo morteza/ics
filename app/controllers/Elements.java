@@ -12,6 +12,7 @@ package controllers;
 import java.util.List;
 
 import javax.lang.model.element.Element;
+import javax.persistence.Query;
 
 import models.Account;
 import models.AccountRole;
@@ -21,6 +22,7 @@ import models.elements.MetricElement;
 import models.elements.QuestionElement;
 import models.elements.QuestionElement.SeverityLevel;
 import models.elements.SubMetricElement;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Util;
@@ -237,11 +239,19 @@ public class Elements extends Controller {
   
   
   @Util
-  public static List<QuestionElement> getQuestions(SubMetricElement subMetric, String level) {
+  public static List<Object[]> getQuestions(Long parentId, String level) {
     QuestionElement.SeverityLevel sLevel = SeverityLevel.valueOf(level);
     //TODO check if sLevel is not null, or return all questions if it's null.   
+
+    // Find all elements regarding the passed metric and level
+    Query questionQuery = JPA.em().createQuery("SELECT q.id, q.description FROM models.elements.QuestionElement q "
+        + "WHERE q.parent.id=:parentId AND (q.level=:level OR q.level=:all) ORDER BY q.rank ASC");
+    questionQuery.setParameter("parentId", parentId);
+    questionQuery.setParameter("level", sLevel);
+    questionQuery.setParameter("all", SeverityLevel.ALL);
     
-    List<QuestionElement> questions = QuestionElement.find("byParentAndLevel", subMetric, sLevel).fetch();
+    List<Object[]> questions = questionQuery.getResultList();
+    
     return questions;
   }
   
