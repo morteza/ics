@@ -13,15 +13,26 @@
       #{if element}
       <input type="hidden" name="element.id" value="${element.id}" />
       #{/if}
+      <div class="two fields">
 	    <div class="field">
 	      <label>نام معیار فرعی</label>
 	      <input type="text" name="title" value="${element?.title}">
+	    </div>
+	    <div class="field">
+        <label>&{'standards.levels'}</label>       
+        <select name="level" class="ui selection dropdown">
+          #{list models.elements.QuestionElement.SeverityLevel.values()}
+          <option class="item" value="${_}" #{if element?.level==_}selected="selected"#{/if}>&{'standards.levels.'+_}</option>
+          #{/list}
+        </select>
+      </div>
 	    </div>
 	    <div class="field">
 	      <label>پیش‌سوال</label>
         <div id="description-editor" class="ui wysiwyg segment" contenteditable="true">${element?.description?.raw()}</div>
 	      <input type="hidden" name="description" />
 	    </div>
+      
 	    <div class="field">
 	      <label>معیار اصلی</label>
 	      <select name="parent.id" class="ui fluid selection dropdown">

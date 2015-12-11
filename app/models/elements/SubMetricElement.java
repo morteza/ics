@@ -20,7 +20,9 @@ import javax.persistence.OneToMany;
 
 import models.ModelWithTimestamp;
 import models.assessment.Assessment;
+import models.elements.QuestionElement.SeverityLevel;
 import play.data.validation.MaxSize;
+import play.data.validation.Required;
 import play.i18n.Messages;
 
 @Entity(name="sub_metric_element")
@@ -34,10 +36,14 @@ public class SubMetricElement extends BaseElement {
   @Column(columnDefinition="TEXT")
   public String description;
   
+  @Required
+  public SeverityLevel level;
+  
   public SubMetricElement(MetricElement parent) {
     super(parent.assessment);
     this.type = "sub_metric";
     this.parent = parent;
+    this.level = SeverityLevel.ALL;
   }
 
   public void setParent(MetricElement parent) {

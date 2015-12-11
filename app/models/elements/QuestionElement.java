@@ -38,7 +38,8 @@ public class QuestionElement extends BaseElement {
     LOW,
     MODERATE,
     HIGH,
-    VERY_HIGH
+    VERY_HIGH,
+    ALL
   };
   
   public SeverityLevel level;
