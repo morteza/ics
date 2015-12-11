@@ -211,30 +211,26 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    assessment.elements.clear();
-
-    List<MetricElement> metrics = MetricElement.find("SELECT DISTINCT m FROM metric_element m WHERE "
+    List<MetricElement> metrics = MetricElement.find("SELECT m FROM metric_element m WHERE "
         + "m.assessment=:assessment")
         .setParameter("assessment", assessment).fetch();
-    List<SubMetricElement> subMetrics = SubMetricElement.find("SELECT DISTINCT sm FROM sub_metric_element sm WHERE "
+    List<SubMetricElement> subMetrics = SubMetricElement.find("SELECT sm FROM sub_metric_element sm WHERE "
         + "sm.assessment=:assessment")
         .setParameter("assessment", assessment).fetch();
-    List<QuestionElement> questions = QuestionElement.find("SELECT DISTINCT q FROM question_element q WHERE "
-        + "q.assessment=:assessment")
-        .setParameter("assessment", assessment).fetch();
+    
+    int index = 0;
     
     for (MetricElement m: metrics) {
-      assessment.elements.add("metric."+m.id);
+      m.rank = ++index;
+      m.save();
     }
+    index = 0;
     for (SubMetricElement sm: subMetrics) {
-      assessment.elements.add("sub_metric."+sm.id);
+      sm.rank = ++index;
+      sm.save();
     }
-    for (QuestionElement q: questions) {
-      assessment.elements.add("question."+q.id);
-    }
-    assessment.save();
     
     flash.success("Cleaned Up!");
-    metrics(assessment.code);
+    general(assessment.code);
   }
 }
