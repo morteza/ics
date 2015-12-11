@@ -1,0 +1,47 @@
+#{extends 'main.html' /}
+#{set 'title'} &{'assessments.Standards'} #{/set}
+#{set hideHeader:'true' /}
+#{set hideFooter:'false' /}
+
+#{set 'moreStyles'}
+#{/set}
+
+<section class="ui padded page stackable grid">
+<div class="ui ten wide centered column">
+  <div class="ui info message">
+    برای شروع ارزیابی باید مشخص سازید که ارزیابی به چه هدفی انجام می شود. شما می توانید به ارزیابی سازمان یا ارزیابی یک محصول
+    بپردازید. هر یک از این دو نوع ارزیابی استانداردها و پرسش های مختص به خود را دارند.
+  </div>
+  <div class="ui hidden divider"></div>
+  <div class="ui fluid two cards">
+    <a href="@{Assessments.assessorInformation()}" class="ui blue card">
+      <div class="image">
+        <img src="@{'public/img/factory.png'}">
+      </div>
+      <div class="content">
+        <div class="center aligned header">ارزیابی سازمانی</div>
+      </div>
+    </a>
+    <a href="#" class="ui teal disabled card">
+      <div class="image">
+        <img src="@{'public/img/product.png'}" class="ui disabled image">
+      </div>
+      <div class="content">
+        <div class="center aligned header">ارزیابی محصول</div>
+      </div>
+    </a>
+  </div>
+</div>
+</section>
+
+#{set 'moreScripts'}
+<script>
+$('.help.icon').popup();
+$('.ui.dropdown').dropdown();
+$('.ui.radio.checkbox').checkbox();
+$('input[name="code"]').on('change', function() {
+  $('#level-field').hide(100);
+  $('#level-field').show(100);
+});
+</script>
+#{/set}

@@ -33,6 +33,10 @@ import utils.SecurityCheck;
 @SecurityCheck(AccountRole.GUEST)
 public class Assessments extends Controller {
   
+  public static void chooseAssessmentType() {
+    render("assessments/choose_type.html");
+  }
+  
   public static void assessorInformation() {    
     render("assessments/assessor.html");
   }
