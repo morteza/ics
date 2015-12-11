@@ -11,7 +11,7 @@
 
 #{security.check models.AccountRole.REGISTERED}
 <div class="ui container">
-<header class="ui huge fixed pointing menu">
+<header class="ui huge fixed menu">
   <a class="icon item" href="@{Application.index()}" style="padding:4px;"><img class="ui brand image" src="@{'/public/img/itrc_logo_small.png'}" /></a>
   <a  class="#{if request.action=='Application.dashboard'}active#{/if} icon item" href="@{Application.dashboard()}" title="&{'dashboard'}"><i class="dashboard icon"></i></a>
   <a  class="#{if request.action=='CVSS.calculator'}active#{/if} icon item" href="@{CVSS.calculator()}" title="&{'calculator'}"><i class="calculator icon"></i></a>

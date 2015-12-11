@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import models.AccountRole;
 import models.assessment.Assessment;
 import models.elements.BaseElement;
@@ -23,6 +25,7 @@ import models.elements.MetricElement;
 import models.elements.QuestionElement;
 import models.elements.QuestionElement.SeverityLevel;
 import models.elements.SubMetricElement;
+import play.db.jpa.JPA;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.With;
@@ -107,9 +110,10 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
-        .setParameter("assessment", assessment)
-        .fetch();
+    Query metricQuery = JPA.em().createQuery("SELECT m.id, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment ORDER BY m.rank ASC");
+    metricQuery.setParameter("assessment", assessment);
+    List<Object[]> metrics = metricQuery.getResultList();
     
     render("designer/metrics.html", assessment, metrics);    
   }
@@ -128,16 +132,19 @@ public class AssessmentDesigner extends Controller {
       parent = MetricElement.findById(parentId);
       renderArgs.put("parent", parent);
     }
+    
+    Query metricQuery = JPA.em().createQuery("SELECT m.id, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment ORDER BY m.rank ASC");
+    metricQuery.setParameter("assessment", assessment);
+    List<Object[]> metrics = metricQuery.getResultList();
 
-    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
-        .setParameter("assessment", assessment)
-        .fetch();
     
-    List<MetricElement> subMetrics = SubMetricElement.find("assessment=:assessment AND parent=:parent ORDER BY rank ASC")
-        .setParameter("assessment", assessment)
-        .setParameter("parent", parent)
-        .fetch();
-    
+    Query subMetricQuery = JPA.em().createQuery("SELECT sm.id, sm.title FROM models.elements.SubMetricElement sm "
+        + "WHERE sm.assessment=:assessment AND sm.parent=:parent ORDER BY sm.rank ASC");
+    subMetricQuery.setParameter("assessment", assessment);
+    subMetricQuery.setParameter("parent", parent);
+    List<Object[]> subMetrics = subMetricQuery.getResultList();
+
     render("designer/sub_metrics.html", assessment, metrics, subMetrics);    
   }
 
@@ -149,9 +156,10 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
-        .setParameter("assessment", assessment)
-        .fetch();
+    Query metricQuery = JPA.em().createQuery("SELECT m.id, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment ORDER BY m.rank ASC");
+    metricQuery.setParameter("assessment", assessment);
+    List<Object[]> metrics = metricQuery.getResultList();
     
     List<QuestionElement> questions;
     MetricElement parent = null;
@@ -163,19 +171,15 @@ public class AssessmentDesigner extends Controller {
     
     // Fetch questions
     if (parent!=null) {
-      if (level!=null) {
-        // Find all elements regarding the passed metric and level
-        questions = QuestionElement.find("parent.parent=:parent AND (level=:level OR level=:all) ORDER BY rank ASC")
-          .setParameter("parent", parent)
-          .setParameter("level", level)
-          .setParameter("all", SeverityLevel.ALL)
-          .fetch();
-      } else {
-        // Find all questions regardless of level
-        questions = null;//QuestionElement.find("parent.parent=:parent")
-            //.setParameter("parent", parent)
-            //.fetch();
+      if (level==null) {
+        level = SeverityLevel.ALL;
       }
+      // Find all elements regarding the passed metric and level
+      Query questionQuery = JPA.em().createQuery("SELECT q.id, q.title FROM models.elements.QuestionElement q "
+          + "WHERE q.parent.parent=:parent AND (q.level=:level) ORDER BY q.rank ASC");
+      questionQuery.setParameter("parent", parent);
+      questionQuery.setParameter("level", level);
+      questions = questionQuery.getResultList();
       renderArgs.put("questions", questions);
     }
 

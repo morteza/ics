@@ -30,7 +30,7 @@
 	        <i class="dropdown icon"></i>
 	        <div class="menu">
 	          #{list metrics}
-	          <a class="#{if parent?.id==_.id}active#{/if} item" href="@{AssessmentDesigner.questions(assessment.code, _.id, null)}">${_.title}</a>
+	          <a class="#{if parent?.id==_[0]}active#{/if} item" href="@{AssessmentDesigner.questions(assessment.code, _[0], null)}">${_[1]}</a>
 	          #{/list}
 	        </div>
 	    </div>
@@ -63,17 +63,17 @@
     <div class="ui hidden divider"></div>
     <div id="current-questions">
       #{list questions}
-      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="question.${_.id}">
+      <div class="ui large #{element.color 'question' /} label" style="margin-bottom:5px;" data-element="question.${_[0]}">
         #{ifnot preventUpdate}
         <i class="circle help icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview('question.'+_.id)}">
-          <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
-          ${_?.title}
+        <a href="@{Elements.preview('question.'+_[0])}">
+          <!-- <i class="#{element.icon 'question' /} icon"></i> -->
+          ${_[1]}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete('question.'+_.id)}" title="حذف پرسش"><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('question.'+_[0])}" title="حذف پرسش"><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>

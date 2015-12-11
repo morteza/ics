@@ -25,17 +25,16 @@
     <div class="ui hidden divider"></div>
     <div id="current-metrics">
       #{list metrics}
-      <div class="ui large #{element.color _.elementType() /} label" style="margin-bottom:5px;" data-element="metric.${_.id}">
+      <div class="ui large #{element.color 'metric' /} label" style="margin-bottom:5px;" data-element="metric.${_[0]}">
         #{ifnot preventUpdate}
         <i class="drag-handle bars icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview('metric.'+_.id)}">
-          <!-- <i class="#{element.icon _.elementType() /} icon"></i> -->
-          ${_?.title}
+        <a href="@{Elements.preview('metric.'+_[0])}">
+          ${_[1]}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete('metric.'+_.id)}" title="Remove this element."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('metric.'+_[0])}" title="Remove this element."><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>

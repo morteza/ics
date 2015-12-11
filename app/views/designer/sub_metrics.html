@@ -29,7 +29,7 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             #{list metrics}
-            <a class="#{if parent?.id==_.id}active#{/if} item" href="@{AssessmentDesigner.subMetrics(assessment.code, _.id)}">${_.title}</a>
+            <a class="#{if parent?.id==_[0]}active#{/if} item" href="@{AssessmentDesigner.subMetrics(assessment.code, _[0])}">${_[1]}</a>
             #{/list}
           </div>
       </div>
@@ -45,17 +45,17 @@
     <div class="ui hidden divider"></div>
     <div id="current-submetrics">
       #{list subMetrics}
-      <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="sub_metric.${_.id}">
+      <div class="ui large #{element.color 'sub_metric' /} label" style="margin-bottom:5px;" data-element="sub_metric.${_[0]}">
         #{ifnot preventUpdate}
         <i class="drag-handle bars icon"></i>
         #{/ifnot}
-        <a href="@{Elements.preview('sub_metric.'+_.id)}">
-          <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
-          ${_?.title}
+        <a href="@{Elements.preview('sub_metric.'+_[0])}">
+          <!-- <i class="#{element.icon 'sub_metric' /} icon"></i> -->
+          ${_[1]}
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete('sub_metric.'+_.id)}" title="Remove this element."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('sub_metric.'+_[0])}" title="حذف این معیار"><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>
