@@ -165,6 +165,7 @@ public class Elements extends Controller {
     BaseElement element = findElementByCode(code);
     notFoundIfNull(element);
 
+    System.out.println("rank: " + element.rank);
     Assessment assessment = element.assessment;
     notFoundIfNull(assessment);
     
@@ -213,16 +214,17 @@ public class Elements extends Controller {
    * @param experiment
    * @param elements
    */
-  public static void sortElements(Assessment assessment, String[] elements) {
-    assessment.elements.clear();
+  public static void reorderElements(Assessment assessment, String[] elements) {
     if (elements!=null) {
+      BaseElement element;
+      int index = 0;
       for (String elementCode: elements) {
-        assessment.elements.add(elementCode);
+        element = findElementByCode(elementCode);
+        element.rank = ++index;
+        element.save();
       }
     }
-    
-    assessment.save();
-    
+
     //reassignQuestionRanks(assessment);
     
     renderText(Messages.get("assessments.elements.Reordered"));

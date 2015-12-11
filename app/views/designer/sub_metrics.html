@@ -123,7 +123,7 @@
     $('#current-submetrics').children().each(function(){
       elementsArray.push($(this).data('element'));
     });
-    $.post("@{Elements.sortElements}", {
+    $.post("@{Elements.reorderElements}", {
       'assessment.id': '${assessment.id}',
       'elements[]': elementsArray
     }).done(function(data) {

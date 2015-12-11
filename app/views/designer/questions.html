@@ -65,7 +65,7 @@
       #{list questions}
       <div class="ui large #{element.color _?.elementType() /} label" style="margin-bottom:5px;" data-element="question.${_.id}">
         #{ifnot preventUpdate}
-        <i class="drag-handle bars icon"></i>
+        <i class="circle help icon"></i>
         #{/ifnot}
         <a href="@{Elements.preview('question.'+_.id)}">
           <!-- <i class="#{element.icon _?.elementType() /} icon"></i> -->
@@ -73,7 +73,7 @@
         </a>
         #{ifnot preventUpdate}
         <div class="detail">
-          <a href="@{Elements.delete('question.'+_.id)}" title="Remove this question."><i class="red link delete icon"></i></a>
+          <a href="@{Elements.delete('question.'+_.id)}" title="حذف پرسش"><i class="red link delete icon"></i></a>
         </div>
         #{/ifnot}
       </div>
@@ -112,33 +112,6 @@
 #{ifnot preventUpdate}
   <script src="@{'/public/js/sortable.min.js'}"></script>
   <script>
-  var questions = document.getElementById('current-questions');
-
-  function updateElementsOrder(evt) {
-    var elementsArray = [];
-
-    $('#current-questions').children().each(function(){
-      elementsArray.push($(this).data('element'));
-    });
-    $.post("@{Elements.sortElements}", {
-      'assessment.id': '${assessment.id}',
-      'elements[]': elementsArray
-    }).done(function(data) {
-      $.growl.notice({
-        title:'',
-        message:data,
-        location:'br'
-      });
-    }); 
-  };
-  
-    
-  Sortable.create(questions, {
-    animation: 150,
-    handle: ".bars.icon",
-    onUpdate: updateElementsOrder
-  }); // That's all.
-  
   $('.ui.dropdown').dropdown();
   </script>
 #{/ifnot}

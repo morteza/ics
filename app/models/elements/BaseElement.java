@@ -19,6 +19,9 @@ public class BaseElement extends ModelWithTimestamp {
   public String type = null;
 
   public String code = null;
+  
+  @Required
+  public Integer rank = 0;
 
   public BaseElement(Assessment assessment) {
     this.assessment = assessment;

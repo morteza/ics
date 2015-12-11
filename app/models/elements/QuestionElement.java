@@ -22,10 +22,7 @@ import play.i18n.Messages;
 
 @Entity(name="question_element")
 public class QuestionElement extends BaseElement {
-  
-  @Required
-  public Integer rank;
-  
+
   @ManyToOne
   public SubMetricElement parent;
   

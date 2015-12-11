@@ -107,7 +107,9 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = MetricElement.find("byAssessment", assessment).fetch();
+    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
+        .setParameter("assessment", assessment)
+        .fetch();
     
     render("designer/metrics.html", assessment, metrics);    
   }
@@ -127,9 +129,11 @@ public class AssessmentDesigner extends Controller {
       renderArgs.put("parent", parent);
     }
 
-    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
-
-    List<MetricElement> subMetrics = SubMetricElement.find("assessment=:assessment AND parent=:parent")
+    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
+        .setParameter("assessment", assessment)
+        .fetch();
+    
+    List<MetricElement> subMetrics = SubMetricElement.find("assessment=:assessment AND parent=:parent ORDER BY rank ASC")
         .setParameter("assessment", assessment)
         .setParameter("parent", parent)
         .fetch();
@@ -145,7 +149,10 @@ public class AssessmentDesigner extends Controller {
     Assessment assessment = Assessment.findByCode(code);
     notFoundIfNull(assessment);
     
-    List<MetricElement> metrics = MetricElement.find("assessment", assessment).fetch();
+    List<MetricElement> metrics = MetricElement.find("assessment=:assessment ORDER BY rank ASC")
+        .setParameter("assessment", assessment)
+        .fetch();
+    
     List<QuestionElement> questions;
     MetricElement parent = null;
     
@@ -158,9 +165,10 @@ public class AssessmentDesigner extends Controller {
     if (parent!=null) {
       if (level!=null) {
         // Find all elements regarding the passed metric and level
-        questions = QuestionElement.find("parent.parent=:parent AND level=:level")
+        questions = QuestionElement.find("parent.parent=:parent AND (level=:level OR level=:all) ORDER BY rank ASC")
           .setParameter("parent", parent)
           .setParameter("level", level)
+          .setParameter("all", SeverityLevel.ALL)
           .fetch();
       } else {
         // Find all questions regardless of level
