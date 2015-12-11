@@ -33,20 +33,20 @@
       <div class="ui header">
         ${subMetric.title}
         <div class="sub header">
-          #{if subMetric.description && subMetric.description.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
-          ${subMetric.description.raw()}
+          #{if subMetric?.description?.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
+          ${subMetric.description?.raw()}
         </div>
         <div class="inline fields content">
 	        <div class="field">
 	          <div class="ui radio checkbox">
-	            <input type="radio" name="response_${_.id}" value="yes" />
-	            <label>&{'yes'}</label>
+	            <input type="radio" name="response_sub_metric_${_.id}" value="no" />
+	            <label>&{'no'}</label>
 	          </div>
 	        </div>
 	        <div class="field">
 	          <div class="ui radio checkbox">
-	            <input type="radio" name="response_${_.id}" value="no" />
-	            <label>&{'no'}</label>
+	            <input type="radio" name="response_sub_metric_${_.id}" value="none" />
+	            <label>&{'na'}</label>
 	          </div>
 	        </div>
         </div>

@@ -37,7 +37,9 @@
         <label>&{'standards.levels'}</label>
         <select name="level" class="ui selection dropdown">
           #{list models.elements.QuestionElement.SeverityLevel.values()}
+          #{if _!=models.elements.QuestionElement.SeverityLevel.ALL}
           <option value="${_}" class="#{if level==LOW}selected="selected"#{/if}>&{'standards.levels.'+_}</option>
+          #{/if}
           #{/list}
         </select>
       </div>
