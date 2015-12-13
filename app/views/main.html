@@ -32,7 +32,7 @@
     <script src="@{'/public/js/jquery.growl.js'}"></script>
     <script src="@{'/public/js/semantic.min.js'}"></script>
   </head>
-  <body>
+  <body class="#{if showBackground}patterned#{/if}">
     <div class="wrap pusher">
       #{ifnot hideHeader=='true'}
         #{header /}

@@ -9,6 +9,12 @@ body {
   height: 100%;
 }
 
+.patterned {
+  min-height: 80vh;
+  background-image: url("/public/img/symphony.png");
+  background-repeat: repeat-xy;
+}
+
 .ui.side-help,
 .ui.side-help .item .header,
 .ui.side-help .item .description {

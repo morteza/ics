@@ -2,6 +2,7 @@
 #{set title:assessment.title /}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
+#{set showBackground:'true' /}
 
 #{set 'moreStyles'}
 #{get 'moreStyles' /}
@@ -15,10 +16,6 @@
     <div class="ui message">
      با توجه به پاسخ‌های شما مواردی که نیاز به بررسی یا اعمال در سازمان شما دارند استخراج گردید. برای اطلاع از این موارد
      به <a class="ui red inline label" href="@{Assessments.concerns(assessment.code, assessor.id)}" target="_blank">لیست نگرانی‌ها</a> مراجعه نمایید.
-    </div>
- 
-    <div class="ui default message">
-    نمودارهای زیر نتایج مستخرج از پاسخ‌های شما به پرسش‌نامه را نشان می‌دهد.    
     </div>
     
     <div class="ui basic segment"> 
@@ -80,7 +77,7 @@ var polarAreaConfig = {
             "بلی",
             "خیر",
             "شامل نمی‌شود",
-            "موارد دیگر",
+            "روش جایگزین",
         ]
     },
     options: {
@@ -90,22 +87,22 @@ var polarAreaConfig = {
 var polarAreaChart = new Chart($("#polarAreaChart").get(0).getContext("2d"), polarAreaConfig);
 
 var barChartData = {
-    labels: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر"],
+    labels: ["کنترل دسترسی", "آموزش", "نیروی انسانی", "معیار اصلی ۴", "معیار اصلی ۵", "معیار اصلی ۶", "معیار اصلی ۷"],
     datasets: [{
-        label: 'سازمان الف',
+        label: 'سطح امنیتی بالا',
         backgroundColor: "rgba(51,187,205,1)",
         data: [28, 48, 40, 98, 2, 10, 18],
         borderColor: 'white',
         borderWidth: 2
     }, {
-        label: 'سازمان ب',
+        label: 'سطح امنیتی متوسط',
         backgroundColor: "rgba(251,187,205,1)",
         data: [23, 24, 25, 34, 72, 91, 10], 
         borderColor: 'white',
         borderWidth: 2
     }, {
         type: 'line',
-        label: 'سازمان ج',
+        label: 'امتیاز کسب شده',
         backgroundColor: "rgba(220,220,220,0.5)",
         data: [5, 10, 50, 30, 20, 80, 99],
     }, ]

@@ -2,41 +2,44 @@
 #{set title:assessment.title /}
 #{set hideHeader:'true' /}
 #{set hideFooter:'true' /}
+#{set showBackground:'true' /}
 
 #{set 'moreStyles'}
 #{get 'moreStyles' /}
 #{/set}
 
-<section class="ui padded page stackable grid">
-<div class="ui fourteen wide centered column">
+<section class="ui padded page stackable grid" style="min-height:75vh">
+<div class="ui sixteen wide centered column">
   #{assessmentSteps assessorId:assessor.id, assessmentCode:assessment.code/}
-  <div class="ui clearing segment">
-    <div class="ui ribbon label">
-      <div class="ui floating link tiny scrolling dropdown button">
-        <div class="text">&{'page'} ${page+1} &{'of'} ${pages}</div>
-        <div class="menu">
-          #{list metrics}
-	        <a href="@{Assessments.jumpToQuestionsPage(assessment.code, assessor.id, level, _index)}" class="item">${_[2]}</a>
-	        #{/list}
-        </div>
-      </div>
-    </div>
+  <div class="ui clearing bottom attached segment" style="border-top: 1px solid #d4d4d5;">
+    
     <form class="ui form" action="@{Assessments.questions}" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="code" value="${assessment.code}" />
       <input type="hidden" name="assessor.id" value="${assessor.id}" />
       <input type="hidden" name="metric.code" value="${metric.code}" />
       <input type="hidden" name="level" value="${level}" />
-      <h1 class="ui dividing header">${metric.title} </h1>
+      <h1 class="ui header">${metric.title}
+      <div class="ui floating link tiny scrolling dropdown right floated basic black button">
+        <div class="text">&{'page'} ${page+1} &{'of'} ${pages}</div>
+        <div class="menu">
+          #{list metrics}
+          <a href="@{Assessments.jumpToQuestionsPage(assessment.code, assessor.id, level, _index)}" class="item">${_[2]}</a>
+          #{/list}
+        </div>
+      </div>
+      </h1>
       
       #{set qIndex:0 /}
+      
       #{list items:subMetrics,as:'subMetric'}
-      <div class="ui header">
+      <div class="ui black raised segment">
+      <div class="ui dividing big header">
         ${subMetric[1]}
+        #{if subMetric[2]?.length()>0 && subMetric[2]!='null' && !subMetric[2].startsWith('......')}        
         <div class="sub header">
           #{if subMetric[2]?.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
           ${subMetric[2]?.raw()}
         </div>
-        #{if subMetric[2]?.length()>0}
         <div class="inline fields content">
 	        <div class="field">
 	          <div class="ui radio checkbox">
@@ -47,46 +50,48 @@
 	        <div class="field">
 	          <div class="ui radio checkbox">
 	            <input type="radio" name="response_sub_metric_${subMetric[0]}" value="none" />
-	            <label>&{'na'}</label>
+	            <label>&{'none'}</label>
 	          </div>
 	        </div>
         </div>
         #{/if}
       </div>
+      
       #{list controllers.Elements.getQuestions(subMetric[0], level)}
       #{set qIndex:qIndex+1 /}
-      <p><strong>#{get 'qIndex' /}-</strong> ${_[1].raw()}</p>
+      <p>#{get 'qIndex' /}. ${_[1].raw()}</p>
       <div class="inline fields">
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_[0]}" value="yes" />
-            <label>&{'yes'}</label>
+            <label><strong>&{'yes'}</strong></label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_[0]}" value="no" />
-            <label>&{'no'}</label>
+            <label><strong>&{'no'}</strong></label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_[0]}" value="alt" />
-            <label>&{'none'}</label>
+            <label><strong>&{'none'}</strong></label>
           </div>
         </div>
         <div class="field">
           <div class="ui radio checkbox">
             <input type="radio" name="response_${_[0]}" value="none" />
             <input type="hidden" name="response_${_[0]}" value="" />
-            <label>&{'alt'}</label>
+            <label><strong>&{'alt'}</strong></label>
           </div>
         </div>
       </div>
-      <div class="ui divider"></div>
       #{/list}
+      </div>
       #{/list}
-                  
+      
+      
       <div class="field">
         <a href="@{Assessments.finish(assessment.code)}" class="ui right aligned red button">خروج</a>
         <button type="submit" class="ui right floated right labeled icon primary button">
