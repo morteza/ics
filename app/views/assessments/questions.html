@@ -32,10 +32,10 @@
       #{set qIndex:0 /}
       
       #{list items:subMetrics,as:'subMetric'}
-      <div class="ui black raised segment">
+      <div class="ui raised segment">
       <div class="ui dividing big header">
         ${subMetric[1]}
-        #{if subMetric[2]?.length()>0 && subMetric[2]!='null' && !subMetric[2].startsWith('......')}        
+        #{if subMetric[2]?.length()>0 && subMetric[2]!='null' && !subMetric[2]?.contains('...............')}        
         <div class="sub header">
           #{if subMetric[2]?.length()>0}<strong>&{'assessments.SubMetricDescription'}</strong>#{/if}
           ${subMetric[2]?.raw()}
