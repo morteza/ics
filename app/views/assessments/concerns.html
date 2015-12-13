@@ -32,16 +32,16 @@
       #{list metrics}
       <tr>
         <td class="center aligned">${_index}</td>
-        <td><strong>${_.title}</strong><br /> <div class="muted">${_?.description?.raw()}</div></td>
+        <td><strong>${metricTitles.get(_)}</strong></td>
         <td class="center aligned">
-          <div class="ui red progress error" data-percent="${failures.get(_.id).format('0.00')}">
+          <div class="ui red progress error" data-percent="${failures.get(_).format('0.00')}">
             <div class="bar">
               <div class="progress"></div>
             </div>
           </div>
         </td>
         <td class="center aligned">
-          <div class="ui yellow progress" data-percent="${weights.get(_.id).format('0.00')}">
+          <div class="ui yellow progress" data-percent="${weights.get(_).format('0.00')}">
             <div class="bar">
               <div class="progress"></div>
             </div>

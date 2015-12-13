@@ -10,11 +10,15 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.persistence.Query;
+
+import utils.MetricWeightComparator;
 
 import models.Account;
 import models.AccountRole;
@@ -196,19 +200,23 @@ public class Assessments extends Controller {
     Assessor assessor = Assessor.findById(assessorId);
     notFoundIfNull(assessor);
     
-    List<MetricElement> allMetrics = MetricElement.find("byAssessment", assessment).fetch();
+    Query metricQuery = JPA.em().createQuery("SELECT m.id, m.title FROM models.elements.MetricElement m "
+        + "WHERE m.assessment=:assessment");
+    metricQuery.setParameter("assessment", assessment);
+    List<Object[]> metrics = metricQuery.getResultList(); // [id, title]
+    Map<Long, String> metricTitles = new HashMap<Long, String>();
+    
     //1. Calculate top categories of concerns (same as metrics)
 
     Map<Long, Double> failures = new HashMap<Long, Double>();
     Map<Long, Double> weights = new HashMap<Long, Double>();
 
-    for (MetricElement m: allMetrics) {
-      failures.put(m.id, 0.0);
-      weights.put(m.id, 0.0);
+    for (Object[] m: metrics) {
+      failures.put((Long)m[0], 0.0);
+      weights.put((Long)m[0], 0.0);
+      metricTitles.put((Long)m[0], (String)m[1]);
     }    
-    //renderArgs.put("allMetrics", allMetrics);
-    renderArgs.put("metrics", allMetrics);
-    
+
     List<QuestionElement> noAndNoneAndUA;
     
     //Add all questions with no response
@@ -261,8 +269,14 @@ public class Assessments extends Controller {
 
     }
 
+    // Sort according to the weights
+    Map<Long, Double> sortedWeights  = new TreeMap<Long, Double>(new MetricWeightComparator(weights));
+    sortedWeights.putAll(weights);
+    
+    renderArgs.put("metrics", sortedWeights.keySet());
+    
         
-    render("assessments/concerns.html", assessment, assessor, weights, normalizedTotalWeight, totalWeight, failures);
+    render("assessments/concerns.html", assessment, assessor, metricTitles, weights, normalizedTotalWeight, totalWeight, failures);
   }
  
   /**
