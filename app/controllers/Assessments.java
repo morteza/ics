@@ -130,7 +130,6 @@ public class Assessments extends Controller {
     //1. Find current metric from session
     String currentMetricCode = session.current().get(assessment.code + "_current");
     MetricElement metric = (MetricElement) Elements.findElementByCode(currentMetricCode);
-    System.out.println("[1] currentMetricCode=" + currentMetricCode);
 
     //2. save results if any
     for (String key: params.all().keySet()) {
