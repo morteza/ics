@@ -19,6 +19,7 @@
       <input type="hidden" name="metric.code" value="${metric.code}" />
       <input type="hidden" name="level" value="${level}" />
       <h1 class="ui header">${metric.title}
+      <div class="ui right floated tiny buttons">
       <div class="ui floating link tiny scrolling dropdown right floated basic black button">
         <div class="text">&{'page'} ${page+1} &{'of'} ${pages}</div>
         <div class="menu">
@@ -26,6 +27,8 @@
           <a href="@{Assessments.jumpToQuestionsPage(assessment.code, assessor.id, level, _index)}" class="item">${_[2]}</a>
           #{/list}
         </div>
+      </div>
+      <a href="@{Assessments.finish(assessment.code)}" class="ui right floated red button">خروج</a>           
       </div>
       </h1>
       
@@ -60,32 +63,14 @@
       #{list controllers.Elements.getQuestions(subMetric[0], level)}
       #{set qIndex:qIndex+1 /}
       <p>#{get 'qIndex' /}. ${_[1].raw()}</p>
-      <div class="inline fields">
-        <div class="field">
-          <div class="ui radio checkbox">
-            <input type="radio" name="response_${_[0]}" value="yes" />
-            <label><strong>&{'yes'}</strong></label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <input type="radio" name="response_${_[0]}" value="no" />
-            <label><strong>&{'no'}</strong></label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <input type="radio" name="response_${_[0]}" value="alt" />
-            <label><strong>&{'none'}</strong></label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            <input type="radio" name="response_${_[0]}" value="none" />
-            <input type="hidden" name="response_${_[0]}" value="" />
-            <label><strong>&{'alt'}</strong></label>
-          </div>
-        </div>
+      <div class="field">
+          <div class="ui question basic buttons">
+            <a class="ui basic green button" data-value="yes">&{'yes'}</a>
+            <a class="ui basic red button" data-value="no">&{'no'}</a>
+            <a class="ui basic brown button" data-value="none">&{'none'}</a>
+            <a class="ui basic green button" data-value="alt">&{'alt'}</a>
+            <input type="hidden" name="response_${_[0]}" value="" />            
+         </div>
       </div>
       #{/list}
       </div>
@@ -93,7 +78,6 @@
       
       
       <div class="field">
-        <a href="@{Assessments.finish(assessment.code)}" class="ui right aligned red button">خروج</a>
         <button type="submit" class="ui right floated right labeled icon primary button">
           <i class="right arrow icon"></i>
           #{if page+1 != pages}
@@ -115,6 +99,13 @@
 <script type="text/javascript">
 $('.link.dropdown').dropdown({
   action: 'hide'
+});
+
+$('.ui.question.buttons .button').click(function() {
+  $(this)
+    .addClass('active')
+    .siblings().removeClass('active');
+  $(this).siblings("input").attr('value',$(this).data('value'));
 });
 </script>
 #{/set}

@@ -180,14 +180,16 @@ public class Assessments extends Controller {
     List<Response> nones = new ArrayList<Response>();
     List<Response> alts = new ArrayList<Response>();
     
+    int numOfNA = 0;
     for (Response r:assessor.responses) {
       if ("yes".equalsIgnoreCase(r.content)) yess.add(r);
-      if ("no".equalsIgnoreCase(r.content)) nos.add(r);
-      if ("none".equalsIgnoreCase(r.content)) nones.add(r);
-      if ("alt".equalsIgnoreCase(r.content)) alts.add(r);
+      else if ("no".equalsIgnoreCase(r.content)) nos.add(r);
+      else if ("none".equalsIgnoreCase(r.content)) nones.add(r);
+      else if ("alt".equalsIgnoreCase(r.content)) alts.add(r);
+      else numOfNA++;
     }
     
-    render("assessments/results.html", assessment, assessor, yess, nos, nones, alts);
+    render("assessments/results.html", assessment, assessor, yess, nos, nones, alts, numOfNA);
   }
   
   public static void concerns(String code, Long assessorId) {

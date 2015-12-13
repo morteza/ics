@@ -9,7 +9,7 @@
 #{/set}
 
 <section class="ui padded page stackable grid">
-<div class="ui twelve wide centered column">
+<div class="ui sixteen wide centered column">
   <div class="ui clearing segment">
     <div class="ui ribbon label">&{'assessment.results'}</div>
 
@@ -18,16 +18,22 @@
      به <a class="ui red inline label" href="@{Assessments.concerns(assessment.code, assessor.id)}" target="_blank">لیست نگرانی‌ها</a> مراجعه نمایید.
     </div>
     
-    <div class="ui basic segment"> 
-      <canvas id="radarChart"></canvas>
-    </div> <!-- /.segment -->
-
     <div class="ui basic segment">  
+      <h2>نسبت پاسخ ها</h2>
       <canvas id="polarAreaChart"></canvas>
     </div> <!-- /.segment -->
 
-    <div class="ui basic segment">  
+    <div class="ui basic segment">
+      <h2>امتیاز بر حسب معیارهای اصلی</h2>
       <canvas id="barChart"></canvas>
+    </div> <!-- /.segment -->
+
+    <div class="ui basic segment"> 
+      <h2>امتیاز بر حسب نوع پرسش ها</h2>
+      <div class="ui grid">
+        <div class="eight wide column"><canvas id="radarChart"></canvas></div>
+        <div class="eight wide column"><canvas id="radarChart2"></canvas></div>
+      </div>
     </div> <!-- /.segment -->
     
     <div class="ui divider"></div>
@@ -43,34 +49,47 @@
 var radarConfig = {
     type: 'radar',
     data: {
+        labels: ["غیرفنی", "سازمانی", "عملیاتی", "فنی"],
+        datasets: [{
+            label: "Dataset #1",
+            backgroundColor: "rgba(255,0,0,0.8)",
+            pointBackgroundColor: "#ff0000",
+            data: [65, 59, 90, 81]
+        }]
+    }
+};
+var radarConfig2 = {
+    type: 'radar',
+    data: {
         labels: ["منابع انسانی", "سخت‌افزار", "نرم‌افزار", "شبکه", "آسیب‌پذیری", "به‌روزرسانی", "یک‌پارچگی"],
         datasets: [{
             label: "Dataset #1",
-            backgroundColor: "rgba(220,220,220,0.2)",
-            pointBackgroundColor: "rgba(220,220,220,1)",
+            backgroundColor: "rgba(0,0,220,0.3)",
+            pointBackgroundColor: "rgba(0,0,220,1)",
             data: [65, 59, 90, 81, 56, 55, 40]
         }, {
             label: "Dataset #2",
-            backgroundColor: "rgba(251,187,205,0.2)",
-            pointBackgroundColor: "rgba(251,187,205,1)",
+            backgroundColor: "rgba(251,0,0,0.8)",
+            pointBackgroundColor: "rgba(251,0,0,1)",
             hoverPointBackgroundColor: "#fff",
-            pointHighlightStroke: "rgba(251,187,205,1)",
             data: [28, 48, 40, 19, 96, 27, 100]
         }]
     }
 };
 var radarChart = new Chart($("#radarChart").get(0).getContext("2d"), radarConfig);
+var radarChart2 = new Chart($("#radarChart2").get(0).getContext("2d"), radarConfig2);
 
 var polarAreaConfig = {
     type: 'polarArea',
     data: {
         datasets: [{
-            data: [${yess.size()}, ${nos.size()}, ${nones.size()}, ${alts.size()}],
+            data: [${yess.size()}, ${nos.size()}, ${nones.size()}, ${alts.size()}, ${numOfNA}],
             backgroundColor: [
-                "#F7464A",
-                "#46BFBD",
-                "#FDB45C",
-                "#949FB1",
+                "#228B22",
+                "#DC143C",
+                "#8B4513",
+                "#9ACD32",
+                "#FFD700"
             ],
         }],
         labels: [
@@ -81,31 +100,26 @@ var polarAreaConfig = {
         ]
     },
     options: {
-        responsive: true
+        responsive: true,
     }
 };
 var polarAreaChart = new Chart($("#polarAreaChart").get(0).getContext("2d"), polarAreaConfig);
 
 var barChartData = {
-    labels: ["کنترل دسترسی", "آموزش", "نیروی انسانی", "معیار اصلی ۴", "معیار اصلی ۵", "معیار اصلی ۶", "معیار اصلی ۷"],
+    labels: ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26"],
     datasets: [{
-        label: 'سطح امنیتی بالا',
-        backgroundColor: "rgba(51,187,205,1)",
-        data: [28, 48, 40, 98, 2, 10, 18],
-        borderColor: 'white',
-        borderWidth: 2
+        label: 'امتیاز کسب شده',
+        backgroundColor: "#ff0000",
+        data: [28, 48, 40, 54, 2, 10, 18, 34, 34, 23, 34, 33, 23, 22 ,34 ,12, 12, 12, 62, 23, 2, 23, 94, 12, 32, 60, 34, 13, 34, 1],
+        borderColor: '#ff0000',
+        borderWidth:5
     }, {
         label: 'سطح امنیتی متوسط',
-        backgroundColor: "rgba(251,187,205,1)",
-        data: [23, 24, 25, 34, 72, 91, 10], 
-        borderColor: 'white',
-        borderWidth: 2
-    }, {
-        type: 'line',
-        label: 'امتیاز کسب شده',
-        backgroundColor: "rgba(220,220,220,0.5)",
-        data: [5, 10, 50, 30, 20, 80, 99],
-    }, ]
+        backgroundColor: "#00ff00",
+        data: [28, 48, 40, 98, 2, 10, 18, 34, 34, 23, 34, 33, 23, 43 ,34 ,12, 23, 24, 23, 23, 2, 23, 94, 12, 89, 89, 34, 45, 34, 1],
+        borderColor: '#00ff00',
+        borderWidth:6
+    } ]
 
 };
 
