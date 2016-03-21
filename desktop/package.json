@@ -1,0 +1,27 @@
+{
+  "name": "itrc.ics.desktop",
+  "version": "1.0.0",
+  "description": "آزمایشگاه ارزیابی سامانه‌های صنعتی",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "ITRC",
+    "ICS",
+    "Assessment"
+  ],
+  "author": "Morteza Ansarinia <m.ansarinia@itrc.ac.ir>",
+  "license": "ITRC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "http://cset-ronins.rhcloud.com",
+  "devDependencies": {
+    "electron-prebuilt": "^0.34.0"
+  }
+}
